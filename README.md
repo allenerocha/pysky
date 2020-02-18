@@ -15,3 +15,4 @@ PySky
 
     ./pysky.py andromeda 1280 720 3.5 Linear
     ./pysky.py vega 1920 1080 3.0 HistEq
+    ./pysky.py alula%20australis 1920 1080 3.0 Sqrt
