@@ -1,24 +1,23 @@
 PySky
 
-<b>Usage</b>
+# Usage
 
     ./pysky.py [celestial body (string)] [pixel width (int)] [pixel height (int)] [resolution (float)] [brightness scale (string)]
 
-<b>Celestial body</b>
+## Celestial body
 
     Celestial body          Names comprised of two words must have %20
                             instead of the space character.
 
-<b>Pixel width and Pixel height</b>
+## Pixel width and Pixel height
 
     Pixel dimensions of the image to be produced.
-    
 
-<b>Resolution</b>
+## Resolution
 
     Size of the image in degrees.
 
-<b>Brightness Scale</b>
+## Brightness Scale
 
     Linear                  Tends to enhance bright features.
     
@@ -27,8 +26,18 @@ PySky
                             
     HistEq                  Can sometimes show subtle features in the data.
 
-<b>Examples</b>
+### Examples
 
     ./pysky.py andromeda 1280 720 3.5 Linear
     ./pysky.py vega 1920 1080 3.0 HistEq
     ./pysky.py alula%20australis 1920 1080 3.0 Sqrt
+    
+# Supported Python Versions
+
+    Python 3.x
+
+# Dependencies
+
+- [Beautiful Soup 4 (bs4)](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
+- [requests](https://requests.readthedocs.io/en/master/)
+- [Pillow](https://python-pillow.org/)
