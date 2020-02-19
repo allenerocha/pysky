@@ -2,7 +2,7 @@ PySky
 
 <b>Usage</b>
 
-    ./pysky.py [celestial body (string)] [pixel width (int)] [pixel height (int)] [resolution (float)] [brightness scale]
+    ./pysky.py [celestial body (string)] [pixel width (int)] [pixel height (int)] [resolution (float)] [brightness scale (string)]
 
 <b>Celestial body</b>
 
