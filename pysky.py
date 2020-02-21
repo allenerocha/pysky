@@ -1,5 +1,4 @@
-"""This module is used to invoke the simbad and skyview modules"""
-# !/usr/bin/env python3
+#!/usr/bin/env python3
 import sys
 import json
 import io

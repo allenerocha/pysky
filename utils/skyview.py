@@ -1,7 +1,6 @@
 """This module retrieves the image from the passed star """
 
 import json
-import io
 import base64
 import os
 import urllib.request
@@ -65,7 +64,8 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
         os.remove("cache/temp.jpg")
 
 
-def check_cache(celestial_obj: str, width: int, height: int, image_size: float, b_scale: str) -> bool:
+def check_cache(celestial_obj: str, width: int, height: int,
+                image_size: float, b_scale: str) -> bool:
     """
     This module retrieves the image from the skyview endpoint
     if it not already cached. After retrieval, it will cache the image.
@@ -86,5 +86,3 @@ def check_cache(celestial_obj: str, width: int, height: int, image_size: float, 
 
     cache_file.pop(celestial_obj, None)
     return False
-
-
