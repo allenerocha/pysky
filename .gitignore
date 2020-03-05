@@ -4,3 +4,5 @@ slideshow/__pycache__/
 *.swp
 
 utils/__pycache__/
+
+cache/data
