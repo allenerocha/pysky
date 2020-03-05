@@ -3,18 +3,26 @@ import PIL.Image
 import json
 
 
-def add_image(*args: list):
-    """
-    This module add an image or list of images to the slide show queue
-    :param args: Image(s) to add to the slide show
-    :return: None
-    """
-    pass
+class SlideShow:
+    def __init__(self, queue = list):
+        if type(queue) != type(list):
+            queue = list()
+        self.queue = queue
 
 
-def play():
-    """
-    This module plays the slide show using pillow
-    :return: None
-    """
-    pass
+    def add_image(self, img: object):
+        """
+        This module add an image or list of images to the slide show queue
+        :param img: Image to add to the slide show
+        :return: None
+        """
+        self.queue.append(img)
+
+
+    def play(self):
+        """
+        This module plays the slide show using pillow
+        :return: None
+        """
+        pass
+
