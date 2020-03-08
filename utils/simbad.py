@@ -1,11 +1,7 @@
 """This module retrieves basic data from simbad based
-on which itentifier is passed via the command line
-End-point http://simbad.u-strasbg.fr/simbad/sim-basic?Ident={URL}&submit=SIMBAD+search """
+on which itentifier is passed via the command line"""
 import sys
-
-import bs4
-import requests
-
+import astroquery.simbad
 
 def get_brightness(celestial_obj: str) -> float:
     """
@@ -13,23 +9,16 @@ def get_brightness(celestial_obj: str) -> float:
     :param celestial_obj: name celestial object to retreieve the brightness of
     :return: the brightness of the passed celestial object
     """
-    endpoint = f"http://simbad.u-strasbg.fr/simbad/sim-basic?Ident={celestial_obj}&submit=SIMBAD+search"
 
-    simbad_request = requests.get(endpoint)
+    #view all possible fields => astroquery.list_votable_fields()
 
-    soup = bs4.BeautifulSoup(simbad_request.text, features="html.parser")
-    table = soup.find("table", attrs={"width": "100%", "cellspacing": 2, "cellpadding": None})
-    brightness = 0.0
-
-    # iterate through the rows
     try:
-        for rows in table.find_all("tr"):
-            # iterate through the columns
-            for cols in rows.find_all("tt"):
-                if "V      " in cols.text:
-                    brightness = float(cols.text.split()[1])
-                    break
+        astroquery.simbad.Simbad.add_votable_fields("flux(V)")
+        astroquery.simbad.Simbad.remove_votable_fields("main_id")
+        astroquery.simbad.Simbad.remove_votable_fields("coordinates")
+
+        brightness = float(str(astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0]))
         return brightness
-    except AttributeError:
-        print(f"Error parsing the data for {celestial_obj}")
+    except TypeError as e:
+        print(f"Error parsing the data for {celestial_obj}. Simbad only contains info on stars.\n\n{str(e)}")
         sys.exit()
