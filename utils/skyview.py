@@ -108,7 +108,7 @@ def check_cache(celestial_obj: str, width: int, height: int,
     :param b_scale brightness scale for image processing
     :return: boolean if depending on if the specific cache exists
     """
-    cache_file = json.loads(open("cache/data", "r").read())
+    cache_file = json.loads(open("data/cache", "r").read())
     if (celestial_obj in cache_file) and\
             (cache_file[celestial_obj]["image"]["width"] == width) and\
             (cache_file[celestial_obj]["image"]["height"] == height) and\
