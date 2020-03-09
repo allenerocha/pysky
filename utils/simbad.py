@@ -22,3 +22,7 @@ def get_brightness(celestial_obj: str) -> float:
     except TypeError as e:
         print(f"Error parsing the data for {celestial_obj}. Simbad only contains info on stars.\n\n{str(e)}")
         sys.exit()
+    except ValueError as e:
+        print(f"Error converting brightness for {celestial_obj}. Simbad does not contain brightnesses for double or multiple stars.\n\n{str(e)}")
+        sys.exit()
+
