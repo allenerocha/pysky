@@ -2,6 +2,7 @@
 
 import json
 import base64
+import time
 import os
 import PIL.Image
 import urllib.request
@@ -25,13 +26,19 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
     :return: Bytes
     """
 
+    BRIGHTNESS_THREASHOLD = 4.5
+
     # the image in in cache
     if check_cache(celestial_obj, width, height, image_size, b_scale):
         cache_file = json.loads(open("cache/data", "r").read())
         return
 
+    a_info = utils.astro_info.get_info(celestial_obj)
     brightness = utils.simbad.get_brightness(celestial_obj)
-    #a_info = utils.astro_info.get_info(celestial_obj)
+
+    if brightness > BRIGHTNESS_THREASHOLD:
+        return None
+
 
     if(urllib.request.urlopen("https://skyview.gsfc.nasa.gov/current/cgi/runquery.pl").getcode() != 200):
         print("Error trying to connect to the skyview server.")
@@ -64,6 +71,7 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
     cache_file = json.loads(open("cache/data", "r").read())
     try:
         cache_file[celestial_obj] = {
+            "created": time.strftime("%Y-%d-%m %H:%M", time.gmtime()),
             "brightness": brightness,
             #"coordinates" : {
             #    "ra": [a_info[0], a_info[1], a_info[2]],
