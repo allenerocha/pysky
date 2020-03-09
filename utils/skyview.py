@@ -33,19 +33,16 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
         cache_file = json.loads(open("cache/data", "r").read())
         return
 
-    a_info = utils.astro_info.get_info(celestial_obj)
+    #a_info = utils.astro_info.get_info(celestial_obj)
     brightness = utils.simbad.get_brightness(celestial_obj)
+    constellation = utils.simbad.get_constellation(celestial_obj)
 
-    if brightness > BRIGHTNESS_THREASHOLD:
-        return None
+    #if brightness > BRIGHTNESS_THREASHOLD:
+    #    return None
 
 
     if(urllib.request.urlopen("https://skyview.gsfc.nasa.gov/current/cgi/runquery.pl").getcode() != 200):
         print("Error trying to connect to the skyview server.")
-        sys.exit()
-
-    if(urllib.request.urlopen("http://simbad.u-strasbg.fr/simbad/sim-fbasic").getcode() != 200):
-        print("Error trying to connect to the simbad server.")
         sys.exit()
 
     # the image is not in cache
@@ -71,6 +68,8 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
     cache_file = json.loads(open("cache/data", "r").read())
     try:
         cache_file[celestial_obj] = {
+            "type": "star",
+            "constellation": f"{constellation}",
             "created": time.strftime("%Y-%d-%m %H:%M", time.gmtime()),
             "brightness": brightness,
             #"coordinates" : {
@@ -92,7 +91,7 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
     except TypeError:
         sys.exit()
     with open("cache/data", "w") as json_out:
-        json.dump(cache_file, json_out)
+        json.dump(cache_file, json_out, indent=4, sort_keys=True)
         img_bytes = open("cache/temp.jpg", "rb").read()
         os.remove("cache/temp.jpg")
 
