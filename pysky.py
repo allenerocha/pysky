@@ -10,12 +10,13 @@ import utils.astro_info
 import utils.objectfilter
 import slideshow.image_manipulation
 import slideshow.slideshow
+import utils.prefs
 
 
 def main():
     """
     """
-
+    utils.prefs.check_prefs()
 
     celestial_objs = utils.objectfilter.emphemeries_filter('venus', 'polaris', 'neptune', 'vega', 'saturn', 'mars')
     STARS = celestial_objs[0]
@@ -35,7 +36,7 @@ def main():
 
     # Checks in the passed body or list of bodies are in the emphemeries Quantity
 
-    cache_file = json.loads(open("cache/data", "r").read())
+    cache_file = json.loads(open("data/cache", "r").read())
 
     for body in EPHEMERIES_BODIES:
         COORDS = utils.astro_info.get_info(body)
@@ -58,7 +59,7 @@ def main():
                                                             str(COORDS[7])
                                                                 ]
                                                 }
-    with open("cache/data", "w") as json_out:
+    with open("data/cache", "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
 
 
@@ -69,7 +70,7 @@ def db_calls(celestial_objs):
     for celestial_obj in celestial_objs:
         # try to get image and data of the object
         utils.skyview.get_img(celestial_obj, 480, 480, 3.5, "Linear")
-        cache_file = json.loads(open("cache/data", "r").read())
+        cache_file = json.loads(open("data/cache", "r").read())
 
         # decode the image from the cache file from b64 to bytes
         decoded_img = base64.b64decode(cache_file[celestial_obj]['image']['base64'][1:-1])

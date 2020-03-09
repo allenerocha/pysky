@@ -30,7 +30,7 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
 
     # the image in in cache
     if check_cache(celestial_obj, width, height, image_size, b_scale):
-        cache_file = json.loads(open("cache/data", "r").read())
+        cache_file = json.loads(open("data/cache", "r").read())
         return
 
     #a_info = utils.astro_info.get_info(celestial_obj)
@@ -63,9 +63,9 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
               bs4.BeautifulSoup(image_request, features="html.parser").find('td', attrs={
                   "colspan": 3, "align": "left"
               }).find('a', href=True)['href'].replace("../", "")
-    urllib.request.urlretrieve(img_url, "cache/temp.jpg")
-    img_bytes = base64.b64encode(open("cache/temp.jpg", "rb").read())
-    cache_file = json.loads(open("cache/data", "r").read())
+    urllib.request.urlretrieve(img_url, "data/temp.jpg")
+    img_bytes = base64.b64encode(open("data/temp.jpg", "rb").read())
+    cache_file = json.loads(open("data/cache", "r").read())
     try:
         cache_file[celestial_obj] = {
             "type": "star",
@@ -90,10 +90,10 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
         }
     except TypeError:
         sys.exit()
-    with open("cache/data", "w") as json_out:
+    with open("data/cache", "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
-        img_bytes = open("cache/temp.jpg", "rb").read()
-        os.remove("cache/temp.jpg")
+        img_bytes = open("data/temp.jpg", "rb").read()
+        os.remove("data/temp.jpg")
 
 
 def check_cache(celestial_obj: str, width: int, height: int,
