@@ -1,6 +1,7 @@
 """This module is used to play a slide show of images using PIL"""
 import PIL.Image
 import json
+import time
 
 
 class SlideShow:
@@ -24,5 +25,7 @@ class SlideShow:
         This module plays the slide show using pillow
         :return: None
         """
-        pass
+        for image in self.queue:
+            PIL.Image.open(image)
+            time.sleep(10)
 
