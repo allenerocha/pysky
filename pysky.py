@@ -3,6 +3,7 @@ import sys
 import json
 import time
 import io
+import os.path
 import base64
 import PIL.Image
 import utils.skyview
@@ -16,7 +17,7 @@ import utils.prefs
 def main():
     """
     """
-    utils.prefs.check_prefs()
+    #utils.prefs.check_prefs()
 
     celestial_objs = utils.objectfilter.emphemeries_filter('venus', 'polaris', 'neptune', 'vega', 'saturn', 'mars')
     STARS = celestial_objs[0]
@@ -30,9 +31,8 @@ def main():
     # todo download image from skyview/nasa site if successfully connected <==== DONE
     # todo overlay celesital statistics on the image <==== WIP
     # todo add overlayed image to slideshow queue
-    # todo play slideshow
-
-    # todo make sure not to repeatedly add object information if it is already stored in the cache
+    # todo play slideshow *****
+    # todo make sure not to repeatedly add object information if it is already stored in the cache ******
 
     # Checks in the passed body or list of bodies are in the emphemeries Quantity
 
@@ -76,19 +76,21 @@ def db_calls(celestial_objs):
         decoded_img = base64.b64decode(cache_file[celestial_obj]['image']['base64'][1:-1])
 
         # save the returned image containing the overlayed information
-        overlayed_img = slideshow.image_manipulation.add_text(
-                                                                PIL.Image.open(io.BytesIO(decoded_img)),
-                                                                [
-                                                                    f"Name: {celestial_obj}",
-                                                                    f"Brightness: {cache_file[celestial_obj]['brightness']}"
-                                                                ],
-                                                                slide_show
-                                                            )
+        slideshow.image_manipulation.add_text(PIL.Image.open(io.BytesIO(decoded_img)), [
+                                                                                            f"Name: {celestial_obj}",
+                                                                                            f"Constellation: {cache_file[celestial_obj]['constellation']}",
+                                                                                            f"Brightness: {cache_file[celestial_obj]['brightness']}"
+                                                                                        ]
+                                                                                    )
 
         # add the returned image to the slide show queue
-        slide_show.add_image(overlayed_img)
+        # slide_show.add_image(overlayed_img)
+        # slide_show.play()
 
 
 if __name__ == '__main__':
+    if not os.path.isfile('data/cache'):
+        with open('data/cache', 'w') as cache:
+            cache.write("{}")
     main()
 
