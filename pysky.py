@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 import sys
 import json
+import time
 import io
 import base64
 import PIL.Image
 import utils.skyview
 import utils.astro_info
+import utils.objectfilter
 import slideshow.image_manipulation
 import slideshow.slideshow
 
@@ -14,7 +16,11 @@ def main():
     """
     """
 
-    #db_calls('neptune', 'venus', 'saturn')
+
+    celestial_objs = utils.objectfilter.emphemeries_filter('venus', 'polaris', 'neptune', 'vega', 'saturn', 'mars')
+    STARS = celestial_objs[0]
+    EPHEMERIES_BODIES = celestial_objs[1]
+    db_calls(STARS)
 
     # todo pass a window of time {start: YEAR-DAY-MON H:M, end: YEAR-DAY-MON H:M}:
     # todo check endpoints <==== DONE
@@ -28,28 +34,38 @@ def main():
     # todo make sure not to repeatedly add object information if it is already stored in the cache
 
     # Checks in the passed body or list of bodies are in the emphemeries Quantity
-    EPHEMERIES_BODIES = utils.astro_info.get_bodies('neptune', 'venus', 'polaris', 'saturn')
 
     cache_file = json.loads(open("cache/data", "r").read())
 
     for body in EPHEMERIES_BODIES:
-        print(body)
         COORDS = utils.astro_info.get_info(body)
         cache_file[f"{body}"] = {}
-        cache_file[f"{body}"]["coordinates"] = {"ra": [COORDS[0], COORDS[1], COORDS[2]], "dec": { "degree": COORDS[3], "radian": COORDS[4]}, "cartesian": [str(COORDS[5]), str(COORDS[6]), str(COORDS[7])]}
+        cache_file[f"{body}"]["type"] = "planet"
+        cache_file[f"{body}"]["created"] = time.strftime("%Y-%d-%m %H:%M", time.gmtime())
+        cache_file[f"{body}"]["coordinates"] = {
+                                                    "ra": [
+                                                            COORDS[0],
+                                                            COORDS[1],
+                                                            COORDS[2]
+                                                        ],
+                                                    "dec": {
+                                                            "degree": COORDS[3],
+                                                            "radian": COORDS[4]
+                                                            },
+                                                    "cartesian": [
+                                                            str(COORDS[5]),
+                                                            str(COORDS[6]),
+                                                            str(COORDS[7])
+                                                                ]
+                                                }
     with open("cache/data", "w") as json_out:
-        json.dump(cache_file, json_out)
-    sys.exit()
+        json.dump(cache_file, json_out, indent=4, sort_keys=True)
 
 
-def db_calls(*args):
+def db_calls(celestial_objs):
     # creates an empty slide show queue
     slide_show = slideshow.slideshow.SlideShow(None)
 
-    celestial_objs = list(args)
-
-    print(celestial_objs)
-    sys.exit()
     for celestial_obj in celestial_objs:
         # try to get image and data of the object
         utils.skyview.get_img(celestial_obj, 480, 480, 3.5, "Linear")

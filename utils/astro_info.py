@@ -11,7 +11,7 @@ def get_bodies(*args) -> list:
     :return: List of bodies or False if there are none
     """
 
-    celestial_objs = list(args)
+    celestial_objs = list(args)[0]
 
     if len(celestial_objs) > 0:
         bodies = []
