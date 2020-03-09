@@ -1,13 +1,17 @@
 """This module retrieves the image from the passed star """
 
 import json
-import io
 import base64
+import time
 import os
+import PIL.Image
 import urllib.request
+import io
 import requests
 import bs4
+import sys
 import utils.simbad
+import utils.astro_info
 
 
 def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_scale: str) -> object:
@@ -22,12 +26,25 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
     :return: Bytes
     """
 
-    brightness = utils.simbad.get_brightness(celestial_obj)
+    BRIGHTNESS_THREASHOLD = 4.5
 
     # the image in in cache
     if check_cache(celestial_obj, width, height, image_size, b_scale):
         cache_file = json.loads(open("cache/data", "r").read())
         return
+
+    #a_info = utils.astro_info.get_info(celestial_obj)
+    brightness = utils.simbad.get_brightness(celestial_obj)
+    constellation = utils.simbad.get_constellation(celestial_obj)
+
+    #if brightness > BRIGHTNESS_THREASHOLD:
+    #    return None
+
+
+    if(urllib.request.urlopen("https://skyview.gsfc.nasa.gov/current/cgi/runquery.pl").getcode() != 200):
+        print("Error trying to connect to the skyview server.")
+        sys.exit()
+
     # the image is not in cache
 
     endpoint = f'https://skyview.gsfc.nasa.gov/current/cgi/runquery.pl?Position={celestial_obj}' \
@@ -49,23 +66,38 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
     urllib.request.urlretrieve(img_url, "cache/temp.jpg")
     img_bytes = base64.b64encode(open("cache/temp.jpg", "rb").read())
     cache_file = json.loads(open("cache/data", "r").read())
-    cache_file[celestial_obj] = {
-        "brightness": brightness,
-        "image": {
-            "width": width,
-            "height": height,
-            "resolution": image_size,
-            "brightness scaling": b_scale,
-            "base64": str(img_bytes)
+    try:
+        cache_file[celestial_obj] = {
+            "type": "star",
+            "constellation": f"{constellation}",
+            "created": time.strftime("%Y-%d-%m %H:%M", time.gmtime()),
+            "brightness": brightness,
+            #"coordinates" : {
+            #    "ra": [a_info[0], a_info[1], a_info[2]],
+            #    "dec": {
+            #        "degree": a_info[3],
+            #        "radian": a_info[4]
+            #    },
+            #    "cartesian": [a_info[5], a_info[6], a_info[7]]
+            #},
+            "image": {
+                "width": width,
+                "height": height,
+                "resolution": image_size,
+                "brightness scaling": b_scale,
+                "base64": str(img_bytes)
+            }
         }
-    }
+    except TypeError:
+        sys.exit()
     with open("cache/data", "w") as json_out:
-        json.dump(cache_file, json_out)
+        json.dump(cache_file, json_out, indent=4, sort_keys=True)
         img_bytes = open("cache/temp.jpg", "rb").read()
         os.remove("cache/temp.jpg")
 
 
-def check_cache(celestial_obj: str, width: int, height: int, image_size: float, b_scale: str) -> bool:
+def check_cache(celestial_obj: str, width: int, height: int,
+                image_size: float, b_scale: str) -> bool:
     """
     This module retrieves the image from the skyview endpoint
     if it not already cached. After retrieval, it will cache the image.
@@ -86,5 +118,3 @@ def check_cache(celestial_obj: str, width: int, height: int, image_size: float, 
 
     cache_file.pop(celestial_obj, None)
     return False
-
-
