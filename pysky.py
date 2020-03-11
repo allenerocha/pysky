@@ -19,7 +19,7 @@ def main():
     """
     #utils.prefs.check_prefs()
 
-    celestial_objs = utils.objectfilter.emphemeries_filter('venus', 'polaris', 'neptune', 'vega', 'saturn', 'mars')
+    celestial_objs = utils.objectfilter.emphemeries_filter('venus', 'polaris', 'neptune', 'vega', 'saturn', 'mars', 'deneb', 'sirius', 'capella')
     STARS = celestial_objs[0]
     EPHEMERIES_BODIES = celestial_objs[1]
     db_calls(STARS)
