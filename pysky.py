@@ -72,17 +72,6 @@ def db_calls(celestial_objs):
         utils.skyview.get_img(celestial_obj, 480, 480, 3.5, "Linear")
         cache_file = json.loads(open("data/cache", "r").read())
 
-        # decode the image from the cache file from b64 to bytes
-        decoded_img = base64.b64decode(cache_file[celestial_obj]['image']['base64'][1:-1])
-
-        # save the returned image containing the overlayed information
-        slideshow.image_manipulation.add_text(PIL.Image.open(io.BytesIO(decoded_img)), [
-                                                                                            f"Name: {celestial_obj}",
-                                                                                            f"Constellation: {cache_file[celestial_obj]['constellation']}",
-                                                                                            f"Brightness: {cache_file[celestial_obj]['brightness']}"
-                                                                                        ]
-                                                                                    )
-
         # add the returned image to the slide show queue
         # slide_show.add_image(overlayed_img)
         # slide_show.play()

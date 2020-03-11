@@ -11,6 +11,7 @@ import requests
 import bs4
 import sys
 import utils.simbad
+import slideshow.image_manipulation
 import utils.astro_info
 
 
@@ -31,6 +32,9 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
     # the image in in cache
     if check_cache(celestial_obj, width, height, image_size, b_scale):
         cache_file = json.loads(open("data/cache", "r").read())
+        imgBytes = base64.b64decode(cache_file[f"{celestial_obj}"]["image"]["base64"])
+        img = PIL.Image.open(io.BytesIO(imgBytes))
+        img.show()
         return
 
     #a_info = utils.astro_info.get_info(celestial_obj)
@@ -88,12 +92,22 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
                 "base64": str(img_bytes)
             }
         }
-    except TypeError:
+        with open("data/cache", "w") as json_out:
+            json.dump(cache_file, json_out, indent=4, sort_keys=True)
+            img_bytes = open("data/temp.jpg", "rb").read()
+            os.remove("data/temp.jpg")
+
+        # decode the image from the cache file from b64 to bytes
+        decoded_img = base64.b64decode(cache_file[celestial_obj]['image']['base64'][1:-1])
+        # save the returned image containing the overlayed information
+        cache_file = slideshow.image_manipulation.add_text(PIL.Image.open(io.BytesIO(decoded_img)), [f"Name: {celestial_obj}",f"Constellation: {cache_file[celestial_obj]['constellation']}",f"Brightness: {cache_file[celestial_obj]['brightness']}"])
+
+    except TypeError as e:
+        print(str(e))
         sys.exit()
-    with open("data/cache", "w") as json_out:
-        json.dump(cache_file, json_out, indent=4, sort_keys=True)
-        img_bytes = open("data/temp.jpg", "rb").read()
-        os.remove("data/temp.jpg")
+    except ConnectionResetError as e:
+        print(str(e))
+        sys.exit()
 
 
 def check_cache(celestial_obj: str, width: int, height: int,

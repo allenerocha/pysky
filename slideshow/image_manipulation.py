@@ -25,7 +25,7 @@ def add_text(img: object, overlay_text: list) -> object:
     _, img_h = img.size
 
     cache_file = json.loads(open("data/cache", "r").read())
-
+    img.show()
     overlayed = PIL.ImageDraw.Draw(img, mode='RGBA')
     overlayed.multiline_text(
                             xy=(10,int(img_h*0.8)),#xy of the location for the text to  be overlayed
@@ -40,6 +40,7 @@ def add_text(img: object, overlay_text: list) -> object:
     img.save(fp='data/temp', format="PNG")
     img_bytes = base64.b64encode(open("data/temp", "rb").read())
     celestial_obj = overlay_text[0][6:]
+    img.show()
     # write the edited image to the cache file
     cache_file[celestial_obj]["image"]["base64"] = str(img_bytes)[1:]
 
