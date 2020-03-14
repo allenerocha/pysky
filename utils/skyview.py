@@ -4,14 +4,14 @@ import json
 import base64
 import time
 import os
-import PIL.Image
-import urllib.request
 import io
+import sys
+import urllib.request
+import PIL.Image
 import requests
 import bs4
-import sys
 import utils.simbad
-import slideshow.image_manipulation
+import utils.image_manipulation
 import utils.astro_info
 
 
@@ -100,7 +100,7 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
         # decode the image from the cache file from b64 to bytes
         decoded_img = base64.b64decode(cache_file[celestial_obj]['image']['base64'][1:-1])
         # save the returned image containing the overlayed information
-        cache_file = slideshow.image_manipulation.add_text(PIL.Image.open(io.BytesIO(decoded_img)), [f"Name: {celestial_obj}",f"Constellation: {cache_file[celestial_obj]['constellation']}",f"Brightness: {cache_file[celestial_obj]['brightness']}"])
+        cache_file = utils.image_manipulation.add_text(PIL.Image.open(io.BytesIO(decoded_img)), [f"Name: {celestial_obj}", f"Constellation: {cache_file[celestial_obj]['constellation']}", f"Brightness: {cache_file[celestial_obj]['brightness']}"])
 
     except TypeError as e:
         print(str(e))

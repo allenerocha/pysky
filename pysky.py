@@ -1,23 +1,18 @@
 #!/usr/bin/env python3
-import sys
 import json
 import time
-import io
 import os.path
-import base64
-import PIL.Image
 import utils.skyview
 import utils.astro_info
 import utils.objectfilter
-import slideshow.image_manipulation
-import slideshow.slideshow
+import utils.image_manipulation
 import utils.prefs
 
 
 def main():
     """
     """
-    #utils.prefs.check_prefs()
+    utils.prefs.check_prefs()
 
     celestial_objs = utils.objectfilter.emphemeries_filter('venus', 'polaris', 'neptune', 'vega', 'saturn', 'mars', 'deneb', 'sirius', 'capella')
     STARS = celestial_objs[0]
@@ -65,7 +60,6 @@ def main():
 
 def db_calls(celestial_objs):
     # creates an empty slide show queue
-    slide_show = slideshow.slideshow.SlideShow(None)
 
     for celestial_obj in celestial_objs:
         # try to get image and data of the object
@@ -79,7 +73,7 @@ def db_calls(celestial_objs):
 
 if __name__ == '__main__':
     if not os.path.isfile('data/cache'):
-        with open('data/cache', 'w') as cache:
-            cache.write("{}")
+        with open('data/cache', 'w') as cache_file:
+            cache_file.write("{}")
     main()
 
