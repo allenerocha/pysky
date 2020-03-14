@@ -3,7 +3,6 @@ celestial body over image of the celestial body using PIL"""
 import json
 import base64
 import os
-import io
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
@@ -31,7 +30,6 @@ def add_text(img: object, overlay_text: list) -> object:
                             xy=(10,int(img_h*0.8)),#xy of the location for the text to  be overlayed
                             text="\n".join(overlay_text),#concats all passed strings in the list
                             fill=(255, 255, 255, 100),#white text with alpha=100
-                            font=PIL.ImageFont.truetype("aakar-medium.ttf", 16),
                             stroke_width=1,#thickness of the stoke
                             stroke_fill=(0, 0, 0, 100),#black stroke with alpha=100
                             spacing=1,#in between each new line
