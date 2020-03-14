@@ -4,13 +4,14 @@ import json
 import base64
 import time
 import os
-import PIL.Image
-import urllib.request
 import io
+import sys
+import urllib.request
+import PIL.Image
 import requests
 import bs4
-import sys
 import utils.simbad
+import utils.image_manipulation
 import utils.astro_info
 
 
@@ -30,7 +31,10 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
 
     # the image in in cache
     if check_cache(celestial_obj, width, height, image_size, b_scale):
-        cache_file = json.loads(open("cache/data", "r").read())
+        cache_file = json.loads(open("data/cache", "r").read())
+        imgBytes = base64.b64decode(cache_file[f"{celestial_obj}"]["image"]["base64"])
+        img = PIL.Image.open(io.BytesIO(imgBytes))
+        img.show()
         return
 
     #a_info = utils.astro_info.get_info(celestial_obj)
@@ -63,9 +67,9 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
               bs4.BeautifulSoup(image_request, features="html.parser").find('td', attrs={
                   "colspan": 3, "align": "left"
               }).find('a', href=True)['href'].replace("../", "")
-    urllib.request.urlretrieve(img_url, "cache/temp.jpg")
-    img_bytes = base64.b64encode(open("cache/temp.jpg", "rb").read())
-    cache_file = json.loads(open("cache/data", "r").read())
+    urllib.request.urlretrieve(img_url, "data/temp.jpg")
+    img_bytes = base64.b64encode(open("data/temp.jpg", "rb").read())
+    cache_file = json.loads(open("data/cache", "r").read())
     try:
         cache_file[celestial_obj] = {
             "type": "star",
@@ -88,12 +92,22 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
                 "base64": str(img_bytes)
             }
         }
-    except TypeError:
+        with open("data/cache", "w") as json_out:
+            json.dump(cache_file, json_out, indent=4, sort_keys=True)
+            img_bytes = open("data/temp.jpg", "rb").read()
+            os.remove("data/temp.jpg")
+
+        # decode the image from the cache file from b64 to bytes
+        decoded_img = base64.b64decode(cache_file[celestial_obj]['image']['base64'][1:-1])
+        # save the returned image containing the overlayed information
+        cache_file = utils.image_manipulation.add_text(PIL.Image.open(io.BytesIO(decoded_img)), [f"Name: {celestial_obj}", f"Constellation: {cache_file[celestial_obj]['constellation']}", f"Brightness: {cache_file[celestial_obj]['brightness']}"])
+
+    except TypeError as e:
+        print(str(e))
         sys.exit()
-    with open("cache/data", "w") as json_out:
-        json.dump(cache_file, json_out, indent=4, sort_keys=True)
-        img_bytes = open("cache/temp.jpg", "rb").read()
-        os.remove("cache/temp.jpg")
+    except ConnectionResetError as e:
+        print(str(e))
+        sys.exit()
 
 
 def check_cache(celestial_obj: str, width: int, height: int,
@@ -108,7 +122,7 @@ def check_cache(celestial_obj: str, width: int, height: int,
     :param b_scale brightness scale for image processing
     :return: boolean if depending on if the specific cache exists
     """
-    cache_file = json.loads(open("cache/data", "r").read())
+    cache_file = json.loads(open("data/cache", "r").read())
     if (celestial_obj in cache_file) and\
             (cache_file[celestial_obj]["image"]["width"] == width) and\
             (cache_file[celestial_obj]["image"]["height"] == height) and\

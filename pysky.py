@@ -1,23 +1,20 @@
 #!/usr/bin/env python3
-import sys
 import json
 import time
-import io
-import base64
-import PIL.Image
+import os.path
 import utils.skyview
 import utils.astro_info
 import utils.objectfilter
-import slideshow.image_manipulation
-import slideshow.slideshow
+import utils.image_manipulation
+import utils.prefs
 
 
 def main():
     """
     """
+    utils.prefs.check_prefs()
 
-
-    celestial_objs = utils.objectfilter.emphemeries_filter('venus', 'polaris', 'neptune', 'vega', 'saturn', 'mars')
+    celestial_objs = utils.objectfilter.emphemeries_filter('venus', 'polaris', 'neptune', 'vega', 'saturn', 'mars', 'deneb', 'sirius', 'capella')
     STARS = celestial_objs[0]
     EPHEMERIES_BODIES = celestial_objs[1]
     db_calls(STARS)
@@ -29,13 +26,12 @@ def main():
     # todo download image from skyview/nasa site if successfully connected <==== DONE
     # todo overlay celesital statistics on the image <==== WIP
     # todo add overlayed image to slideshow queue
-    # todo play slideshow
-
-    # todo make sure not to repeatedly add object information if it is already stored in the cache
+    # todo play slideshow *****
+    # todo make sure not to repeatedly add object information if it is already stored in the cache ******
 
     # Checks in the passed body or list of bodies are in the emphemeries Quantity
 
-    cache_file = json.loads(open("cache/data", "r").read())
+    cache_file = json.loads(open("data/cache", "r").read())
 
     for body in EPHEMERIES_BODIES:
         COORDS = utils.astro_info.get_info(body)
@@ -58,36 +54,26 @@ def main():
                                                             str(COORDS[7])
                                                                 ]
                                                 }
-    with open("cache/data", "w") as json_out:
+    with open("data/cache", "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
 
 
 def db_calls(celestial_objs):
     # creates an empty slide show queue
-    slide_show = slideshow.slideshow.SlideShow(None)
 
     for celestial_obj in celestial_objs:
         # try to get image and data of the object
         utils.skyview.get_img(celestial_obj, 480, 480, 3.5, "Linear")
-        cache_file = json.loads(open("cache/data", "r").read())
-
-        # decode the image from the cache file from b64 to bytes
-        decoded_img = base64.b64decode(cache_file[celestial_obj]['image']['base64'][1:-1])
-
-        # save the returned image containing the overlayed information
-        overlayed_img = slideshow.image_manipulation.add_text(
-                                                                PIL.Image.open(io.BytesIO(decoded_img)),
-                                                                [
-                                                                    f"Name: {celestial_obj}",
-                                                                    f"Brightness: {cache_file[celestial_obj]['brightness']}"
-                                                                ],
-                                                                slide_show
-                                                            )
+        cache_file = json.loads(open("data/cache", "r").read())
 
         # add the returned image to the slide show queue
-        slide_show.add_image(overlayed_img)
+        # slide_show.add_image(overlayed_img)
+        # slide_show.play()
 
 
 if __name__ == '__main__':
+    if not os.path.isfile('data/cache'):
+        with open('data/cache', 'w') as cache_file:
+            cache_file.write("{}")
     main()
 
