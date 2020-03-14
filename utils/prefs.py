@@ -23,8 +23,9 @@ def create_prefs():
     # todo display options
     # todo user selects options
     # todo dump json file to data/prefs
-    sys.exit()
-    pass
+    os.makedir("data")
+    with open("data/prefs", "w") as cache_file:
+        cache_file.write("{}")
 
 
 def clean_cache():
