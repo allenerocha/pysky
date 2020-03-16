@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import time
+import sys
 import os.path
 import utils.skyview
 import utils.astro_info
@@ -12,18 +13,15 @@ import utils.prefs
 def main():
     """
     """
-    utils.prefs.check_prefs()
+    utils.prefs.check_integrity()
 
-    celestial_objs = utils.objectfilter.emphemeries_filter('venus', 'polaris', 'neptune', 'vega', 'saturn', 'mars', 'deneb', 'sirius', 'capella')
+    # utils.prefs.clean_cache()
+
+    celestial_objs = utils.objectfilter.emphemeries_filter('venus', 'polaris', 'neptune', 'vega', 'saturn', 'deneb', 'sirius', 'capella')
     STARS = celestial_objs[0]
     EPHEMERIES_BODIES = celestial_objs[1]
     db_calls(STARS)
 
-    # todo pass a window of time {start: YEAR-DAY-MON H:M, end: YEAR-DAY-MON H:M}:
-    # todo check endpoints <==== DONE
-    # todo try-catch for successful server connection <==== DONE
-    # todo download brightness from simbad if successfully connected <==== DONE
-    # todo download image from skyview/nasa site if successfully connected <==== DONE
     # todo overlay celesital statistics on the image <==== WIP
     # todo add overlayed image to slideshow queue
     # todo play slideshow *****
@@ -31,49 +29,42 @@ def main():
 
     # Checks in the passed body or list of bodies are in the emphemeries Quantity
 
+    # Open cache file
     cache_file = json.loads(open("data/cache", "r").read())
 
+    # Iterate through the ephemeries to add information
     for body in EPHEMERIES_BODIES:
         COORDS = utils.astro_info.get_info(body)
-        cache_file[f"{body}"] = {}
-        cache_file[f"{body}"]["type"] = "planet"
-        cache_file[f"{body}"]["created"] = time.strftime("%Y-%d-%m %H:%M", time.gmtime())
-        cache_file[f"{body}"]["coordinates"] = {
-                                                    "ra": [
-                                                            COORDS[0],
-                                                            COORDS[1],
-                                                            COORDS[2]
-                                                        ],
-                                                    "dec": {
-                                                            "degree": COORDS[3],
-                                                            "radian": COORDS[4]
-                                                            },
-                                                    "cartesian": [
-                                                            str(COORDS[5]),
-                                                            str(COORDS[6]),
-                                                            str(COORDS[7])
-                                                                ]
-                                                }
+        cache_file  = get_ephemeries_info(EPHEMERIES_BODIES, cache_file)
+    # Dump cache file
     with open("data/cache", "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
 
 
 def db_calls(celestial_objs):
-    # creates an empty slide show queue
-
+    # Iterate STARS to get images and data
     for celestial_obj in celestial_objs:
-        # try to get image and data of the object
+        # Call to download images
         utils.skyview.get_img(celestial_obj, 480, 480, 3.5, "Linear")
-        cache_file = json.loads(open("data/cache", "r").read())
+        #cache_file = json.loads(open("data/cache", "r").read())
+        utils.prefs.clean_cache()
 
-        # add the returned image to the slide show queue
-        # slide_show.add_image(overlayed_img)
-        # slide_show.play()
+
+def get_ephemeries_info(bodies: list, cache_file: dict) -> dict:
+    # Iterate through the ephemeries to add information
+    for body in bodies:
+        COORDS = utils.astro_info.get_info(body)
+        cache_file[f"{body}"] = {}
+        cache_file[f"{body}"]["type"] = "planet"
+        cache_file[f"{body}"]["created"] = time.strftime("%Y-%d-%m %H:%M", time.gmtime())
+        cache_file[f"{body}"]["coordinates"] = {    # Right acension
+                                                    "ra": [str(COORDS[0]), str(COORDS[1]), str(COORDS[2])],
+                                                    "dec": str(COORDS[3]),
+                                                    "cartesian": [str(COORDS[5]), str(COORDS[6]), str(COORDS[7])]
+                                                }
+    return cache_file
 
 
 if __name__ == '__main__':
-    if not os.path.isfile('data/cache'):
-        with open('data/cache', 'w') as cache_file:
-            cache_file.write("{}")
     main()
 
