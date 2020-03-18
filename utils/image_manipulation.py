@@ -24,7 +24,7 @@ def add_text(img: object, overlay_text: list) -> object:
     _, img_h = img.size
 
     cache_file = json.loads(open("data/cache", "r").read())
-    img.show()
+    print(f"Overlaying text to image...")
     overlayed = PIL.ImageDraw.Draw(img, mode='RGBA')
     overlayed.multiline_text(
                             xy=(10,int(img_h*0.8)),#xy of the location for the text to  be overlayed
@@ -35,14 +35,18 @@ def add_text(img: object, overlay_text: list) -> object:
                             spacing=1,#in between each new line
                             align="left"
                             )
+
+    print("Adding edited image to cache file...")
     img.save(fp='data/temp', format="PNG")
     img_bytes = base64.b64encode(open("data/temp", "rb").read())
     celestial_obj = overlay_text[0][6:]
-    img.show()
     # write the edited image to the cache file
     cache_file[celestial_obj]["image"]["base64"] = str(img_bytes)[1:]
+    print("Edited image added to cache file!")
 
     with open("data/cache", "w") as json_out:
+        print("Saving edited cache file...")
         json.dump(cache_file, json_out)
         os.remove("data/temp")
+        print("Edited cache file saved!")
 

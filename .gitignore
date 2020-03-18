@@ -6,3 +6,7 @@ slideshow/__pycache__/
 utils/__pycache__/
 
 data/cache
+
+slideshow/
+
+data/

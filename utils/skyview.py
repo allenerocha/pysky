@@ -30,6 +30,7 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
     BRIGHTNESS_THREASHOLD = 4.5
 
     # the image in in cache
+    print(f"Checking if image of {celestial_obj} is cached...")
     if check_cache(celestial_obj, width, height, image_size, b_scale):
         cache_file = json.loads(open("data/cache", "r").read())
         imgBytes = base64.b64decode(cache_file[f"{celestial_obj}"]["image"]["base64"])
@@ -40,16 +41,18 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
     #a_info = utils.astro_info.get_info(celestial_obj)
     brightness = utils.simbad.get_brightness(celestial_obj)
     constellation = utils.simbad.get_constellation(celestial_obj)
+    ra_dec = utils.simbad.get_ra_dec(celestial_obj)
 
     #if brightness > BRIGHTNESS_THREASHOLD:
     #    return None
 
 
+    print("Establishing connection to skyview server...")
+    t1 = time.time()
     if(urllib.request.urlopen("https://skyview.gsfc.nasa.gov/current/cgi/runquery.pl").getcode() != 200):
-        print("Error trying to connect to the skyview server.")
+        print("Error trying to connect to the skyview server taking {time.time() - t1}.")
         sys.exit()
-
-    # the image is not in cache
+    print(f"Connection to skyview server successful taking {time.time() - t1} seconds!")
 
     endpoint = f'https://skyview.gsfc.nasa.gov/current/cgi/runquery.pl?Position={celestial_obj}' \
                f'&coordinates=J2000&coordinates=&projection=Tan&pixels={width}%2C{height}' \
@@ -60,15 +63,27 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
                f'survey=Mellinger+Red&survey=Mellinger+Green&survey=Mellinger+Blue&' \
                f'IOSmooth=&contour=&contourSmooth=&ebins=null'
     try:
+        t1 = time.time()
+        print(f"Downloading webpage for {celestial_obj}...")
         image_request = requests.get(endpoint).text
     except requests.exceptions.RequestException:
         raise requests.exceptions.RequestException("Error searching for object.")
+    print(f"Downloaded successfully in {time.time() - t1} seconds!")
+
+    print("Parsing webpage...")
     img_url = "https://skyview.gsfc.nasa.gov/" + \
               bs4.BeautifulSoup(image_request, features="html.parser").find('td', attrs={
                   "colspan": 3, "align": "left"
               }).find('a', href=True)['href'].replace("../", "")
+    print("Webpage parsed!")
+
+    print(f"Downloading image of {celestial_obj}...")
+    t1 = time.time()
     urllib.request.urlretrieve(img_url, "data/temp.jpg")
     img_bytes = base64.b64encode(open("data/temp.jpg", "rb").read())
+    print(f"Downloaded successfully in {time.time() - t1} seconds!")
+
+    print(f"Writing {celestial_obj} data to cache...")
     cache_file = json.loads(open("data/cache", "r").read())
     try:
         cache_file[celestial_obj] = {
@@ -76,14 +91,10 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
             "constellation": f"{constellation}",
             "created": time.strftime("%Y-%d-%m %H:%M", time.gmtime()),
             "brightness": brightness,
-            #"coordinates" : {
-            #    "ra": [a_info[0], a_info[1], a_info[2]],
-            #    "dec": {
-            #        "degree": a_info[3],
-            #        "radian": a_info[4]
-            #    },
-            #    "cartesian": [a_info[5], a_info[6], a_info[7]]
-            #},
+            "coordinates" : {
+                "ra": ra_dec[0],
+                "dec": ra_dec[1]
+            },
             "image": {
                 "width": width,
                 "height": height,
@@ -92,15 +103,24 @@ def get_img(celestial_obj: str, width: int, height: int, image_size: float, b_sc
                 "base64": str(img_bytes)
             }
         }
+        print(f"Finished writing {celestial_obj} data to cache!")
+
+        print("Saving changes to cache...")
         with open("data/cache", "w") as json_out:
             json.dump(cache_file, json_out, indent=4, sort_keys=True)
             img_bytes = open("data/temp.jpg", "rb").read()
             os.remove("data/temp.jpg")
+        print("Successfully saved changes to cache!")
 
         # decode the image from the cache file from b64 to bytes
         decoded_img = base64.b64decode(cache_file[celestial_obj]['image']['base64'][1:-1])
         # save the returned image containing the overlayed information
-        cache_file = utils.image_manipulation.add_text(PIL.Image.open(io.BytesIO(decoded_img)), [f"Name: {celestial_obj}", f"Constellation: {cache_file[celestial_obj]['constellation']}", f"Brightness: {cache_file[celestial_obj]['brightness']}"])
+        utils.image_manipulation.add_text(PIL.Image.open(io.BytesIO(decoded_img)), [f"Name: {celestial_obj}", f"Constellation: {cache_file[celestial_obj]['constellation']}", f"Brightness: {cache_file[celestial_obj]['brightness']}"])
+        #Write image to disk
+        img = PIL.Image.open(io.BytesIO(base64.b64decode(cache_file[celestial_obj]['image']['base64'][1:-1])))
+        img.save(f"slideshow/{celestial_obj}-{cache_file[celestial_obj]['image']['width']}-{cache_file[celestial_obj]['image']['height']}-{cache_file[celestial_obj]['image']['resolution']}-{cache_file[celestial_obj]['image']['brightness scaling']}-{cache_file[celestial_obj]['created']}.png")
+        # pop the image
+        #cache_file
 
     except TypeError as e:
         print(str(e))
@@ -128,7 +148,15 @@ def check_cache(celestial_obj: str, width: int, height: int,
             (cache_file[celestial_obj]["image"]["height"] == height) and\
             (cache_file[celestial_obj]["image"]["resolution"] == image_size) and\
             (cache_file[celestial_obj]["image"]["brightness scaling"] == b_scale):
+        print(f"Image of {celestial_obj} is cached.\n")
         return True
 
-    cache_file.pop(celestial_obj, None)
+    else:
+        cache_file.pop(celestial_obj, None)
+        os.listdir
+        files = [f for f in os.listdir("slideshow") if os.path.isfile(join("slideshow", f))]
+        print(files)
+
+        print(f"Image of {celestial_obj} not cached.\nPreparing to download...")
     return False
+
