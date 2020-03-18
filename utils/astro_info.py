@@ -53,28 +53,22 @@ def get_info(celestial_obj: str) -> list:
 
     try:
         # 42.650167, -87.880403
-        static_location = astropy.coordinates.EarthLocation.of_site('greenwich')
+        #static_location = astropy.coordinates.EarthLocation.of_site(42.650167, -87.880403)
+        static_location = astropy.coordinates.EarthLocation.of_site("greenwich")
 
         # Current time
-        t1 = time.strftime("%Y-%d-%m %H:%M", time.gmtime())
 
         # retrives the inforamtion of the body
+        print(f"Retreiving coordinates for {celestial_obj}")
+        t1 = time.time()
         with astropy.coordinates.solar_system_ephemeris.set('builtin'):
-            # this assignment creates warings
-            # WARNING: failed to download https://maia.usno.navy.mil/ser7/finals2000A.all and https://toshi.nofs.navy.mil/ser7/finals2000A.all
-            # WARNING: Tried to get polar motions for times after IERS data is valid.
-            # WARNING: failed to download https://maia.usno.navy.mil/ser7/finals2000A.all and https://toshi.nofs.navy.mil/ser7/finals2000A.all
-            # WARNING: (some) times are outside of range covered by IERS table.
-            # WARNING: failed to download https://maia.usno.navy.mil/ser7/finals2000A.all and https://toshi.nofs.navy.mil/ser7/finals2000A.all
-
             body_coordinates = astropy.coordinates.get_body(
                                                     f'{celestial_obj}',
-                                                    astropy.time.Time(t1),
+                                                    astropy.time.Time("2020-01-22 23:22"),
                                                     static_location
                                                 )
 
-
-
+        print(f"Retreived coordinates for {celestial_obj} in {time.time() - t1}!")
         return [body_coordinates.ra.hms[0], body_coordinates.ra.hms[1], body_coordinates.ra.hms[2], body_coordinates.dec.degree, body_coordinates.dec.radian, body_coordinates.cartesian.x, body_coordinates.cartesian.y, body_coordinates.cartesian.z]
 
     except Exception as e:

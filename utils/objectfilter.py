@@ -8,6 +8,7 @@ def emphemeries_filter(*args) -> list:
     :param arg: List of passed bodies
     :return: [[STARS], [EPHEMERIES BODIES]]
     """
+    print("Filtering objects.")
     # Converts tuple to list
     celestial_objs = list(args)
 
@@ -16,4 +17,5 @@ def emphemeries_filter(*args) -> list:
 
     # Removes all ephemeries bodies from the list
     STARS = [celestial_obj for celestial_obj in celestial_objs if celestial_obj not in EPHEMERIES_BODIES]
+    print("Filtering complete.\n")
     return [STARS, EPHEMERIES_BODIES]
