@@ -6,7 +6,7 @@ PySky
 
 # Images
     By default images of valid objects will be saved in the filename format:
-        object-width-height-resolution-scaling-creationdate.png
+        slideshow/object-width-height-resolution-scaling-creationdate.png
 
 ## Date format
 
