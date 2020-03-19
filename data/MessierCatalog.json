@@ -1,0 +1,1212 @@
+{
+
+	"M1": {
+		"NGC/IC number": "NGC 1952",
+		"Picture": "img",
+		"Object type": "Supernova remnant",
+		"Distance (kly)": "4.9-8.1",
+		"Constellation": "Taurus",
+		"Apparent magnitude": 8.4,
+		"Right ascension": "05h 34m 31.94s",
+		"Declination": "+22 00 52.2"
+	},
+
+	"M2": {
+		"NGC/IC number": "NGC 7089",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 33,
+		"Constellation": "Aquarius",
+		"Apparent magnitude": 6.3,
+		"Right ascension": "21h 33m 27.02s",
+		"Declination": "-00 49 23.7"
+	},
+
+	"M3": {
+		"NGC/IC number": "NGC 5272",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 33.9,
+		"Constellation": "Canes Venatici",
+		"Apparent magnitude": 6.2,
+		"Right ascension": "13h 42m 11.62s",
+		"Declination": "+28 22 38.2"
+	},
+
+	"M4": {
+		"NGC/IC number": "NGC 6121",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 7.2,
+		"Constellation": "Scorpius",
+		"Apparent magnitude": 5.9,
+		"Right ascension": "16h 23m 35.22s",
+		"Declination": "-26 31 32.7"
+	},
+
+	"M5": {
+		"NGC/IC number": "NGC 5904",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 24.5,
+		"Constellation": "Serpens",
+		"Apparent magnitude": 6.7,
+		"Right ascension": "15h 18m 33.22s",
+		"Declination": "+02 04 51.7"
+	},
+
+	"M6": {
+		"NGC/IC number": "NGC 6405",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 1.6,
+		"Constellation": "Scorpius",
+		"Apparent magnitude": 4.2,
+		"Right ascension": "17h 40.1m",
+		"Declination": "-32 13"
+	},
+
+	"M7": {
+		"NGC/IC number": "NGC 6475",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": "0.65-1.31",
+		"Constellation": "Scorpius",
+		"Apparent magnitude": 3.3,
+		"Right ascension": "17h 53m 51.2s",
+		"Declination": "-34 47 34"
+	},
+
+	"M8": {
+		"NGC/IC number": "NGC 6523",
+		"Picture": "img",
+		"Object type": "Nebula with cluster",
+		"Distance (kly)": 4.1,
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 6,
+		"Right ascension": "18h 03m 37s",
+		"Declination": "-24 23 12"
+	},
+
+	"M9": {
+		"NGC/IC number": "NGC 6333",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 25.8,
+		"Constellation": "Ophiuchus",
+		"Apparent magnitude": 8.4,
+		"Right ascension": "17h 19m 11.78s",
+		"Declination": "-18 30 58.5"
+	},
+
+	"M10": {
+		"NGC/IC number": "NGC 6254",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 14.3,
+		"Constellation": "Ophiuchus",
+		"Apparent magnitude": 6.4,
+		"Right ascension": "16h 57m 8.92s",
+		"Declination": "-04 05 58.07"
+	},
+
+	"M11": {
+		"NGC/IC number": "NGC 6705",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 6.2,
+		"Constellation": "Scutum",
+		"Apparent magnitude": 6.3,
+		"Right ascension": "18h 51.1m",
+		"Declination": "-06 16"
+	},
+
+	"M12": {
+		"NGC/IC number": "NGC 6218",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 15.7,
+		"Constellation": "Ophiuchus",
+		"Apparent magnitude": 7.7,
+		"Right ascension": "16h 47m 14.18s",
+		"Declination": "-01 56 54.7"
+	},
+
+	"M13": {
+		"NGC/IC number": "NGC 6205",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 22.2,
+		"Constellation": "Hercules",
+		"Apparent magnitude": 5.8,
+		"Right ascension": "16h 41m 41.24s",
+		"Declination": "+36 27 35.5"
+	},
+
+	"M14": {
+		"NGC/IC number": "NGC 6402",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 30.3,
+		"Constellation": "Ophiuchus",
+		"Apparent magnitude": 8.3,
+		"Right ascension": "17h 37m 36.15s",
+		"Declination": "-03 14 45.3"
+	},
+
+	"M15": {
+		"NGC/IC number": "NGC 7078",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 33,
+		"Constellation": "Pegasus",
+		"Apparent magnitude": 6.2,
+		"Right ascension": "21h 29m 58.33s",
+		"Declination": "+12 10 01.2"
+	},
+
+	"M16": {
+		"NGC/IC number": "NGC 6611",
+		"Picture": "img",
+		"Object type": "H II region nebula  with cluster",
+		"Distance (kly)": 7,
+		"Constellation": "Serpens",
+		"Apparent magnitude": 6,
+		"Right ascension": "18h 18m 48s",
+		"Declination": "-13 49"
+	},
+
+	"M17": {
+		"NGC/IC number": "NGC 6618",
+		"Picture": "img",
+		"Object type": "H II region nebula with cluster",
+		"Distance (kly)": "5-6",
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 6,
+		"Right ascension": "18h 20m 26s",
+		"Declination": "-16 10 36"
+	},
+
+	"M18": {
+		"NGC/IC number": "NGC 6613",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 4.9,
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 7.5,
+		"Right ascension": "18h 19.9m",
+		"Declination": "-17 08"
+	},
+
+	"M19": {
+		"NGC/IC number": "NGC 6273",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 28.7,
+		"Constellation": "Ophiuchus",
+		"Apparent magnitude": 7.5,
+		"Right ascension": "17h 02m 37.69s",
+		"Declination": "-26 16 04.6"
+	},
+
+	"M20": {
+		"NGC/IC number": "NGC 6514",
+		"Picture": "img",
+		"Object type": "H II region nebula with cluster",
+		"Distance (kly)": 5.2,
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 6.3,
+		"Right ascension": "18h 02m 23s",
+		"Declination": "-23 01 48"
+	},
+
+	"M21": {
+		"NGC/IC number": "NGC 6531",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 4.25,
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 6.5,
+		"Right ascension": "18h 04.6m",
+		"Declination": "-22 30"
+	},
+
+	"M22": {
+		"NGC/IC number": "NGC 6656",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": "9.6-11.6",
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 5.1,
+		"Right ascension": "18h 36m 23.94s",
+		"Declination": "-23 54 17.1"
+	},
+
+	"M23": {
+		"NGC/IC number": "NGC 6494",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 2.15,
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 6.9,
+		"Right ascension": "17h 56.8m",
+		"Declination": "-19 01"
+	},
+
+	"M24": {
+		"NGC/IC number": "IC 4715",
+		"Picture": "img",
+		"Object type": "Milky Way star cloud",
+		"Distance (kly)": "~10",
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 4.6,
+		"Right ascension": "18h 17m",
+		"Declination": "-18 29"
+	},
+
+	"M25": {
+		"NGC/IC number": "IC 4725",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 2,
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 4.6,
+		"Right ascension": "18h 31.6m",
+		"Declination": "-19 15"
+	},
+
+	"M26": {
+		"NGC/IC number": "NGC 6694",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 5,
+		"Constellation": "Scutum",
+		"Apparent magnitude": 8,
+		"Right ascension": "18h 45.2m",
+		"Declination": "-09 24"
+	},
+
+	"M27": {
+		"NGC/IC number": "NGC 6853",
+		"Picture": "img",
+		"Object type": "Planetary nebula",
+		"Distance (kly)": "1.148-1.52",
+		"Constellation": "Vulpecula",
+		"Apparent magnitude": 7.5,
+		"Right ascension": "19h 59m 36.340s",
+		"Declination": "+22 43 16.09"
+	},
+
+	"M28": {
+		"NGC/IC number": "NGC 6626",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 17.9,
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 7.7,
+		"Right ascension": "18h 24m 32.89s",
+		"Declination": "-24 52 11.4"
+	},
+
+	"M29": {
+		"NGC/IC number": "NGC 6913",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 7.2,
+		"Constellation": "Cygnus",
+		"Apparent magnitude": 7.1,
+		"Right ascension": "20h 23m 56s",
+		"Declination": "+38 31 24"
+	},
+
+	"M30": {
+		"NGC/IC number": "NGC 7099",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": "27.8-31",
+		"Constellation": "Capricornus",
+		"Apparent magnitude": 7.7,
+		"Right ascension": "21h 40m 22.12",
+		"Declination": "-23 10 47.5"
+	},
+
+	"M31": {
+		"NGC/IC number": "NGC 224",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": "2430-2650",
+		"Constellation": "Andromeda",
+		"Apparent magnitude": 3.4,
+		"Right ascension": "00h 42m 44.3s",
+		"Declination": "+41 16 9"
+	},
+
+	"M32": {
+		"NGC/IC number": "NGC 221",
+		"Picture": "img",
+		"Object type": "Dwarf elliptical galaxy",
+		"Distance (kly)": "2410-2570",
+		"Constellation": "Andromeda",
+		"Apparent magnitude": 8.1,
+		"Right ascension": "00h 42m 41.8s",
+		"Declination": "+40 51 55"
+	},
+
+	"M33": {
+		"NGC/IC number": "NGC 598",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": "2380-3070",
+		"Constellation": "Triangulum",
+		"Apparent magnitude": 5.7,
+		"Right ascension": "01h 33m 50.02s",
+		"Declination": "+30 39 36.7"
+	},
+
+	"M34": {
+		"NGC/IC number": "NGC 1039",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 1.5,
+		"Constellation": "Perseus",
+		"Apparent magnitude": 5.5,
+		"Right ascension": "02h 42.1m",
+		"Declination": "+42 46"
+	},
+
+	"M35": {
+		"NGC/IC number": "NGC 2168",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 2.8,
+		"Constellation": "Gemini",
+		"Apparent magnitude": 5.3,
+		"Right ascension": "06h 09.1m",
+		"Declination": "+24 21"
+	},
+
+	"M36": {
+		"NGC/IC number": "NGC 1960",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 4.1,
+		"Constellation": "Auriga",
+		"Apparent magnitude": 6.3,
+		"Right ascension": "05h 36m 12s",
+		"Declination": "+34 08 4"
+	},
+
+	"M37": {
+		"NGC/IC number": "NGC 2099",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 4.511,
+		"Constellation": "Auriga",
+		"Apparent magnitude": 6.2,
+		"Right ascension": "05h 52m 18s",
+		"Declination": "+32 33 02"
+	},
+
+	"M38": {
+		"NGC/IC number": "NGC 1912",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 4.2,
+		"Constellation": "Auriga",
+		"Apparent magnitude": 7.4,
+		"Right ascension": "05h 28m 42s",
+		"Declination": "+35 51 18"
+	},
+
+	"M39": {
+		"NGC/IC number": "NGC 7092",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 0.8244,
+		"Constellation": "Cygnus",
+		"Apparent magnitude": 5.5,
+		"Right ascension": "21h 31m 42s",
+		"Declination": "+48 26 00"
+	},
+
+	"M40": {
+		"NGC/IC number": "-",
+		"Picture": "img",
+		"Object type": "Double star",
+		"Distance (kly)": 0.51,
+		"Constellation": "Ursa Major",
+		"Apparent magnitude": 9.7,
+		"Right ascension": "12h 22m 12.5s",
+		"Declination": "+58 4 59"
+	},
+
+	"M41": {
+		"NGC/IC number": "NGC 2287",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 2.3,
+		"Constellation": "Canis Major",
+		"Apparent magnitude": 4.5,
+		"Right ascension": "06h 46.0m",
+		"Declination": "-20 46"
+	},
+
+	"M42": {
+		"NGC/IC number": "NGC 1976",
+		"Picture": "img",
+		"Object type": "H II region nebula",
+		"Distance (kly)": "1.324-1.364",
+		"Constellation": "Orion",
+		"Apparent magnitude": 4,
+		"Right ascension": "05h 35m 17.3",
+		"Declination": "-05 23 28"
+	},
+
+	"M43": {
+		"NGC/IC number": "NGC 1982",
+		"Picture": "img",
+		"Object type": "H II region nebula (part of the Orion Nebula)",
+		"Distance (kly)": 1.6,
+		"Constellation": "Orion",
+		"Apparent magnitude": 9,
+		"Right ascension": "05h 35.6m",
+		"Declination": "-05 16"
+	},
+
+	"M44": {
+		"NGC/IC number": "NGC 2632",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 0.577,
+		"Constellation": "Cancer",
+		"Apparent magnitude": 3.7,
+		"Right ascension": "08h 40.4m",
+		"Declination": "+19 59"
+	},
+
+	"M45": {
+		"NGC/IC number": "-",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": "0.39-0.46",
+		"Constellation": "Taurus",
+		"Apparent magnitude": 1.6,
+		"Right ascension": "03h 47m 24s",
+		"Declination": "+24 07 00"
+	},
+
+	"M46": {
+		"NGC/IC number": "NGC 2437",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 5.4,
+		"Constellation": "Puppis",
+		"Apparent magnitude": 6.1,
+		"Right ascension": "07h 41.8m",
+		"Declination": "-14 49"
+	},
+
+	"M47": {
+		"NGC/IC number": "NGC 2422",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 1.6,
+		"Constellation": "Puppis",
+		"Apparent magnitude": 4.2,
+		"Right ascension": "07h 36.6m",
+		"Declination": "-14 30"
+	},
+
+	"M48": {
+		"NGC/IC number": "NGC 2548",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 1.5,
+		"Constellation": "Hydra",
+		"Apparent magnitude": 5.5,
+		"Right ascension": "08h 13.7m",
+		"Declination": "-05 45"
+	},
+
+	"M49": {
+		"NGC/IC number": "NGC 4472",
+		"Picture": "img",
+		"Object type": "Elliptical galaxy",
+		"Distance (kly)": "53600-58200",
+		"Constellation": "Virgo",
+		"Apparent magnitude": 9.4,
+		"Right ascension": "12h 29m 46.7s",
+		"Declination": "+08 00 02"
+	},
+
+	"M50": {
+		"NGC/IC number": "NGC 2323",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 3.2,
+		"Constellation": "Monoceros",
+		"Apparent magnitude": 5.9,
+		"Right ascension": "07h 03.2m",
+		"Declination": "-08 20"
+	},
+
+	"M51": {
+		"NGC/IC number": "NGC 5194 NGC 5195",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": "19000-27000",
+		"Constellation": "Canes Venatici",
+		"Apparent magnitude": 8.4,
+		"Right ascension": "13h 29m 52.7s",
+		"Declination": "+47 11 43"
+	},
+
+	"M52": {
+		"NGC/IC number": "NGC 7654",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 5,
+		"Constellation": "Cassiopeia",
+		"Apparent magnitude": 5,
+		"Right ascension": "23h 24.2m",
+		"Declination": "+61 35"
+	},
+
+	"M53": {
+		"NGC/IC number": "NGC 5024",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 58,
+		"Constellation": "Coma Berenices",
+		"Apparent magnitude": 8.3,
+		"Right ascension": "13h 12m 55.25s",
+		"Declination": "+18 10 05.4"
+	},
+
+	"M54": {
+		"NGC/IC number": "NGC 6715",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 87.4,
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 8.4,
+		"Right ascension": "18h 55m 03.33s",
+		"Declination": "-30 28 47.5"
+	},
+
+	"M55": {
+		"NGC/IC number": "NGC 6809",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 17.6,
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 7.4,
+		"Right ascension": "19h 39m 59.71s",
+		"Declination": "-30 57 53.1"
+	},
+
+	"M56": {
+		"NGC/IC number": "NGC 6779",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 32.9,
+		"Constellation": "Lyra",
+		"Apparent magnitude": 8.3,
+		"Right ascension": "19h 16m 35.57s",
+		"Declination": "+30 11 00.5"
+	},
+
+	"M57": {
+		"NGC/IC number": "NGC 6720",
+		"Picture": "img",
+		"Object type": "Planetary nebula",
+		"Distance (kly)": "1.6-3.8",
+		"Constellation": "Lyra",
+		"Apparent magnitude": 8.8,
+		"Right ascension": "18h 53m 35.079s",
+		"Declination": "+33 01 45.03"
+	},
+
+	"M58": {
+		"NGC/IC number": "NGC 4579",
+		"Picture": "img",
+		"Object type": "Barred Spiral galaxy",
+		"Distance (kly)": "~63000",
+		"Constellation": "Virgo",
+		"Apparent magnitude": 10.5,
+		"Right ascension": "12h 37m 43.5s",
+		"Declination": "+11 49 05"
+	},
+
+	"M59": {
+		"NGC/IC number": "NGC 4621",
+		"Picture": "img",
+		"Object type": "Elliptical galaxy",
+		"Distance (kly)": "55000-65000",
+		"Constellation": "Virgo",
+		"Apparent magnitude": 10.6,
+		"Right ascension": "12h 42m 02.3s",
+		"Declination": "+11 38 49"
+	},
+
+	"M60": {
+		"NGC/IC number": "NGC 4649",
+		"Picture": "img",
+		"Object type": "Elliptical galaxy",
+		"Distance (kly)": "51000-59000",
+		"Constellation": "Virgo",
+		"Apparent magnitude": 9.8,
+		"Right ascension": "12h 43m 39.6s",
+		"Declination": "+11 33 09"
+	},
+
+	"M61": {
+		"NGC/IC number": "NGC 4303",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": "50200-54800",
+		"Constellation": "Virgo",
+		"Apparent magnitude": 10.2,
+		"Right ascension": "12h 21m 54.9s",
+		"Declination": "+04 28 25"
+	},
+
+	"M62": {
+		"NGC/IC number": "NGC 6266",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 22.2,
+		"Constellation": "Ophiuchus",
+		"Apparent magnitude": 7.4,
+		"Right ascension": "17h 01m 12.60s",
+		"Declination": "-30 06 44.5"
+	},
+
+	"M63": {
+		"NGC/IC number": "NGC 5055",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": 37000,
+		"Constellation": "Canes Venatici",
+		"Apparent magnitude": 9.3,
+		"Right ascension": "13h 15m 49.3s",
+		"Declination": "+42 01 45"
+	},
+
+	"M64": {
+		"NGC/IC number": "NGC 4826",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": "22000-26000",
+		"Constellation": "Coma Berenices",
+		"Apparent magnitude": 9.4,
+		"Right ascension": "12h 56m 43.7s",
+		"Declination": "+21 40 58"
+	},
+
+	"M65": {
+		"NGC/IC number": "NGC 3623",
+		"Picture": "img",
+		"Object type": "Barred Spiral galaxy",
+		"Distance (kly)": "41000-42000",
+		"Constellation": "Leo",
+		"Apparent magnitude": 10.3,
+		"Right ascension": "11h 18m 55.9s",
+		"Declination": "+13 05 32"
+	},
+
+	"M66": {
+		"NGC/IC number": "NGC 3627",
+		"Picture": "img",
+		"Object type": "Barred Spiral galaxy",
+		"Distance (kly)": "31000-41000",
+		"Constellation": "Leo",
+		"Apparent magnitude": 8.9,
+		"Right ascension": "11h 20m 15.0s",
+		"Declination": "+12 59 30"
+	},
+
+	"M67": {
+		"NGC/IC number": "NGC 2682",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": "2.61-2.93",
+		"Constellation": "Cancer",
+		"Apparent magnitude": 6.1,
+		"Right ascension": "08h 51.3m",
+		"Declination": "+11 49"
+	},
+
+	"M68": {
+		"NGC/IC number": "NGC 4590",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 33.6,
+		"Constellation": "Hydra",
+		"Apparent magnitude": 9.7,
+		"Right ascension": "12h 39m 27.98s",
+		"Declination": "-26 44 38.6"
+	},
+
+	"M69": {
+		"NGC/IC number": "NGC 6637",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 29.7,
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 8.3,
+		"Right ascension": "18h 31m 23.10s",
+		"Declination": "-32 20 53.1"
+	},
+
+	"M70": {
+		"NGC/IC number": "NGC 6681",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 29.4,
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 9.1,
+		"Right ascension": "18h 43m 12.76s",
+		"Declination": "-32 17 31.6"
+	},
+
+	"M71": {
+		"NGC/IC number": "NGC 6838",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 13,
+		"Constellation": "Sagitta",
+		"Apparent magnitude": 6.1,
+		"Right ascension": "19h 53m 46.49s",
+		"Declination": "+18 46 45.1"
+	},
+
+	"M72": {
+		"NGC/IC number": "NGC 6981",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": "53.40-55.74",
+		"Constellation": "Aquarius",
+		"Apparent magnitude": 9.4,
+		"Right ascension": "20h 53m 27.70s",
+		"Declination": "-12 32 14.3"
+	},
+
+	"M73": {
+		"NGC/IC number": "NGC 6994",
+		"Picture": "img",
+		"Object type": "Asterism",
+		"Distance (kly)": "~2.5",
+		"Constellation": "Aquarius",
+		"Apparent magnitude": 9,
+		"Right ascension": "20h 58m 54s",
+		"Declination": "-12 38"
+	},
+
+	"M74": {
+		"NGC/IC number": "NGC 628",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": "24000-36000",
+		"Constellation": "Pisces",
+		"Apparent magnitude": 10,
+		"Right ascension": "01h 36m 41.8s",
+		"Declination": "+15 47 01"
+	},
+
+	"M75": {
+		"NGC/IC number": "NGC 6864",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 67.5,
+		"Constellation": "Sagittarius",
+		"Apparent magnitude": 9.2,
+		"Right ascension": "20h 06m 04.75s",
+		"Declination": "-21 55 16.2"
+	},
+
+	"M76": {
+		"NGC/IC number": "NGC 650 NGC 651",
+		"Picture": "img",
+		"Object type": "Planetary nebula",
+		"Distance (kly)": 2.5,
+		"Constellation": "Perseus",
+		"Apparent magnitude": 10.1,
+		"Right ascension": "01h 42.4m",
+		"Declination": "+51 34 31"
+	},
+
+	"M77": {
+		"NGC/IC number": "NGC 1068",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": 47000,
+		"Constellation": "Cetus",
+		"Apparent magnitude": 9.6,
+		"Right ascension": "02h 42m 40.7s",
+		"Declination": "-00 00 48"
+	},
+
+	"M78": {
+		"NGC/IC number": "NGC 2068",
+		"Picture": "img",
+		"Object type": "Diffuse nebula",
+		"Distance (kly)": 1.6,
+		"Constellation": "Orion",
+		"Apparent magnitude": 8.3,
+		"Right ascension": "05h 46m 46.7s",
+		"Declination": "+00 00 50"
+	},
+
+	"M79": {
+		"NGC/IC number": "NGC 1904",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 41,
+		"Constellation": "Lepus",
+		"Apparent magnitude": 8.6,
+		"Right ascension": "05h 24m 10.59s",
+		"Declination": "-24 31 27.3"
+	},
+
+	"M80": {
+		"NGC/IC number": "NGC 6093",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 32.6,
+		"Constellation": "Scorpius",
+		"Apparent magnitude": 7.9,
+		"Right ascension": "16h 17m 02.41s",
+		"Declination": "-22 58 33.9"
+	},
+
+	"M81": {
+		"NGC/IC number": "NGC 3031",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": "11400-12200",
+		"Constellation": "Ursa Major",
+		"Apparent magnitude": 6.9,
+		"Right ascension": "09h 55m 33.2s",
+		"Declination": "+69 3 55"
+	},
+
+	"M82": {
+		"NGC/IC number": "NGC 3034",
+		"Picture": "img",
+		"Object type": "Starburst galaxy",
+		"Distance (kly)": "10700-12300",
+		"Constellation": "Ursa Major",
+		"Apparent magnitude": 8.4,
+		"Right ascension": "09h 55m 52.2s",
+		"Declination": "+69 40 47"
+	},
+
+	"M83": {
+		"NGC/IC number": "NGC 5236",
+		"Picture": "img",
+		"Object type": "Barred Spiral galaxy",
+		"Distance (kly)": 14700,
+		"Constellation": "Hydra",
+		"Apparent magnitude": 7.5,
+		"Right ascension": "13h 37m 00.9s",
+		"Declination": "-29 51 57"
+	},
+
+	"M84": {
+		"NGC/IC number": "NGC 4374",
+		"Picture": "img",
+		"Object type": "Lenticular galaxy",
+		"Distance (kly)": "57000-63000",
+		"Constellation": "Virgo",
+		"Apparent magnitude": 10.1,
+		"Right ascension": "12h 25m 03.7s",
+		"Declination": "+12 53 13"
+	},
+
+	"M85": {
+		"NGC/IC number": "NGC 4382",
+		"Picture": "img",
+		"Object type": "Lenticular galaxy",
+		"Distance (kly)": "56000-64000",
+		"Constellation": "Coma Berenices",
+		"Apparent magnitude": 10,
+		"Right ascension": "12h 25m 24.0s",
+		"Declination": "+18 11 28"
+	},
+
+	"M86": {
+		"NGC/IC number": "NGC 4406",
+		"Picture": "img",
+		"Object type": "Lenticular galaxy",
+		"Distance (kly)": "49000-55000",
+		"Constellation": "Virgo",
+		"Apparent magnitude": 9.8,
+		"Right ascension": "12h 26m 11.7s",
+		"Declination": "+12 56 46"
+	},
+
+	"M87": {
+		"NGC/IC number": "NGC 4486",
+		"Picture": "img",
+		"Object type": "Elliptical galaxy",
+		"Distance (kly)": "51870-55130",
+		"Constellation": "Virgo",
+		"Apparent magnitude": 9.6,
+		"Right ascension": "12h 30m 49.42338s",
+		"Declination": "+12 23 28.0439"
+	},
+
+	"M88": {
+		"NGC/IC number": "NGC 4501",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": "39000-56000",
+		"Constellation": "Coma Berenices",
+		"Apparent magnitude": 10.4,
+		"Right ascension": "12h 31m 59.2s",
+		"Declination": "+14 25 14"
+	},
+
+	"M89": {
+		"NGC/IC number": "NGC 4552",
+		"Picture": "img",
+		"Object type": "Elliptical galaxy",
+		"Distance (kly)": "47000-53000",
+		"Constellation": "Virgo",
+		"Apparent magnitude": 10.7,
+		"Right ascension": "12h 35m 39.8s",
+		"Declination": "+12 33 23"
+	},
+
+	"M90": {
+		"NGC/IC number": "NGC 4569",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": "55900-61500",
+		"Constellation": "Virgo",
+		"Apparent magnitude": 10.3,
+		"Right ascension": "12h 36m 49.8s",
+		"Declination": "+13 09 46"
+	},
+
+	"M91": {
+		"NGC/IC number": "NGC 4548",
+		"Picture": "img",
+		"Object type": "Barred Spiral galaxy",
+		"Distance (kly)": "47000-79000",
+		"Constellation": "Coma Berenices",
+		"Apparent magnitude": 11,
+		"Right ascension": "12h 35m 26.4s",
+		"Declination": "+14 29 47"
+	},
+
+	"M92": {
+		"NGC/IC number": "NGC 6341",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 26.7,
+		"Constellation": "Hercules",
+		"Apparent magnitude": 6.3,
+		"Right ascension": "17h 17m 07.39s",
+		"Declination": "+43 08 09.4"
+	},
+
+	"M93": {
+		"NGC/IC number": "NGC 2447",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 3.6,
+		"Constellation": "Puppis",
+		"Apparent magnitude": 6,
+		"Right ascension": "07h 44.6m",
+		"Declination": "-23 52"
+	},
+
+	"M94": {
+		"NGC/IC number": "NGC 4736",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": "14700-17300",
+		"Constellation": "Canes Venatici",
+		"Apparent magnitude": 9,
+		"Right ascension": "12h 50m 53.1s",
+		"Declination": "+41 07 14"
+	},
+
+	"M95": {
+		"NGC/IC number": "NGC 3351",
+		"Picture": "img",
+		"Object type": "Barred Spiral galaxy",
+		"Distance (kly)": "31200-34000",
+		"Constellation": "Leo",
+		"Apparent magnitude": 11.4,
+		"Right ascension": "10h 43m 57.7s",
+		"Declination": "+11 42 14"
+	},
+
+	"M96": {
+		"NGC/IC number": "NGC 3368",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": "28000-34000",
+		"Constellation": "Leo",
+		"Apparent magnitude": 10.1,
+		"Right ascension": "10h 46m 45.7s",
+		"Declination": "+11 49 12"
+	},
+
+	"M97": {
+		"NGC/IC number": "NGC 3587",
+		"Picture": "img",
+		"Object type": "Planetary nebula",
+		"Distance (kly)": 2.03,
+		"Constellation": "Ursa Major",
+		"Apparent magnitude": 9.9,
+		"Right ascension": "11h 14m 47.734s",
+		"Declination": "+55 01 08.50"
+	},
+
+	"M98": {
+		"NGC/IC number": "NGC 4192",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": 44400,
+		"Constellation": "Coma Berenices",
+		"Apparent magnitude": 11,
+		"Right ascension": "12h 13m 48.292s",
+		"Declination": "+14 54 01.69"
+	},
+
+	"M99": {
+		"NGC/IC number": "NGC 4254",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": "44700-55700",
+		"Constellation": "Coma Berenices",
+		"Apparent magnitude": 10.4,
+		"Right ascension": "12h 18m 49.6s",
+		"Declination": "+14 24 59"
+	},
+
+	"M100": {
+		"NGC/IC number": "NGC 4321",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": 55000,
+		"Constellation": "Coma Berenices",
+		"Apparent magnitude": 10.1,
+		"Right ascension": "12h 22m 54.9s",
+		"Declination": "+15 49 21"
+	},
+
+	"M101": {
+		"NGC/IC number": "NGC 5457",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": "19100-22400",
+		"Constellation": "Ursa Major",
+		"Apparent magnitude": 7.9,
+		"Right ascension": "14h 03m 12.6s",
+		"Declination": "+54 20 57"
+	},
+
+	"M102": {
+		"NGC/IC number": "NGC 5866",
+		"Picture": "img",
+		"Object type": "Lenticular galaxy",
+		"Distance (kly)": 50000,
+		"Constellation": "Draco",
+		"Apparent magnitude": 10.7,
+		"Right ascension": "15h 06m 29.5s",
+		"Declination": "+55 45 48"
+	},
+
+	"M103": {
+		"NGC/IC number": "NGC 581",
+		"Picture": "img",
+		"Object type": "Open cluster",
+		"Distance (kly)": 10,
+		"Constellation": "Cassiopeia",
+		"Apparent magnitude": 7.4,
+		"Right ascension": "01h 33.2m",
+		"Declination": "+60 42"
+	},
+
+	"M104": {
+		"NGC/IC number": "NGC 4594",
+		"Picture": "img",
+		"Object type": "Lenticular galaxy",
+		"Distance (kly)": "28700-30900",
+		"Constellation": "Virgo",
+		"Apparent magnitude": 9,
+		"Right ascension": "12h 39m 59.4s",
+		"Declination": "-11 37 23"
+	},
+
+	"M105": {
+		"NGC/IC number": "NGC 3379",
+		"Picture": "img",
+		"Object type": "Elliptical galaxy",
+		"Distance (kly)": "30400-33600",
+		"Constellation": "Leo",
+		"Apparent magnitude": 10.2,
+		"Right ascension": "10h 47m 49.6s",
+		"Declination": "+12 34 54"
+	},
+
+	"M106": {
+		"NGC/IC number": "NGC 4258",
+		"Picture": "img",
+		"Object type": "Spiral galaxy",
+		"Distance (kly)": "22200-25200",
+		"Constellation": "Canes Venatici",
+		"Apparent magnitude": 9.1,
+		"Right ascension": "12h 18m 57.5s",
+		"Declination": "+47 18 14"
+	},
+
+	"M107": {
+		"NGC/IC number": "NGC 6171",
+		"Picture": "img",
+		"Object type": "Globular cluster",
+		"Distance (kly)": 20.9,
+		"Constellation": "Ophiuchus",
+		"Apparent magnitude": 8.9,
+		"Right ascension": "16h 32m 31.86s",
+		"Declination": "-13 03 13.6"
+	},
+
+	"M108": {
+		"NGC/IC number": "NGC 3556",
+		"Picture": "img",
+		"Object type": "Barred Spiral galaxy",
+		"Distance (kly)": 46000,
+		"Constellation": "Ursa Major",
+		"Apparent magnitude": 10.7,
+		"Right ascension": "11h 11m 31.0s",
+		"Declination": "+55 40 27"
+	},
+
+	"M109": {
+		"NGC/IC number": "NGC 3992",
+		"Picture": "img",
+		"Object type": "Barred Spiral galaxy",
+		"Distance (kly)": "59500-107500",
+		"Constellation": "Ursa Major",
+		"Apparent magnitude": 10.6,
+		"Right ascension": "11h 57m 36.0s",
+		"Declination": "+53 22 28"
+	},
+
+	"M110": {
+		"NGC/IC number": "NGC 205",
+		"Picture": "img",
+		"Object type": "Dwarf elliptical galaxy",
+		"Distance (kly)": "2600-2780",
+		"Constellation": "Andromeda",
+		"Apparent magnitude": 9,
+		"Right ascension": "00h 40m 22.1s",
+		"Declination": "+41 41 07"
+	}
+}
