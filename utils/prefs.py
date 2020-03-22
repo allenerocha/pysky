@@ -56,6 +56,17 @@ def clean_cache():
     print("Cleaning cache...")
     cache_file = json.loads(open("data/cache", "r").read())
 
+    print("Cache cleaned!\n")
+
+def prune(key: str) -> dict:
+    """
+    Removes a given key from the cache
+    """
+    # todo pop/delete the key in the passed dictoionary
+    pass
+
+
+def print_cache():
     # Iterate keys
     for key, value in cache_file.items():
         print(f"{key} =>")
@@ -69,13 +80,4 @@ def clean_cache():
                         print(f"\t{subkey} => {subvalue}")
         except:
             print(f"k:{key} => v:{value}")
-    print("Cache cleaned!\n")
-
-def prune(key: str) -> dict:
-    """
-    Removes a given key from the cache
-    """
-    # todo pop/delete the key in the passed dictoionary
-    pass
-
 
