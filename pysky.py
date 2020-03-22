@@ -8,12 +8,17 @@ import utils.astro_info
 import utils.objectfilter
 import utils.image_manipulation
 import utils.prefs
+import utils.cli
 
 
 def main():
     """
     """
     utils.prefs.check_integrity()
+
+    viewing_time_range = utils.cli.parse(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+
+    print(viewing_time_range)
 
     # utils.prefs.clean_cache()
 
