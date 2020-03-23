@@ -2,25 +2,30 @@
 # https://github.com/damnever/pigar
 
 # utils/image_manipulation.py: 6,7,8
-# utils/skyview.py: 7
+# utils/skyview.py: 10
 Pillow == 6.2.0
 
-# utils/astro_info.py: 2,3,4
+# utils/check_sky.py: 2
+astroplan == 0.6
+
+# utils/astro_info.py: 2,3,4,5
+# utils/check_sky.py: 3
+# utils/cli.py: 2
 astropy == 4.0
 
 # utils/simbad.py: 4
 astroquery == 0.4
 
-# utils/skyview.py: 11
+# utils/skyview.py: 12
 beautifulsoup4 == 4.8.2
 
 # astroq.py: 3
 ipyaladin == 0.1.7
 
-# utils/skyview.py: 10
+# utils/skyview.py: 11
 requests == 2.21.0
 
-# pysky.py: 5,6,7,8,9
-# utils/objectfilter.py: 1
+# pysky.py: 6,7,8,9,10,11
+# utils/objectfilter.py: 2
 # utils/skyview.py: 13,14,15
 utils == 1.0.1
