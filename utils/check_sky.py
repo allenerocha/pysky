@@ -1,7 +1,6 @@
 """This module is used to see if an object is visible"""
 import astroplan
 import astropy
-import astropy.units
 
 
 def is_object_visible(celestial_obj: object, start_time: object, end_time: object, location: object, secz_max=2.0) -> tuple:
