@@ -2,6 +2,7 @@ import time
 import astropy.time
 import astropy.coordinates
 import astropy.coordinates
+import astropy.units
 
 
 def get_bodies(*args) -> list:
@@ -54,7 +55,7 @@ def get_info(celestial_obj: str) -> list:
     try:
         # 42.650167, -87.880403
         #static_location = astropy.coordinates.EarthLocation.of_site(42.650167, -87.880403)
-        static_location = astropy.coordinates.EarthLocation.of_site("greenwich")
+        static_location = astropy.coordinates.EarthLocation.from_geodetic(-87.8791*astropy.units.deg, 42.6499*astropy.units.deg, height=204*astropy.units.m)
 
         # Current time
 
