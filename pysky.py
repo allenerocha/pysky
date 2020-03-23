@@ -9,6 +9,9 @@ import utils.objectfilter
 import utils.image_manipulation
 import utils.prefs
 import utils.cli
+import utils.check_sky
+import astroplan
+import astropy
 
 
 def main():
@@ -18,13 +21,15 @@ def main():
 
     viewing_time_range = utils.cli.parse(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 
-    print(viewing_time_range)
-
     # utils.prefs.clean_cache()
+
+    earth_loc = astroplan.Observer(location=astropy.coordinates.EarthLocation.from_geodetic(-87.8791*astropy.units.deg, 42.6499*astropy.units.deg, height=204*astropy.units.m), name="Schoolyard Observatory", timezone="US/Central")
 
     celestial_objs = utils.objectfilter.emphemeries_filter('venus', 'polaris', 'neptune', 'vega', 'saturn', 'deneb', 'sirius', 'capella')
     STARS = celestial_objs[0]
     EPHEMERIES_BODIES = celestial_objs[1]
+
+
     db_calls(STARS)
 
     # todo overlay celesital statistics on the image <==== WIP
