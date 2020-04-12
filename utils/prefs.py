@@ -1,8 +1,8 @@
 """This module is called at application launch and checks for user
 preferences and applies the cache rules to the cache file and saves it"""
+import json
 import os.path
 import sys
-import json
 
 
 def check_integrity():
@@ -23,8 +23,7 @@ def check_integrity():
         print("Checking for chache file...")
         if os.path.isfile("data/cache"):
             print("Cache file found!")
-            pass
-            #clean_cache()
+            clean_cache()
         else:
             print("Cache file not found.")
             print("Creating cache file...")
@@ -44,26 +43,36 @@ def check_integrity():
         print("Slideshow directory found!")
     print("Project integrity verified.\n")
 
+
 def clean_cache():
     """
     Reads prefs files and calls the prune function to remove planets
     """
-    # todo load data/prefs
-    # todo check cache rules
-    # todo iterate through the cache and apply rules
-    # todo call prune
-    # todo dump cache json to data/cache
     print("Cleaning cache...")
-    cache_file = json.loads(open("data/cache", "r").read())
+    try:
+        cache_file = json.loads(open("data/cache", "r").read())
+    except json.decoder.JSONDecodeError as e:
+        print(f"\nError reading cache file. Generating emptying cache...\n{str(e)}\n")
+        with open("data/cache", "w") as cache_file:
+            cache_file.write("{}")
+            print("Created cache file!")
+        return
 
+    cache_file_aux = dict()
+
+    # Iterate over the cache file looking for non-planets
+    for celestial_object, attributes in cache_file.items():
+        for key, value in attributes.items():
+            # Non-planet found adding to auxilary dictionary
+            if key == "type" and value != "planet":
+                cache_file_aux[celestial_object] = attributes
+                continue
     print("Cache cleaned!\n")
 
-def prune(key: str) -> dict:
-    """
-    Removes a given key from the cache
-    """
-    # todo pop/delete the key in the passed dictoionary
-    pass
+    print("Saving changes to cache file...")
+    with open("data/cache", "w") as json_out:
+        json.dump(cache_file_aux, json_out, indent=4, sort_keys=True)
+        print("Changes saved to cache file!\n")
 
 
 def print_cache():
@@ -77,7 +86,6 @@ def print_cache():
                         if subsubkey != "base64":
                             print(f"\t\t{subsubkey} => {subsubvalue}")
                 except:
-                        print(f"\t{subkey} => {subvalue}")
+                    print(f"\t{subkey} => {subvalue}")
         except:
             print(f"k:{key} => v:{value}")
-
