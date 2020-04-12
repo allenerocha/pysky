@@ -15,6 +15,7 @@ import utils.image_manipulation
 import utils.objectfilter
 import utils.prefs
 import utils.skyview
+from astroplan import download_IERS_A
 
 
 def main():
@@ -22,23 +23,7 @@ def main():
     """
     utils.prefs.check_integrity()
 
-    viewing_time_range = utils.cli.parse(
-        sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
-    )
-
     utils.prefs.clean_cache()
-
-    sys.exit()
-
-    earth_loc = astroplan.Observer(
-        location=astropy.coordinates.EarthLocation.from_geodetic(
-            -87.8791 * astropy.units.deg,
-            42.6499 * astropy.units.deg,
-            height=204 * astropy.units.m,
-        ),
-        name="Schoolyard Observatory",
-        timezone="US/Central",
-    )
 
     celestial_objs = utils.objectfilter.emphemeries_filter(
         "venus", "polaris", "neptune", "vega", "saturn", "deneb", "sirius", "capella"
@@ -94,4 +79,17 @@ def get_ephemeries_info(bodies: list, cache_file: dict) -> dict:
 
 
 if __name__ == "__main__":
+    root_dir = os.path.abspath(os.path.dirname(__file__))
+    viewing_time_range = utils.cli.parse(
+        sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+    )
+    earth_loc = astroplan.Observer(
+        location=astropy.coordinates.EarthLocation.from_geodetic(
+            -87.8791 * astropy.units.deg,
+            42.6499 * astropy.units.deg,
+            height=204 * astropy.units.m,
+        ),
+        name="Schoolyard Observatory",
+        timezone="US/Central",
+    )
     main()
