@@ -3,7 +3,7 @@
 
 # utils/image_manipulation.py: 6,7,8
 # utils/skyview.py: 10
-Pillow == 6.2.0
+Pillow >= 6.2.2
 
 # utils/check_sky.py: 2
 astroplan == 0.6
