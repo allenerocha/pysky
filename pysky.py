@@ -18,9 +18,13 @@ import utils.skyview
 from astroplan import download_IERS_A
 
 
-def main():
+def main(root_dir: str):
     """
+    This is the main function that calls all other relevant functions
+    :param root_dir: absolute path to this file
     """
+    ABS_PATH = root_dir
+
     utils.prefs.check_integrity()
 
     utils.prefs.clean_cache()
@@ -89,7 +93,7 @@ if __name__ == "__main__":
             42.6499 * astropy.units.deg,
             height=204 * astropy.units.m,
         ),
-        name="Schoolyard Observatory",
+        name="Hawthorn Hollow",
         timezone="US/Central",
     )
-    main()
+    main(root_dir)
