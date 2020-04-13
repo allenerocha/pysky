@@ -2,14 +2,16 @@
 celestial body over image of the celestial body using PIL"""
 import base64
 import json
+import logging
 import os
+from logging import info
 
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
 
 
-def add_text(img: object, overlay_text: list) -> object:
+def add_text(img: object, overlay_text: list, root_dir: str) -> object:
     """
     This adds text to the image
     :img: Image file to overlay the text
@@ -17,15 +19,17 @@ def add_text(img: object, overlay_text: list) -> object:
     :return: None
     """
 
-    """
-    overlay_text -> [name, brightess]
-    """
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+    )
 
     # only save the height of the image
     _, img_h = img.size
 
-    cache_file = json.loads(open("data/cache", "r").read())
-    print(f"Overlaying text to image...")
+    cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
+    info(f"Overlaying text to image...")
     overlayed = PIL.ImageDraw.Draw(img, mode="RGBA")
     overlayed.multiline_text(
         xy=(10, int(img_h * 0.8)),  # xy of the location for the text to  be overlayed
@@ -37,16 +41,16 @@ def add_text(img: object, overlay_text: list) -> object:
         align="left",
     )
 
-    print("Adding edited image to cache file...")
-    img.save(fp="data/temp", format="PNG")
-    img_bytes = base64.b64encode(open("data/temp", "rb").read())
+    info("Adding edited image to cache file...")
+    img.save(fp=f"{root_dir}/data/temp", format="PNG")
+    img_bytes = base64.b64encode(open(f"{root_dir}/data/temp", "rb").read())
     celestial_obj = overlay_text[0][6:]
     # write the edited image to the cache file
     cache_file[celestial_obj]["image"]["base64"] = str(img_bytes)[1:]
-    print("Edited image added to cache file!")
+    info("Edited image added to cache file!")
 
-    with open("data/cache", "w") as json_out:
-        print("Saving edited cache file...")
+    with open(f"{root_dir}/data/cache", "w") as json_out:
+        info("Saving edited cache file...")
         json.dump(cache_file, json_out)
-        os.remove("data/temp")
-        print("Edited cache file saved!")
+        os.remove(f"{root_dir}/data/temp")
+        info("Edited cache file saved!")

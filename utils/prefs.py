@@ -1,61 +1,75 @@
 """This module is called at application launch and checks for user
 preferences and applies the cache rules to the cache file and saves it"""
 import json
+import logging
 import os.path
 import sys
+from logging import warning, error, info
 
 
-def check_integrity():
+def check_integrity(root_dir: str):
     """
     This module checks if there is a preference file
     """
-    print("Checking project integrity...")
-    print("Checking for data directory...")
-    if not os.path.isdir("data"):
-        print("Data directory not found.\nCreating data directory and cache file...")
-        os.mkdir("data")
-        with open("data/cache", "w") as cache_file:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+    )
+
+    info("Checking project integrity...")
+    info("Checking for data directory...")
+    if not os.path.isdir(f"{root_dir}/data"):
+        warning("Data directory not found.\nCreating data directory and cache file...")
+        os.mkdir(f"{root_dir}/data")
+        with open(f"{root_dir}/data/cache", "w") as cache_file:
             cache_file.write("{}")
-        print("Data directory and cache file created!")
+        info("Data directory and cache file created!")
 
     else:
-        print("Data directory found!")
-        print("Checking for chache file...")
-        if os.path.isfile("data/cache"):
-            print("Cache file found!")
-            clean_cache()
+        info("Data directory found!")
+        info("Checking for chache file...")
+        if os.path.isfile(f"{root_dir}/data/cache"):
+            info("Cache file found!")
+            clean_cache(root_dir)
         else:
-            print("Cache file not found.")
-            print("Creating cache file...")
-            with open("data/cache", "w") as cache_file:
+            warning("Cache file not found.")
+            info("Creating cache file...")
+            with open(f"{root_dir}/data/cache", "w") as cache_file:
                 cache_file.write("{}")
-            print("Created cache file!")
+            info("Created cache file!")
 
-    print("Checking for slideshow directory...")
-    if not os.path.isdir("slideshow"):
-        print("Slideshow directory not found.")
+    info("Checking for slideshow directory...")
+    if not os.path.isdir(f"{root_dir}/slideshow"):
+        warning("Slideshow directory not found.")
 
-        print("Creating slideshow directory...")
-        os.path.mkdir("slideshow")
-        print("Created slideshow directory!")
+        info("Creating slideshow directory...")
+        os.path.mkdir(f"{root_dir}/slideshow")
+        info("Created slideshow directory!")
 
     else:
-        print("Slideshow directory found!")
-    print("Project integrity verified.\n")
+        info("Slideshow directory found!")
+    info("Project integrity verified.\n")
 
 
-def clean_cache():
+def clean_cache(root_dir: str):
     """
     Reads prefs files and calls the prune function to remove planets
     """
-    print("Cleaning cache...")
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+    )
+
+    info("Cleaning cache...")
     try:
-        cache_file = json.loads(open("data/cache", "r").read())
+        cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
     except json.decoder.JSONDecodeError as e:
-        print(f"\nError reading cache file. Generating emptying cache...\n{str(e)}\n")
-        with open("data/cache", "w") as cache_file:
+        error(f"\nError reading cache file. Generating emptying cache...\n{str(e)}\n")
+        with open(f"{root_dir}/data/cache", "w") as cache_file:
             cache_file.write("{}")
-            print("Created cache file!")
+            info("Created cache file!")
         return
 
     cache_file_aux = dict()
@@ -67,25 +81,30 @@ def clean_cache():
             if key == "type" and value != "planet":
                 cache_file_aux[celestial_object] = attributes
                 continue
-    print("Cache cleaned!\n")
+    info("Cache cleaned!\n")
 
-    print("Saving changes to cache file...")
-    with open("data/cache", "w") as json_out:
+    info("Saving changes to cache file...")
+    with open(f"{root_dir}/data/cache", "w") as json_out:
         json.dump(cache_file_aux, json_out, indent=4, sort_keys=True)
-        print("Changes saved to cache file!\n")
+        info("Changes saved to cache file!\n")
 
 
-def print_cache():
+def print_cache(root_dir):
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+    )
     # Iterate keys
     for key, value in cache_file.items():
-        print(f"{key} =>")
+        info(f"{key} =>")
         try:
             for subkey, subvalue in value.items():
                 try:
                     for subsubkey, subsubvalue in subvalue.items():
                         if subsubkey != "base64":
-                            print(f"\t\t{subsubkey} => {subsubvalue}")
+                            info(f"\t\t{subsubkey} => {subsubvalue}")
                 except:
-                    print(f"\t{subkey} => {subvalue}")
+                    info(f"\t{subkey} => {subvalue}")
         except:
-            print(f"k:{key} => v:{value}")
+            info(f"k:{key} => v:{value}")

@@ -3,10 +3,12 @@
 import base64
 import io
 import json
+import logging
 import os
 import sys
 import time
 import urllib.request
+from logging import critical, error, info, warning
 
 import bs4
 import PIL.Image
@@ -18,7 +20,12 @@ import utils.simbad
 
 
 def get_img(
-    celestial_obj: str, width: int, height: int, image_size: float, b_scale: str
+    celestial_obj: str,
+    width: int,
+    height: int,
+    image_size: float,
+    b_scale: str,
+    root_dir: str,
 ) -> object:
     """
     This module retrieves the image from the skyview endpoint
@@ -30,23 +37,28 @@ def get_img(
     :param b_scale
     :return: Bytes
     """
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+    )
 
     BRIGHTNESS_THREASHOLD = 4.5
 
     # the image in in cache
-    print(f"Checking if image of {celestial_obj} is cached...")
-    if check_cache(celestial_obj, width, height, image_size, b_scale):
+    info(f"Checking if image of {celestial_obj} is cached...")
+    if check_cache(celestial_obj, width, height, image_size, b_scale, root_dir):
         return
 
     # a_info = utils.astro_info.get_info(celestial_obj)
-    brightness = utils.simbad.get_brightness(celestial_obj)
-    constellation = utils.simbad.get_constellation(celestial_obj)
-    ra_dec = utils.simbad.get_ra_dec(celestial_obj)
+    brightness = utils.simbad.get_brightness(celestial_obj, root_dir)
+    constellation = utils.simbad.get_constellation(celestial_obj, root_dir)
+    ra_dec = utils.simbad.get_ra_dec(celestial_obj, root_dir)
 
     # if brightness > BRIGHTNESS_THREASHOLD:
     #    return None
 
-    print("Establishing connection to skyview server...")
+    info("Establishing connection to skyview server...")
     t1 = time.time()
     if (
         urllib.request.urlopen(
@@ -54,11 +66,9 @@ def get_img(
         ).getcode()
         != 200
     ):
-        print(
-            "Error trying to connect to the skyview server taking {time.time() - t1}."
-        )
+        critical("Error trying to connect to the skyview server taking {time.time() - t1}.")
         sys.exit()
-    print(f"Connection to skyview server successful taking {time.time() - t1} seconds!")
+    info(f"Connection to skyview server successful taking {time.time() - t1} seconds!")
 
     endpoint = (
         f"https://skyview.gsfc.nasa.gov/current/cgi/runquery.pl?Position={celestial_obj}"
@@ -72,13 +82,14 @@ def get_img(
     )
     try:
         t1 = time.time()
-        print(f"Downloading webpage for {celestial_obj}...")
+        info(f"Downloading webpage for {celestial_obj}...")
         image_request = requests.get(endpoint).text
-    except requests.exceptions.RequestException:
+    except requests.exceptions.RequestException as e:
+        critical(f"{str(e)}")
         raise requests.exceptions.RequestException("Error searching for object.")
-    print(f"Downloaded successfully in {time.time() - t1} seconds!")
+    info(f"Downloaded successfully in {time.time() - t1} seconds!")
 
-    print("Parsing webpage...")
+    info("Parsing webpage...")
     img_url = "https://skyview.gsfc.nasa.gov/" + bs4.BeautifulSoup(
         image_request, features="html.parser"
     ).find("td", attrs={"colspan": 3, "align": "left"}).find("a", href=True)[
@@ -86,16 +97,16 @@ def get_img(
     ].replace(
         "../", ""
     )
-    print("Webpage parsed!")
+    info("Webpage parsed!")
 
-    print(f"Downloading image of {celestial_obj}...")
+    info(f"Downloading image of {celestial_obj}...")
     t1 = time.time()
-    urllib.request.urlretrieve(img_url, "data/temp.jpg")
-    img_bytes = base64.b64encode(open("data/temp.jpg", "rb").read())
-    print(f"Downloaded successfully in {time.time() - t1} seconds!")
+    urllib.request.urlretrieve(img_url, f"{root_dir}/data/temp.jpg")
+    img_bytes = base64.b64encode(open(f"{root_dir}/data/temp.jpg", "rb").read())
+    info(f"Downloaded successfully in {time.time() - t1} seconds!")
 
-    print(f"Writing {celestial_obj} data to cache...")
-    cache_file = json.loads(open("data/cache", "r").read())
+    info(f"Writing {celestial_obj} data to cache...")
+    cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
     try:
         cache_file[celestial_obj] = {
             "type": "star",
@@ -111,14 +122,14 @@ def get_img(
                 "base64": str(img_bytes),
             },
         }
-        print(f"Finished writing {celestial_obj} data to cache!")
+        info(f"Finished writing {celestial_obj} data to cache!")
 
-        print("Saving changes to cache...")
-        with open("data/cache", "w") as json_out:
+        info("Saving changes to cache...")
+        with open(f"{root_dir}/data/cache", "w") as json_out:
             json.dump(cache_file, json_out, indent=4, sort_keys=True)
-            img_bytes = open("data/temp.jpg", "rb").read()
-            os.remove("data/temp.jpg")
-        print("Successfully saved changes to cache!")
+            img_bytes = open(f"{root_dir}/data/temp.jpg", "rb").read()
+            os.remove(f"{root_dir}/data/temp.jpg")
+        info("Successfully saved changes to cache!")
 
         # decode the image from the cache file from b64 to bytes
         decoded_img = base64.b64decode(
@@ -132,6 +143,7 @@ def get_img(
                 f"Constellation: {cache_file[celestial_obj]['constellation']}",
                 f"Brightness: {cache_file[celestial_obj]['brightness']}",
             ],
+            root_dir,
         )
         # Write image to disk
         img = PIL.Image.open(
@@ -146,15 +158,20 @@ def get_img(
         # cache_file
 
     except TypeError as e:
-        print(str(e))
+        critical(str(e))
         sys.exit()
     except ConnectionResetError as e:
-        print(str(e))
+        critical(str(e))
         sys.exit()
 
 
 def check_cache(
-    celestial_obj: str, width: int, height: int, image_size: float, b_scale: str
+    celestial_obj: str,
+    width: int,
+    height: int,
+    image_size: float,
+    b_scale: str,
+    root_dir: str,
 ) -> bool:
     """
     This module retrieves the image from the skyview endpoint
@@ -166,7 +183,13 @@ def check_cache(
     :param b_scale brightness scale for image processing
     :return: boolean if depending on if the specific cache exists
     """
-    cache_file = json.loads(open("data/cache", "r").read())
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+    )
+
+    cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
     if (
         (celestial_obj in cache_file)
         and (cache_file[celestial_obj]["image"]["width"] == width)
@@ -174,24 +197,28 @@ def check_cache(
         and (cache_file[celestial_obj]["image"]["resolution"] == image_size)
         and (cache_file[celestial_obj]["image"]["brightness scaling"] == b_scale)
     ):
-        files = [f for f in os.listdir("slideshow") if os.path.isfile(f"slideshow/{f}")]
+        files = [
+            f
+            for f in os.listdir(f"{root_dir}/slideshow")
+            if os.path.isfile(f"{root_dir}/slideshow/{f}")
+        ]
         if len(files) < 1:
             return False
 
         elif (
-            f"slideshow/{celestial_obj}-{width}-{height}-{image_size}-{b_scale}.png"
+            f"{root_dir}/slideshow/{celestial_obj}-{width}-{height}-{image_size}-{b_scale}.png"
             not in files
         ):
             cache_file.pop(celestial_obj, None)
             return False
 
-        print(files)
-        print(f"Image of {celestial_obj} is cached.\n")
+        info(files)
+        info(f"Image of {celestial_obj} is cached.\n")
         return True
 
     else:
         cache_file.pop(celestial_obj, None)
         # files = [f for f in os.listdir("slideshow") if os.path.isfile(join("slideshow", f))]
 
-        print(f"Image of {celestial_obj} not cached.\nPreparing to download...")
+        error(f"Image of {celestial_obj} not cached.\nPreparing to download...")
     return False
