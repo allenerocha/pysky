@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="pysky",
-    version="0.1",
+    version="0.1.0",
     packages=find_packages(),
     install_requires=[
         "json",
@@ -29,4 +29,15 @@ setup(
     description="This is an application to view what will be visible in the sky in a given a time range.",
     url="http://github.com/allenerocha/PySky",
     project_urls={"Source Code": "https://github.com/allenerocha/PySky",},
+    license="GPL",
+    classifiers=[
+        "Development Status :: 1",
+        "Environment :: Console",
+        "Intended Audience :: End Users/Desktop",
+        "License :: OSI Approved :: Python Software Foundation License",
+        "Operating System :: MacOS :: MacOS X",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: POSIX",
+        "Programming Language :: Python :: 3.6",
+    ],
 )
