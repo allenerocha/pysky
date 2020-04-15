@@ -98,3 +98,20 @@ def get_info(root_dir: str, celestial_obj: str) -> list:
 
     except Exception as e:
         critical(str(e))
+
+
+def get_ephemeries_info(bodies: list, root_dir, cache_file: dict) -> dict:
+    # Iterate through the ephemeries to add information
+    for body in bodies:
+        COORDS = get_info(root_dir, body)
+        cache_file[f"{body}"] = {}
+        cache_file[f"{body}"]["type"] = "planet"
+        cache_file[f"{body}"]["created"] = time.strftime(
+            "%Y-%d-%m %H:%M", time.gmtime()
+        )
+        cache_file[f"{body}"]["coordinates"] = {  # Right acension
+            "ra": [str(COORDS[0]), str(COORDS[1]), str(COORDS[2])],
+            "dec": str(COORDS[3]),
+            "cartesian": [str(COORDS[5]), str(COORDS[6]), str(COORDS[7])],
+        }
+    return cache_file
