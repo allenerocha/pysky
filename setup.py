@@ -21,6 +21,8 @@ setup(
         "requests == 2.21.0",
         "beautifulsoup4 == 4.8.2",
     ],
+    include_package_data=True,
+    package_data={"data": ["*.json", "static_data/*"]},
     entry_points={"console_scripts": ["pysky = pysky:main"]},
     author="Allen Rocha",
     author_email="allenerocha@pm.me",
