@@ -22,7 +22,7 @@ setup(
         "beautifulsoup4 == 4.8.2",
     ],
     include_package_data=True,
-    entry_points={"console_scripts": ["pysky = pysky:main"]},
+    entry_points={"console_scripts": ["pysky = pysky.__main__:main"]},
     author="Allen Rocha",
     author_email="allenerocha@pm.me",
     description="This is an application to view what will be visible in the sky in a given a time range.",
@@ -33,10 +33,11 @@ setup(
         "Development Status :: 1",
         "Environment :: Console",
         "Intended Audience :: End Users/Desktop",
-        "License :: OSI Approved :: Python Software Foundation License",
+        "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
         "Operating System :: MacOS :: MacOS X",
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX",
         "Programming Language :: Python :: 3.6",
     ],
 )
+
