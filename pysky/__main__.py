@@ -6,7 +6,6 @@ import json
 import os.path
 import sys
 import time
-from pathlib import Path
 
 import astropy
 
@@ -85,16 +84,8 @@ def get_ephemeries_info(bodies: list, cache_file: dict) -> dict:
 if __name__ == "__main__":
     root_dir = os.path.abspath(os.path.dirname(__file__))
 
-    if "help" in sys.argv or "--help" in sys.argv or "-h" in sys.argv:
-        with open(f"{Path(root_dir).parent}/README.md", "r") as help_file:
-            for line in help_file.readlines():
-                print(line.rstrip())
-        sys.exit()
-
-    viewing_time_range = utils.cli.parse(
-        root_dir, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
-    )
-    earth_loc = astroplan.Observer(
+    viewing_time_range = utils.cli.parse(root_dir, sys.argv)
+    hawthorn_hollow = astroplan.Observer(
         location=astropy.coordinates.EarthLocation.from_geodetic(
             -87.8791 * astropy.units.deg,
             42.6499 * astropy.units.deg,
@@ -103,4 +94,4 @@ if __name__ == "__main__":
         name="Hawthorn Hollow",
         timezone="US/Central",
     )
-    main(root_dir, earth_loc)
+    main(root_dir, hawthorn_hollow)
