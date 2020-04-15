@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 # encoding: utf-8
+"""The main entry point. Invoke as `pysky'.
+"""
 import json
 import os.path
 import sys
 import time
+from pathlib import Path
 
 import astropy
 
@@ -81,6 +84,13 @@ def get_ephemeries_info(bodies: list, cache_file: dict) -> dict:
 
 if __name__ == "__main__":
     root_dir = os.path.abspath(os.path.dirname(__file__))
+
+    if "help" in sys.argv or "--help" in sys.argv or "-h" in sys.argv:
+        with open(f"{Path(root_dir).parent}/README.md", "r") as help_file:
+            for line in help_file.readlines():
+                print(line.rstrip())
+        sys.exit()
+
     viewing_time_range = utils.cli.parse(
         root_dir, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
     )
