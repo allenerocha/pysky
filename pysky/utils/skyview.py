@@ -66,7 +66,9 @@ def get_img(
         ).getcode()
         != 200
     ):
-        critical("Error trying to connect to the skyview server taking {time.time() - t1}.")
+        critical(
+            "Error trying to connect to the skyview server taking {time.time() - t1}."
+        )
         sys.exit()
     info(f"Connection to skyview server successful taking {time.time() - t1} seconds!")
 
@@ -90,14 +92,20 @@ def get_img(
     info(f"Downloaded successfully in {time.time() - t1} seconds!")
 
     info("Parsing webpage...")
-    img_url = "https://skyview.gsfc.nasa.gov/" + bs4.BeautifulSoup(
-        image_request, features="html.parser"
-    ).find("td", attrs={"colspan": 3, "align": "left"}).find("a", href=True)[
-        "href"
-    ].replace(
-        "../", ""
-    )
-    info("Webpage parsed!")
+    try:
+        img_url = "https://skyview.gsfc.nasa.gov/" + bs4.BeautifulSoup(
+            image_request, features="html.parser"
+        ).find("td", attrs={"colspan": 3, "align": "left"}).find("a", href=True)[
+            "href"
+        ].replace(
+            "../", ""
+        )
+        info("Webpage parsed!")
+    except AttributeError as e:
+        critical(
+            f"Error trying to parse the web page of {celestial_obj}...\nTerminating...\n\n{str(e)}\n"
+        )
+        sys.exit()
 
     info(f"Downloading image of {celestial_obj}...")
     t1 = time.time()
