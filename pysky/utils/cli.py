@@ -58,7 +58,8 @@ def parse(root_dir: str, cli_args: list) -> list:
         info("Successfully parsed cli input!\n")
 
         return [START_TIME, END_TIME]
-    except:
+    except Exception as e:
+        print(str(e))
         print_help(root_dir)
 
 
