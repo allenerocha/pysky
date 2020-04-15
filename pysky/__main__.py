@@ -50,7 +50,9 @@ def main(root_dir: str, location: object):
     # Iterate through the ephemeries to add information
     for body in EPHEMERIES_BODIES:
         COORDS = utils.astro_info.get_info(root_dir, body)
-        cache_file = get_ephemeries_info(EPHEMERIES_BODIES, cache_file)
+        cache_file = utils.astro_info.get_ephemeries_info(
+            EPHEMERIES_BODIES, root_dir, cache_file
+        )
     # Dump cache file
     with open(f"{root_dir}/data/cache", "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
@@ -60,31 +62,13 @@ def db_calls(celestial_objs, root_dir):
     # Iterate STARS to get images and data
     for celestial_obj in celestial_objs:
         # Call to download images
-        utils.skyview.get_img(celestial_obj, 480, 480, 3.5, "Linear", root_dir)
-        # cache_file = json.loads(open("data/cache", "r").read())
-
-
-def get_ephemeries_info(bodies: list, cache_file: dict) -> dict:
-    # Iterate through the ephemeries to add information
-    for body in bodies:
-        COORDS = utils.astro_info.get_info(root_dir, body)
-        cache_file[f"{body}"] = {}
-        cache_file[f"{body}"]["type"] = "planet"
-        cache_file[f"{body}"]["created"] = time.strftime(
-            "%Y-%d-%m %H:%M", time.gmtime()
-        )
-        cache_file[f"{body}"]["coordinates"] = {  # Right acension
-            "ra": [str(COORDS[0]), str(COORDS[1]), str(COORDS[2])],
-            "dec": str(COORDS[3]),
-            "cartesian": [str(COORDS[5]), str(COORDS[6]), str(COORDS[7])],
-        }
-    return cache_file
+        utils.skyview.get_img(celestial_obj, 1080, 1080, 3.5, "Linear", root_dir)
 
 
 if __name__ == "__main__":
     root_dir = os.path.abspath(os.path.dirname(__file__))
 
-    viewing_time_range = utils.cli.parse(root_dir, sys.argv)
+    viewing_time_range = utils.cli.parse(root_dir, sys.argv[1:])
     hawthorn_hollow = astroplan.Observer(
         location=astropy.coordinates.EarthLocation.from_geodetic(
             -87.8791 * astropy.units.deg,
