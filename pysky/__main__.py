@@ -42,27 +42,23 @@ def main(root_dir: str, location: object):
     STARS = celestial_objs[0]
     EPHEMERIES_BODIES = celestial_objs[1]
 
-    db_calls(STARS, root_dir)
+    # Iterate STARS to get images and data
+    for celestial_obj in STARS:
+        # Call to download images
+        utils.skyview.get_img(celestial_obj, 1080, 1080, 3.5, "Linear", root_dir)
 
     # Open cache file
     cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
 
     # Iterate through the ephemeries to add information
     for body in EPHEMERIES_BODIES:
-        COORDS = utils.astro_info.get_info(root_dir, body)
+        # COORDS = utils.astro_info.get_info(root_dir, body)
         cache_file = utils.astro_info.get_ephemeries_info(
             EPHEMERIES_BODIES, root_dir, cache_file
         )
     # Dump cache file
     with open(f"{root_dir}/data/cache", "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
-
-
-def db_calls(celestial_objs, root_dir):
-    # Iterate STARS to get images and data
-    for celestial_obj in celestial_objs:
-        # Call to download images
-        utils.skyview.get_img(celestial_obj, 1080, 1080, 3.5, "Linear", root_dir)
 
 
 if __name__ == "__main__":

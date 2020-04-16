@@ -153,6 +153,8 @@ def get_img(
             ],
             root_dir,
         )
+        # Reload edited cache file
+        cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
         # Write image to disk
         img = PIL.Image.open(
             io.BytesIO(
@@ -162,8 +164,6 @@ def get_img(
         img.save(
             f"slideshow/{celestial_obj}-{cache_file[celestial_obj]['image']['width']}-{cache_file[celestial_obj]['image']['height']}-{cache_file[celestial_obj]['image']['resolution']}-{cache_file[celestial_obj]['image']['brightness scaling']}.png"
         )
-        # pop the image
-        # cache_file
 
     except TypeError as e:
         critical(str(e))
@@ -226,7 +226,5 @@ def check_cache(
 
     else:
         cache_file.pop(celestial_obj, None)
-        # files = [f for f in os.listdir("slideshow") if os.path.isfile(join("slideshow", f))]
-
         error(f"Image of {celestial_obj} not cached.\nPreparing to download...")
     return False
