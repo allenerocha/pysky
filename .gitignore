@@ -12,8 +12,18 @@ slideshow/
 
 data/log
 
-pysky/utils/__pycache__/
+utils/__pycache__/
 
 pysky/data/cache
 
 pysky/data/log
+
+venv/
+
+utils/PySky.egg-info/
+
+build/
+
+pysky/__pycache__/
+
+pysky/PySky.egg-info/

@@ -52,6 +52,7 @@ setup(
     keywords="pysky",
     name="pysky",
     packages=find_packages(),
+    package_dir={'utils': 'pysky'},
     setup_requires=setup_requirements,
     test_suite="tests",
     tests_require=test_requirements,
