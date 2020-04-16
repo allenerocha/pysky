@@ -17,7 +17,6 @@ requirements = [
     "astroquery == 0.4",
     "astroplan == 0.6",
     "Pillow >= 6.2.2",
-    "urllib",
     "requests == 2.21.0",
     "beautifulsoup4 == 4.8.2",
 ]
