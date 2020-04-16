@@ -13,3 +13,7 @@ slideshow/
 data/log
 
 pysky/utils/__pycache__/
+
+pysky/data/cache
+
+pysky/data/log
