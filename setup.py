@@ -13,15 +13,9 @@ with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
 requirements = [
-    "json",
-    "os",
-    "sys",
-    "time",
     "astropy == 4.0",
     "astroquery == 0.4",
     "astroplan == 0.6",
-    "logging",
-    "datetime",
     "base64",
     "Pillow >= 6.2.2",
     "io",
