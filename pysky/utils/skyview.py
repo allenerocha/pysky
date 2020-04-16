@@ -9,6 +9,7 @@ import sys
 import time
 import urllib.request
 from logging import critical, error, info, warning
+from pathlib import Path
 
 import bs4
 import PIL.Image
@@ -162,7 +163,7 @@ def get_img(
             )
         )
         img.save(
-            f"slideshow/{celestial_obj}-{cache_file[celestial_obj]['image']['width']}-{cache_file[celestial_obj]['image']['height']}-{cache_file[celestial_obj]['image']['resolution']}-{cache_file[celestial_obj]['image']['brightness scaling']}.png"
+            f"{Path.home()}/PySkySlideshow/{celestial_obj}-{cache_file[celestial_obj]['image']['width']}-{cache_file[celestial_obj]['image']['height']}-{cache_file[celestial_obj]['image']['resolution']}-{cache_file[celestial_obj]['image']['brightness scaling']}.png"
         )
 
     except TypeError as e:
@@ -207,14 +208,14 @@ def check_cache(
     ):
         files = [
             f
-            for f in os.listdir(f"{root_dir}/slideshow")
-            if os.path.isfile(f"{root_dir}/slideshow/{f}")
+            for f in os.listdir(f"{Path.home()}/PySkySlideshow")
+            if os.path.isfile(f"{Path.home()}/PySkySlideshow/{f}")
         ]
         if len(files) < 1:
             return False
 
         elif (
-            f"{root_dir}/slideshow/{celestial_obj}-{width}-{height}-{image_size}-{b_scale}.png"
+            f"{Path.home()}/PySkySlideshow/{celestial_obj}-{width}-{height}-{image_size}-{b_scale}.png"
             not in files
         ):
             cache_file.pop(celestial_obj, None)

@@ -4,7 +4,8 @@ import json
 import logging
 import os.path
 import sys
-from logging import warning, error, info
+from logging import error, info, warning
+from pathlib import Path
 
 
 def check_integrity(root_dir: str):
@@ -21,7 +22,7 @@ def check_integrity(root_dir: str):
     info("Checking for data directory...")
     if not os.path.isdir(f"{root_dir}/data"):
         warning("Data directory not found.\nCreating data directory and cache file...")
-        os.mkdir(f"{root_dir}/data")
+        os.makedirs(f"{root_dir}/data")
         with open(f"{root_dir}/data/cache", "w") as cache_file:
             cache_file.write("{}")
         info("Data directory and cache file created!")
@@ -40,11 +41,11 @@ def check_integrity(root_dir: str):
             info("Created cache file!")
 
     info("Checking for slideshow directory...")
-    if not os.path.isdir(f"{root_dir}/slideshow"):
+    if not os.path.isdir(f"{Path.home()}/PySkySlideshow"):
         warning("Slideshow directory not found.")
 
         info("Creating slideshow directory...")
-        os.path.mkdir(f"{root_dir}/slideshow")
+        os.makedirs(f"{Path.home()}/PySkySlideshow")
         info("Created slideshow directory!")
 
     else:
