@@ -36,7 +36,7 @@ test_requirements = []
 
 setup(
     author=pysky.__author__,
-    author_email=__email__,
+    author_email=pysky.__email__,
     python_requires=">=3.6",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
@@ -66,5 +66,5 @@ setup(
     tests_require=test_requirements,
     url="http://github.com/allenerocha/PySky",
     project_urls={"Source Code": "https://github.com/allenerocha/PySky",},
-    version=__version__,
+    version=pysky.__version__,
 )
