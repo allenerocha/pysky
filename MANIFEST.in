@@ -1,3 +1,6 @@
 include LICENSE
 
-recursive-include pysky/data
+recursive-include pysky/data *.json
+recursive-include pysky/data/static_data *.jpg
+recursive-include pysky/data/static_data *.png
+recursive-include pysky/data/static_data *.tif
