@@ -23,3 +23,7 @@ venv/
 utils/PySky.egg-info/
 
 build/
+
+pysky/__pycache__/
+
+pysky/PySky.egg-info/
