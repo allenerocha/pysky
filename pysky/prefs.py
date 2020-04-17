@@ -3,7 +3,6 @@ preferences and applies the cache rules to the cache file and saves it"""
 import json
 import logging
 import os.path
-import sys
 from logging import error, info, warning
 from pathlib import Path
 
@@ -90,7 +89,7 @@ def clean_cache(root_dir: str):
         info("Changes saved to cache file!\n")
 
 
-def print_cache(root_dir):
+def print_cache(root_dir, cache_file):
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
