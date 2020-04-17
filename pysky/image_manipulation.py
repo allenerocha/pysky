@@ -11,7 +11,7 @@ import PIL.ImageDraw
 import PIL.ImageFont
 
 
-def add_text(img: object, overlay_text: list, root_dir: str) -> object:
+def overlay_text(img: object, overlay_text: list, root_dir: str) -> object:
     """
     This adds text to the image
     :img: Image file to overlay the text

@@ -8,19 +8,18 @@ import os
 import sys
 import time
 import urllib.request
-from logging import critical, error, info, warning
+from logging import critical, error, info
 from pathlib import Path
 
 import bs4
 import PIL.Image
 import requests
 
-import utils.astro_info
-import utils.image_manipulation
-import utils.simbad
+from .image_manipulation import overlay_text
+from .simbad import get_brightness, get_constellation, get_ra_dec
 
 
-def get_img(
+def get_skyview_img(
     celestial_obj: str,
     width: int,
     height: int,
@@ -51,10 +50,9 @@ def get_img(
     if check_cache(celestial_obj, width, height, image_size, b_scale, root_dir):
         return
 
-    # a_info = utils.astro_info.get_info(celestial_obj)
-    brightness = utils.simbad.get_brightness(celestial_obj, root_dir)
-    constellation = utils.simbad.get_constellation(celestial_obj, root_dir)
-    ra_dec = utils.simbad.get_ra_dec(celestial_obj, root_dir)
+    brightness = get_brightness(celestial_obj, root_dir)
+    constellation = get_constellation(celestial_obj, root_dir)
+    ra_dec = get_ra_dec(celestial_obj, root_dir)
 
     # if brightness > BRIGHTNESS_THREASHOLD:
     #    return None
@@ -145,7 +143,7 @@ def get_img(
             cache_file[celestial_obj]["image"]["base64"][1:-1]
         )
         # save the returned image containing the overlayed information
-        utils.image_manipulation.add_text(
+        overlay_text(
             PIL.Image.open(io.BytesIO(decoded_img)),
             [
                 f"Name: {celestial_obj}",

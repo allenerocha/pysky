@@ -2,7 +2,7 @@
 on which itentifier is passed via the command line"""
 import logging
 import sys
-from logging import critical, error, info, warning
+from logging import critical, info
 
 import astroquery.simbad
 

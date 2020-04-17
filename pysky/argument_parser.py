@@ -8,7 +8,7 @@ from pathlib import Path
 import astropy.time
 
 
-def parse(root_dir: str, cli_args: list) -> list:
+def cli_parse(root_dir: str, cli_args: list) -> list:
     """
     POSITION 0 & 2 (DATE)
     POSITION 1 & 3 (TIME)

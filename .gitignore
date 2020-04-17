@@ -27,3 +27,5 @@ build/
 pysky/__pycache__/
 
 pysky/PySky.egg-info/
+
+tests/__pycache__/
