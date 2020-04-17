@@ -21,6 +21,8 @@ requirements = [
     "beautifulsoup4 == 4.8.2",
 ]
 
+packages = ["pysky"]
+
 setup_requirements = []
 
 test_requirements = []
@@ -44,16 +46,16 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Topic :: Scientific/Engineering :: Astronomy",
     ],
-    description="This is an application to view what will be visible in the sky in a given a time range.",
+    description=pysky.__description__,
     entry_points={"console_scripts": ["pysky = pysky.__main__:main"]},
     install_requires=requirements,
     license=pysky.__licence__,
     long_description=readme + "\n\n" + history,
     include_package_data=True,
     keywords="pysky",
-    name="pysky",
-    packages=find_packages(),
-    package_dir={"utils": "pysky"},
+    name=pysky.__title__,
+    packages=packages,
+    package_dir={"pysky": "pysky"},
     setup_requires=setup_requirements,
     test_suite="tests",
     tests_require=test_requirements,
