@@ -5,6 +5,7 @@ import astropy
 
 import astroplan
 from astroplan import download_IERS_A
+
 from .argument_parser import cli_parse
 from .astro_info import get_ephemeries_info
 from .objectfilter import emphemeries_filter
@@ -20,6 +21,7 @@ def invoke(cli_args):
     root_dir = os.path.abspath(os.path.dirname(__file__))
 
     cli_parse(root_dir, cli_args)
+
     hawthorn_hollow = astroplan.Observer(
         location=astropy.coordinates.EarthLocation.from_geodetic(
             -87.8791 * astropy.units.deg,
@@ -29,9 +31,7 @@ def invoke(cli_args):
         name="Hawthorn Hollow",
         timezone="US/Central",
     )
-
     check_integrity(root_dir)
-
     celestial_objs = emphemeries_filter(
         root_dir,
         "venus",
