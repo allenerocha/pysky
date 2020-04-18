@@ -6,11 +6,7 @@ Download & Installation
 
  .. code-block:: bash
 
-    ~$ git clone https://github.com/allenerocha/pysky.git
-
- .. code-block:: bash
-
-    ~$ cd pysky/
+    ~$ git clone https://github.com/allenerocha/pysky.git && cd pysky/
 
  .. code-block:: bash
 
