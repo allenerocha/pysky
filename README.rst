@@ -12,6 +12,15 @@ Download & Installation
 
     pysky/$ pip3 install .
 
+
+Uninstalling
+============
+
+ .. code-block:: bash
+
+   ~$ pip3 uninstall pysky -y
+
+
 Usage
 =====
 
