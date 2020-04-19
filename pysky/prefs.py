@@ -3,7 +3,7 @@ preferences and applies the cache rules to the cache file and saves it"""
 import json
 import logging
 import os.path
-from logging import error, info, warning
+from logging import critical, error, info, warning
 from pathlib import Path
 
 
@@ -38,6 +38,22 @@ def check_integrity(root_dir: str):
             with open(f"{root_dir}/data/cache", "w") as cache_file:
                 cache_file.write("{}")
             info("Created cache file!")
+
+    info(f"Searching in `{root_dir}/data/` for `VisibleCadwellCatalog.json`...")
+    if not os.path.isfile(f"{root_dir}/data/VisibleCadwellCatalog.json"):
+        error(
+            f"VisibleCadwellCatalog.json not found in the directory `{root_dir}/data/`!\nThe Application will not automatically search for these objects unless they are redownloaded.\n"
+        )
+    else:
+        info(f"VisibleCadwellCatalog.json was found!\n")
+
+    info(f"Searching in `{root_dir}/data/` `VisibleMessierCatalog.json`...")
+    if not os.path.isfile(f"{root_dir}/data/VisibleMessierCatalog.json"):
+        error(
+            f"VisibleMessierCatalog.json not found in the directory `{root_dir}/data/`!\nThe Application will not automatically search for these objects unless they are redownloaded.\n"
+        )
+    else:
+        info(f"VisibleMessierCatalog.json was found!\n")
 
     info("Checking for slideshow directory...")
     if not os.path.isdir(f"{Path.home()}/PySkySlideshow"):
@@ -89,22 +105,26 @@ def clean_cache(root_dir: str):
         info("Changes saved to cache file!\n")
 
 
-def print_cache(root_dir, cache_file):
+def read_user_prefs(root_dir: str) -> list:
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
         handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
     )
-    # Iterate keys
-    for key, value in cache_file.items():
-        info(f"{key} =>")
-        try:
-            for subkey, subvalue in value.items():
-                try:
-                    for subsubkey, subsubvalue in subvalue.items():
-                        if subsubkey != "base64":
-                            info(f"\t\t{subsubkey} => {subsubvalue}")
-                except:
-                    info(f"\t{subkey} => {subvalue}")
-        except:
-            info(f"k:{key} => v:{value}")
+    info(f"Searching `{root_dir}/data/` for `user_prefs.cfg`...")
+    if not os.path.isfile(f"{root_dir}/data/user_prefs.cfg"):
+        critical(
+            f"User preferences file `user_prefs.cfg` not found in the directory `{root_dir}/data/`!\nApplication will continue, only looking for planets, Messier catalog, and Cadwell catalog objects.\n"
+        )
+        return None
+    else:
+        info("User preferences file `user_prefs.cfg` found!")
+        info("Parsing `user_prefs.cfg`...")
+        with open(f"{root_dir}/data/user_prefs.cfg", "r") as u_prefs_file:
+            u_prefs_lines = [
+                line.strip()
+                for line in u_prefs_file.readlines()
+                if len(line.strip()) > 0 and line.strip()[0] != "#"
+            ]
+        return u_prefs_lines
+
