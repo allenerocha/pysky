@@ -19,7 +19,7 @@ def get_bodies(root_dir: str, *args) -> list:
         handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
     )
 
-    celestial_objs = list(args)[0]
+    celestial_objs = list(args)[0][0]
 
     if len(celestial_objs) > 0:
         bodies = []

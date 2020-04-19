@@ -21,7 +21,7 @@ def emphemeries_filter(root_dir: str, *args) -> list:
 
     info("Filtering objects.")
     # Converts tuple to list
-    celestial_objs = list(args)
+    celestial_objs = args[0]
 
     # Retrieves a list of all ephemeriers bodies in that list
     EPHEMERIES_BODIES = get_bodies(root_dir, list(args))

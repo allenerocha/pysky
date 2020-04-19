@@ -37,17 +37,9 @@ def invoke(cli_args):
     MESSIER_OBJECTS = parse_messier(root_dir)
     USER_OBJECTS = read_user_prefs(root_dir)
 
-    celestial_objs = emphemeries_filter(
-        root_dir,
-        "venus",
-        "polaris",
-        "neptune",
-        "vega",
-        "saturn",
-        "deneb",
-        "sirius",
-        "capella",
-    )
+    celestial_objs = emphemeries_filter(root_dir, USER_OBJECTS)
+    print(celestial_objs)
+    exit()
     STARS = celestial_objs[0]
     EPHEMERIES_BODIES = celestial_objs[1]
 
