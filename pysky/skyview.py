@@ -15,6 +15,7 @@ import bs4
 import PIL.Image
 import requests
 
+from .catalog_parse import check_cadwell, check_messier
 from .image_manipulation import overlay_text
 from .simbad import get_brightness, get_constellation, get_ra_dec
 
@@ -26,7 +27,7 @@ def get_skyview_img(
     image_size: float,
     b_scale: str,
     root_dir: str,
-) -> object:
+) -> int:
     """
     This module retrieves the image from the skyview endpoint
     if it not already cached. After retrieval, it will cache the image.
@@ -51,11 +52,15 @@ def get_skyview_img(
         return
 
     brightness = get_brightness(celestial_obj, root_dir)
+    if brightness is None:
+        critical(f"Error searching for {celestial_obj} in the cadwell and messier catalogs.")
+            return 2
+
     constellation = get_constellation(celestial_obj, root_dir)
     ra_dec = get_ra_dec(celestial_obj, root_dir)
 
-    # if brightness > BRIGHTNESS_THREASHOLD:
-    #    return None
+    if brightness > BRIGHTNESS_THREASHOLD:
+        return 1
 
     info("Establishing connection to skyview server...")
     t1 = time.time()
@@ -87,7 +92,8 @@ def get_skyview_img(
         image_request = requests.get(endpoint).text
     except requests.exceptions.RequestException as e:
         critical(f"{str(e)}")
-        raise requests.exceptions.RequestException("Error searching for object.")
+        critical("Error searching for object.")
+        return 2
     info(f"Downloaded successfully in {time.time() - t1} seconds!")
 
     info("Parsing webpage...")
@@ -102,9 +108,9 @@ def get_skyview_img(
         info("Webpage parsed!")
     except AttributeError as e:
         critical(
-            f"Error trying to parse the web page of {celestial_obj}...\nTerminating...\n\n{str(e)}\n"
+            f"Error trying to parse the web page of {celestial_obj}!\n\n{str(e)}\n"
         )
-        sys.exit()
+        return 3
 
     info(f"Downloading image of {celestial_obj}...")
     t1 = time.time()
@@ -161,7 +167,7 @@ def get_skyview_img(
             )
         )
         img.save(
-            f"{Path.home()}/PySkySlideshow/{celestial_obj}-{cache_file[celestial_obj]['image']['width']}-{cache_file[celestial_obj]['image']['height']}-{cache_file[celestial_obj]['image']['resolution']}-{cache_file[celestial_obj]['image']['brightness scaling']}.png"
+            f"{Path.home()}/PySkySlideshow/{celestial_obj.replace(' ', '_')}-{cache_file[celestial_obj]['image']['width']}-{cache_file[celestial_obj]['image']['height']}-{cache_file[celestial_obj]['image']['resolution']}-{cache_file[celestial_obj]['image']['brightness scaling']}.png"
         )
 
     except TypeError as e:
@@ -170,6 +176,7 @@ def get_skyview_img(
     except ConnectionResetError as e:
         critical(str(e))
         sys.exit()
+    return 4
 
 
 def check_cache(

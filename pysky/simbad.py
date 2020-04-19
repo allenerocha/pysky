@@ -48,19 +48,19 @@ def get_brightness(celestial_obj: str, root_dir: str) -> float:
         info(f"Retrieved brightness for {celestial_obj}!\n")
         return brightness
 
-    # Occurs when the object is not in SIMBAS's database
+    # Occurs when the object is not in SIMBADS's database
     except TypeError as e:
         critical(
             f"Error parsing the data for {celestial_obj}. Simbad only contains info on stars.\n\n{str(e)}"
         )
-        sys.exit()
+        return None
 
     # Occurs for multiple stars
     except ValueError as e:
         critical(
             f"Error converting brightness for {celestial_obj}. Simbad does not contain brightnesses for double or multiple stars.\n\n{str(e)}"
         )
-        sys.exit()
+        return None
 
 
 def get_constellation(celestial_obj: str, root_dir) -> str:
