@@ -57,6 +57,7 @@ Images
 ======
 
 By default images of valid objects will be saved in the filename format:
+
 ``$HOME/PySkySlideshow/object-width-height-resolution-scaling.png``
 
 Examples
