@@ -14,11 +14,18 @@ def parse_messier(root_dir: str) -> dict:
     """
     if not isinstance(root_dir, str):
         root_dir = Path(os.path.dirname(os.path.realpath((__file__))))
-    messier_file = json.loads(open(
-        f"{root_dir}/data/VisibleMessierCatalog.json",
-        "r"
-        ).read())
+    messier_file = json.loads(
+        open(f"{root_dir}/data/VisibleMessierCatalog.json", "r").read()
+    )
     return messier_file
+
+
+def check_messier(celestial_obj):
+    messier_catalog = parse_messier(None)
+    for key, value in messier_catalog.items():
+        if key == celestial_obj:
+            return messier_catalog[key]["Apparent magnitude"]
+    return None
 
 
 def parse_cadwell(root_dir: str) -> dict:
@@ -30,9 +37,15 @@ def parse_cadwell(root_dir: str) -> dict:
     """
     if not isinstance(root_dir, str):
         root_dir = Path(os.path.dirname(os.path.realpath((__file__))))
-    cadwell_file = json.loads(open(
-        f"{root_dir}/data/VisibleCadwellCatalog.json",
-        "r"
-        ).read())
+    cadwell_file = json.loads(
+        open(f"{root_dir}/data/VisibleCadwellCatalog.json", "r").read()
+    )
     return cadwell_file
 
+
+def check_cadwell(celestial_obj):
+    cadwell_catalog = parse_cadwell(None)["NGC number"]
+    for key, value in cadwell_catalog.items():
+        if key == celestial_obj:
+            return cadwell_catalog[key]["Magnitude"]
+    return None
