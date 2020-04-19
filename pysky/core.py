@@ -8,8 +8,9 @@ from astroplan import download_IERS_A
 
 from .argument_parser import cli_parse
 from .astro_info import get_ephemeries_info
+from .catalog_parse import parse_cadwell, parse_messier
 from .objectfilter import emphemeries_filter
-from .prefs import check_integrity
+from .prefs import check_integrity, read_user_prefs
 from .skyview import get_skyview_img
 
 
@@ -32,6 +33,10 @@ def invoke(cli_args):
         timezone="US/Central",
     )
     check_integrity(root_dir)
+    CADWELL_OBJECTS = parse_cadwell(root_dir)
+    MESSIER_OBJECTS = parse_messier(root_dir)
+    USER_OBJECTS = read_user_prefs(root_dir)
+
     celestial_objs = emphemeries_filter(
         root_dir,
         "venus",
