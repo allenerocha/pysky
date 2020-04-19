@@ -1,6 +1,7 @@
 """This module is called after utils/prefs and parses the passed CLI options"""
 import datetime
 import logging
+import os
 import sys
 from logging import info
 from pathlib import Path
@@ -28,7 +29,9 @@ def cli_parse(root_dir: str, cli_args: list) -> list:
 
     if not len(cli_args) == 4:
         print_help()
-        raise IndexError(f"Argument for cli_parse must be size 4 not {len(cli_args)}.")
+        raise IndexError(
+                f"Argument for cli_parse must be size 4 not {len(cli_args)}."
+                )
 
     for arg in cli_args:
         if not isinstance(arg, str):
@@ -40,7 +43,9 @@ def cli_parse(root_dir: str, cli_args: list) -> list:
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+        handlers=[logging.FileHandler(
+            f"{root_dir}/data/log"
+            ), logging.StreamHandler()],
     )
     try:
         info("Parsing cli input...")
@@ -83,6 +88,7 @@ def cli_parse(root_dir: str, cli_args: list) -> list:
 
 
 def print_help():
-    with open(f"{Path(__file__).parent.parent}/README.rst", "r") as help_file:
+    root_dir = Path(os.path.dirname(os.path.realpath((__file__)))).parent
+    with open(f"{root_dir}/README.rst", "r") as help_file:
         for line in help_file.readlines():
             print(line.rstrip())
