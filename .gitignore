@@ -7,9 +7,13 @@ utils/__pycache__/
 
 slideshow/
 
-pysky/data/
+pysky/data/static_data
 
-pysky/data/
+pysky/data/VisibleCadwellCatalog.json
+
+pysky/data/VisibleMessierCatalog.json
+
+pysky/data/user_prefs.cfg
 
 venv/
 
