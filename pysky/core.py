@@ -1,13 +1,13 @@
 import json
 import logging
 import os.path
-from logging import critical
+from logging import critical, error, info
 from pathlib import Path
 
-import astropy
-
 import astroplan
+import astropy
 from astroplan import download_IERS_A
+from tqdm import tqdm
 
 from .argument_parser import cli_parse
 from .astro_info import get_ephemeries_info
@@ -57,7 +57,7 @@ def invoke(cli_args):
     cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
 
     # Iterate through the ephemeries to add information
-    for body in EPHEMERIES_BODIES:
+    for body in tqdm(EPHEMERIES_BODIES):
         cache_file = get_ephemeries_info(EPHEMERIES_BODIES, root_dir, cache_file)
     # Dump cache file
     with open(f"{root_dir}/data/cache", "w") as json_out:
@@ -79,9 +79,15 @@ def invoke(cli_args):
 
 
 def invoke_skyview(stars, root_dir):
+    root_dir = os.path.abspath(os.path.dirname(__file__))
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+    )
     del_stars = list()
     # Iterate STARS to get images and data
-    for celestial_obj in stars:
+    for celestial_obj in tqdm(stars):
         STATUS_CODE = get_skyview_img(
             celestial_obj, 1080, 1080, 3.5, "Linear", root_dir
         )
@@ -113,6 +119,12 @@ def invoke_skyview(stars, root_dir):
 
 
 def get_visible(start_time, end_time, location, celestial_objs=None) -> dict():
+    root_dir = os.path.abspath(os.path.dirname(__file__))
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+    )
     visible = dict()
     if celestial_objs is None:
         cache_file = json.loads(
@@ -123,7 +135,8 @@ def get_visible(start_time, end_time, location, celestial_objs=None) -> dict():
         )
         celestial_objs = cache_file.keys()
 
-    for celestial_obj in celestial_objs:
+    for celestial_obj in tqdm(celestial_objs):
+        info("Gathering name, start_altaz.alt, and start_altaz.az ...")
         try:
             obj = astroplan.FixedTarget.from_name(celestial_obj)
             alt, az, t = is_object_visible(obj, start_time, end_time, location)
@@ -132,6 +145,10 @@ def get_visible(start_time, end_time, location, celestial_objs=None) -> dict():
                 "azimuth": str(az),
                 "start time": str(t),
             }
+            info(f"Sucessfully gathered data for {celestial_obj}!\n")
         except astropy.coordinates.name_resolve.NameResolveError as e:
-            print(str(e))
+            error(
+                f"Unabale to gather name, start_altaz.alt, and start_altaz.az for {celestial_obj}!\n"
+            )
+            error(str(e))
     return visible

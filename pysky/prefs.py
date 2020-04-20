@@ -6,6 +6,8 @@ import os.path
 from logging import critical, error, info, warning
 from pathlib import Path
 
+from tqdm import tqdm
+
 
 def check_integrity(root_dir: str):
     """
@@ -91,8 +93,8 @@ def clean_cache(root_dir: str):
     cache_file_aux = dict()
 
     # Iterate over the cache file looking for non-planets
-    for celestial_object, attributes in cache_file.items():
-        for key, value in attributes.items():
+    for celestial_object, attributes in tqdm(cache_file.items()):
+        for key, value in tqdm(attributes.items()):
             # Non-planet found adding to auxilary dictionary
             if key == "type" and value != "planet":
                 cache_file_aux[celestial_object] = attributes
@@ -126,5 +128,5 @@ def read_user_prefs(root_dir: str) -> list:
                 for line in u_prefs_file.readlines()
                 if len(line.strip()) > 0 and line.strip()[0] != "#"
             ]
+            info("Finished parsing user preferences!\n")
         return u_prefs_lines
-

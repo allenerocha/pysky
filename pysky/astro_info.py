@@ -5,6 +5,7 @@ from logging import critical, info
 import astropy.coordinates
 import astropy.time
 import astropy.units
+from tqdm import tqdm
 
 
 def get_bodies(root_dir: str, *args) -> list:
@@ -24,7 +25,7 @@ def get_bodies(root_dir: str, *args) -> list:
     if len(celestial_objs) > 0:
         bodies = []
         # Iterate through the passed bodies
-        for celestial_obj in celestial_objs:
+        for celestial_obj in tqdm(celestial_objs):
             try:
                 # Checks if the current body is in the tuple
                 if celestial_obj in astropy.coordinates.solar_system_ephemeris.bodies:
@@ -102,7 +103,7 @@ def get_info(root_dir: str, celestial_obj: str) -> list:
 
 def get_ephemeries_info(bodies: list, root_dir, cache_file: dict) -> dict:
     # Iterate through the ephemeries to add information
-    for body in bodies:
+    for body in tqdm(bodies):
         COORDS = get_info(root_dir, body)
         cache_file[f"{body}"] = {}
         cache_file[f"{body}"]["type"] = "planet"
