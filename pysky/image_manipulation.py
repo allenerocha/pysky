@@ -4,11 +4,12 @@ import base64
 import json
 import logging
 import os
-from logging import info
+from logging import critical, info
 
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
+PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
 
 def overlay_text(img, overlay_text: list, root_dir: str, destination="") -> object:
@@ -24,12 +25,14 @@ def overlay_text(img, overlay_text: list, root_dir: str, destination="") -> obje
         format="%(asctime)s [%(levelname)s] %(message)s",
         handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
     )
-
     if isinstance(img, str) and os.path.isfile(img):
         img = PIL.Image.open(img)
     # only save the height of the image
-    _, img_h = img.size
-
+    try:
+        _, img_h = img.size
+    except AttributeError:
+        critical(f"Error opening {img}")
+    celestial_obj = overlay_text[0].replace("Name: ", "")
     cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
     info(f"Overlaying text to image...")
     overlayed = PIL.ImageDraw.Draw(img, mode="RGBA")
@@ -42,19 +45,17 @@ def overlay_text(img, overlay_text: list, root_dir: str, destination="") -> obje
         spacing=1,  # in between each new line
         align="left",
     )
-
-    celestial_obj = overlay_text[0].replace("Name: ", "")
     if len(destination) > 1:
-        info(f"Saving image to {destination}...")
-        img.save(fp=f"{destination}/{celestial_obj}.png", format="PNG")
+        info(f"Saving image of {celestial_obj} to {destination}...")
+        img.save(fp=f"{destination}/{celestial_obj.replace(' ', '')}.png", format="PNG")
         return
 
-    info("Adding edited image to cache file...")
+    info(f"Adding edited image of {celestial_obj} to cache file...")
     img.save(fp=f"{root_dir}/data/temp.png", format="PNG")
     img_bytes = base64.b64encode(open(f"{root_dir}/data/temp.png", "rb").read())
     # write the edited image to the cache file
     cache_file[celestial_obj]["image"]["base64"] = str(img_bytes)[1:]
-    info("Edited image added to cache file!")
+    info(f"Edited image of {celestial_obj} added to cache file!")
 
     with open(f"{root_dir}/data/cache", "w") as json_out:
         info("Saving edited cache file...")
