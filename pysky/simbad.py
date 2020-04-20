@@ -112,9 +112,10 @@ def get_ra_dec(celestial_obj: str, root_dir: str) -> list:
     astroquery.simbad.Simbad.reset_votable_fields()
     astroquery.simbad.Simbad.remove_votable_fields("main_id")
     info(f"Retreiving right acension and declination for {celestial_obj}...")
-    ra_dec = [
-        astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0].split(),
-        astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][1].split(),
-    ]
-    info(f"Retrieved ra and dec for {celestial_obj}!")
+    ras = astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0].split()
+    ra = [int(float(r)) for r in ras]
+    decs = astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][1].split()
+    dec = [int(float(d)) for d in decs]
+    ra_dec = [ra, dec]
+    info(f"Retrieved ra and dec for {celestial_obj}!\n")
     return ra_dec
