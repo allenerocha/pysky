@@ -11,7 +11,7 @@ import PIL.ImageDraw
 import PIL.ImageFont
 
 
-def overlay_text(img: object, overlay_text: list, root_dir: str) -> object:
+def overlay_text(img, overlay_text: list, root_dir: str, destination="") -> object:
     """
     This adds text to the image
     :img: Image file to overlay the text
@@ -25,6 +25,8 @@ def overlay_text(img: object, overlay_text: list, root_dir: str) -> object:
         handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
     )
 
+    if isinstance(img, str) and os.path.isfile(img):
+        img = PIL.Image.open(img)
     # only save the height of the image
     _, img_h = img.size
 
@@ -41,10 +43,15 @@ def overlay_text(img: object, overlay_text: list, root_dir: str) -> object:
         align="left",
     )
 
+    celestial_obj = overlay_text[0].replace("Name: ", "")
+    if len(destination) > 1:
+        info(f"Saving image to {destination}...")
+        img.save(fp=f"{destination}/{celestial_obj}.png", format="PNG")
+        return
+
     info("Adding edited image to cache file...")
     img.save(fp=f"{root_dir}/data/temp.png", format="PNG")
     img_bytes = base64.b64encode(open(f"{root_dir}/data/temp.png", "rb").read())
-    celestial_obj = overlay_text[0].replace("Name: ", "")
     # write the edited image to the cache file
     cache_file[celestial_obj]["image"]["base64"] = str(img_bytes)[1:]
     info("Edited image added to cache file!")
