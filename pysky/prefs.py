@@ -49,7 +49,7 @@ def check_integrity(root_dir: str):
     else:
         info(f"VisibleCadwellCatalog.json was found!\n")
 
-    info(f"Searching in `{root_dir}/data/` `VisibleMessierCatalog.json`...")
+    info(f"Searching in `{root_dir}/data/` for `VisibleMessierCatalog.json`...")
     if not os.path.isfile(f"{root_dir}/data/VisibleMessierCatalog.json"):
         error(
             f"VisibleMessierCatalog.json not found in the directory `{root_dir}/data/`!\nThe Application will not automatically search for these objects unless they are redownloaded.\n"
