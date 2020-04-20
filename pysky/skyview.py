@@ -53,8 +53,10 @@ def get_skyview_img(
 
     brightness = get_brightness(celestial_obj, root_dir)
     if brightness is None:
-        critical(f"Error searching for {celestial_obj} in the cadwell and messier catalogs.")
-            return 2
+        critical(
+            f"Error searching for {celestial_obj} in the cadwell and messier catalogs."
+        )
+        return 2
 
     constellation = get_constellation(celestial_obj, root_dir)
     ra_dec = get_ra_dec(celestial_obj, root_dir)
