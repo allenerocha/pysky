@@ -5,15 +5,11 @@ slideshow/__pycache__/
 
 utils/__pycache__/
 
-data/cache
-
 slideshow/
 
-data/log
+pysky/data/
 
-pysky/data/cache
-
-pysky/data/log
+pysky/data/
 
 venv/
 
