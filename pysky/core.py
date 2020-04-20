@@ -4,8 +4,9 @@ import os.path
 from logging import critical, error, info
 from pathlib import Path
 
-import astroplan
 import astropy
+
+import astroplan
 from astroplan import download_IERS_A
 from tqdm import tqdm
 
@@ -13,6 +14,7 @@ from .argument_parser import cli_parse
 from .astro_info import get_ephemeries_info
 from .catalog_parse import parse_cadwell, parse_messier
 from .check_sky import is_object_visible
+from .image_manipulation import overlay_text
 from .objectfilter import emphemeries_filter
 from .prefs import check_integrity, read_user_prefs
 from .skyview import get_skyview_img
@@ -70,12 +72,55 @@ def invoke(cli_args):
         HAWTHORN_HOLLOW,
         celestial_objs=list(MESSIER_OBJECTS.keys()),
     )
+    for m_obj in tqdm(messier_visible.keys()):
+        static_data_path = (
+            f"{os.path.abspath(os.path.dirname(__file__))}/data/static_data/"
+        )
+        info(f"Looking for {m_obj} in {static_data_path}...")
+        for image in os.listdir(f"{static_data_path}"):
+            if os.path.isfile(f"{static_data_path}/{image}") and image.split(".")[
+                0
+            ] == m_obj.replace(" ", ""):
+                static_data_path += image
+                info(f"Found {m_obj} in {static_data_path}!")
+        overlay_text(
+            static_data_path,
+            [
+                f"Name: {m_obj}",
+                f"Constellation: {MESSIER_OBJECTS[m_obj]['Constellation']}",
+                f"Brightness: {MESSIER_OBJECTS[m_obj]['Apparent magnitude']}",
+            ],
+            root_dir,
+            destination=f"{Path.home()}/PySkySlideshow",
+        )
+
     cadwell_visible = get_visible(
         START_TIME,
         END_TIME,
         HAWTHORN_HOLLOW,
         celestial_objs=list(CADWELL_OBJECTS["NGC number"].keys()),
     )
+    for c_obj in tqdm(cadwell_visible.keys()):
+        static_data_path = (
+            f"{os.path.abspath(os.path.dirname(__file__))}/data/static_data/"
+        )
+        info(f"Looking for {c_obj} in {static_data_path}...")
+        for image in os.listdir(f"{static_data_path}"):
+            if os.path.isfile(f"{static_data_path}/{image}") and image.split(".")[
+                0
+            ] == c_obj.replace(" ", ""):
+                static_data_path += image
+                info(f"Found {c_obj} in {static_data_path}!")
+        overlay_text(
+            static_data_path,
+            [
+                f"Name: {c_obj}",
+                f"Constellation: {CADWELL_OBJECTS['NGC number'][c_obj]['Constellation']}",
+                f"Brightness: {CADWELL_OBJECTS['NGC number'][c_obj]['Magnitude']}",
+            ],
+            root_dir,
+            destination=f"{Path.home()}/PySkySlideshow",
+        )
 
 
 def invoke_skyview(stars, root_dir):
@@ -136,7 +181,9 @@ def get_visible(start_time, end_time, location, celestial_objs=None) -> dict():
         celestial_objs = cache_file.keys()
 
     for celestial_obj in tqdm(celestial_objs):
-        info("Gathering name, start_altaz.alt, and start_altaz.az ...")
+        info(
+            f"Gathering name, start_altaz.alt, and start_altaz.az for {celestial_obj}..."
+        )
         try:
             obj = astroplan.FixedTarget.from_name(celestial_obj)
             alt, az, t = is_object_visible(obj, start_time, end_time, location)
