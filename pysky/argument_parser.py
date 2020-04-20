@@ -45,40 +45,14 @@ def cli_parse(root_dir: str, cli_args: list) -> list:
     )
     try:
         info("Parsing cli input...")
-        year_one = int(cli_args[0].split("-")[0])
-        month_one = int(cli_args[0].split("-")[2])
-        day_one = int(cli_args[0].split("-")[1])
-        hour_one = int(cli_args[1].split(":")[0])
-        minute_one = int(cli_args[1].split(":")[1])
-
-        datetime_one = datetime.datetime(
-            year=year_one,
-            month=month_one,
-            day=day_one,
-            hour=hour_one,
-            minute=minute_one,
-        )
-
-        year_two = int(cli_args[2].split("-")[0])
-        month_two = int(cli_args[2].split("-")[2])
-        day_two = int(cli_args[2].split("-")[1])
-        hour_two = int(cli_args[3].split(":")[0])
-        minute_two = int(cli_args[3].split(":")[1])
-
-        datetime_two = datetime.datetime(
-            year=year_two,
-            month=month_two,
-            day=day_two,
-            hour=hour_two,
-            minute=minute_two,
-        )
+        START_TIME = astropy.time.Time(f"{cli_args[0]} {cli_args[1]}")
+        END_TIME = astropy.time.Time(f"{cli_args[2]} {cli_args[3]}")
     except IndexError as e:
         print(str(e))
         print_help()
         sys.exit()
 
-    START_TIME = astropy.time.Time(datetime_one)
-    END_TIME = astropy.time.Time(datetime_two)
+
 
     return (START_TIME, END_TIME)
 
