@@ -29,7 +29,12 @@ def invoke(cli_args):
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+        handlers=[
+            logging.FileHandler(
+                f"{root_dir}/data/log"
+            ),
+            logging.StreamHandler()
+        ],
     )
 
     START_TIME, END_TIME = cli_parse(root_dir, cli_args)
@@ -60,7 +65,12 @@ def invoke(cli_args):
 
     # Iterate through the ephemeries to add information
     for body in tqdm(EPHEMERIES_BODIES):
-        cache_file = get_ephemeries_info(EPHEMERIES_BODIES, root_dir, cache_file)
+        cache_file = get_ephemeries_info(
+            EPHEMERIES_BODIES,
+            root_dir,
+            cache_file
+        )
+
     # Dump cache file
     with open(f"{root_dir}/data/cache", "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
@@ -78,11 +88,13 @@ def invoke(cli_args):
         )
         info(f"Looking for {m_obj} in {static_data_path}...")
         for image in os.listdir(f"{static_data_path}"):
-            if os.path.isfile(f"{static_data_path}/{image}") and image.split(".")[
-                0
-            ] == m_obj.replace(" ", ""):
+            if os.path.isfile(
+                f"{static_data_path}/{image}"
+            ) and image.split(".")[0] == m_obj.replace(" ", ""):
                 static_data_path += image
-                info(f"Found {m_obj} in {static_data_path}!")
+                info(
+                    f"Found {m_obj} in {static_data_path}!"
+                )
         overlay_text(
             static_data_path,
             [
@@ -106,17 +118,19 @@ def invoke(cli_args):
         )
         info(f"Looking for {c_obj} in {static_data_path}...")
         for image in os.listdir(f"{static_data_path}"):
-            if os.path.isfile(f"{static_data_path}/{image}") and image.split(".")[
-                0
-            ] == c_obj.replace(" ", ""):
+            if os.path.isfile(
+                f"{static_data_path}/{image}"
+            ) and image.split(".")[0] == c_obj.replace(" ", ""):
                 static_data_path += image
                 info(f"Found {c_obj} in {static_data_path}!")
+        CONSELLATION = CADWELL_OBJECTS['NGC number'][c_obj]['Constellation']
+        BRIGHTNESS = CADWELL_OBJECTS['NGC number'][c_obj]['Magnitude']
         overlay_text(
             static_data_path,
             [
                 f"Name: {c_obj}",
-                f"Constellation: {CADWELL_OBJECTS['NGC number'][c_obj]['Constellation']}",
-                f"Brightness: {CADWELL_OBJECTS['NGC number'][c_obj]['Magnitude']}",
+                f"Constellation: {CONSELLATION}",
+                f"Brightness: {BRIGHTNESS}",
             ],
             root_dir,
             destination=f"{Path.home()}/PySkySlideshow",
@@ -128,7 +142,12 @@ def invoke_skyview(stars, root_dir):
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+        handlers=[
+            logging.FileHandler(
+                f"{root_dir}/data/log"
+            ),
+            logging.StreamHandler()
+        ],
     )
     del_stars = list()
     # Iterate STARS to get images and data
@@ -139,25 +158,30 @@ def invoke_skyview(stars, root_dir):
         # Call to download images
         if STATUS_CODE == 1:
             critical(
-                f"Brightness of {celestial_obj} is below 4.5! Removing from queue..."
+                f"Brightness of {celestial_obj} is below 4.5!"
             )
+            critical(f"Removing {celestial_obj} from queue...")
             del_stars.append(celestial_obj)
         elif STATUS_CODE == 2:
             critical(
-                f"Error downloading webpage for {celestial_obj}! Removing from queue..."
+                f"Error downloading webpage for {celestial_obj}!"
             )
+            critical(f"Removing {celestial_obj} from queue...")
             del_stars.append(celestial_obj)
         elif STATUS_CODE == 3:
             critical(
-                f"Error trying to parse the web page of {celestial_obj}! Removing from queue..."
+                f"Error trying to parse the web page of {celestial_obj}!"
             )
+            critical(f"Removing {celestial_obj} from queue...")
             del_stars.append(celestial_obj)
         elif STATUS_CODE == 4:
             continue
         else:
             critical(
-                f"Ran into an unknown error please create a issue on:\nhttps://github.com/allenerocha/pysky/issues/new\n! Removing {celestial_obj} from queue..."
+                f"Ran into an unknown error please create a issue on:\n\t" +
+                "https://github.com/allenerocha/pysky/issues/new\n"
             )
+            critical(f"Removing {celestial_obj} from queue...")
             del_stars.append(celestial_obj)
 
     return list(set(del_stars) ^ set(stars))
@@ -168,13 +192,19 @@ def get_visible(start_time, end_time, location, celestial_objs=None) -> dict():
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+        handlers=[
+            logging.FileHandler(
+                f"{root_dir}/data/log"
+            ),
+            logging.StreamHandler()
+        ],
     )
     visible = dict()
     if celestial_objs is None:
         cache_file = json.loads(
             open(
-                f"{Path(os.path.dirname(os.path.realpath((__file__))))}/data/cache",
+                f"{Path(os.path.dirname(os.path.realpath((__file__))))}" +
+                "/data/cache",
                 "r",
             ).read()
         )
@@ -182,7 +212,8 @@ def get_visible(start_time, end_time, location, celestial_objs=None) -> dict():
 
     for celestial_obj in tqdm(celestial_objs):
         info(
-            f"Gathering name, start_altaz.alt, and start_altaz.az for {celestial_obj}..."
+            "Gathering name, start_altaz.alt, and start_altaz.az for" +
+            f"{celestial_obj}..."
         )
         try:
             obj = astroplan.FixedTarget.from_name(celestial_obj)
@@ -195,7 +226,8 @@ def get_visible(start_time, end_time, location, celestial_objs=None) -> dict():
             info(f"Sucessfully gathered data for {celestial_obj}!\n")
         except astropy.coordinates.name_resolve.NameResolveError as e:
             error(
-                f"Unabale to gather name, start_altaz.alt, and start_altaz.az for {celestial_obj}!\n"
+                "Unabale to gather name, start_altaz.alt, and start_altaz.az" +
+                f"for {celestial_obj}!\n"
             )
             error(str(e))
     return visible

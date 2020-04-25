@@ -21,12 +21,8 @@ from .simbad import get_brightness, get_constellation, get_ra_dec
 
 
 def get_skyview_img(
-    celestial_obj: str,
-    width: int,
-    height: int,
-    image_size: float,
-    b_scale: str,
-    root_dir: str,
+    celestial_obj: str, width: int, height: int,
+    image_size: float, b_scale: str, root_dir: str,
 ) -> int:
     """
     This module retrieves the image from the skyview endpoint
@@ -41,20 +37,29 @@ def get_skyview_img(
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+        handlers=[
+            logging.FileHandler(
+                f"{root_dir}/data/log"
+            ),
+            logging.StreamHandler()
+        ],
     )
 
     BRIGHTNESS_THREASHOLD = 4.5
 
     # the image in in cache
     info(f"Checking if image of {celestial_obj} is cached...")
-    if check_cache(celestial_obj, width, height, image_size, b_scale, root_dir):
+    if check_cache(
+        celestial_obj, width, height,
+        image_size, b_scale, root_dir
+    ):
         return
 
     brightness = get_brightness(celestial_obj, root_dir)
     if brightness is None:
         critical(
-            f"Error searching for {celestial_obj} in the cadwell and messier catalogs."
+            f"Error searching for {celestial_obj} " +
+            "in the cadwell and messier catalogs."
         )
         return 2
 
@@ -73,20 +78,26 @@ def get_skyview_img(
         != 200
     ):
         critical(
-            "Error trying to connect to the skyview server taking {time.time() - t1}."
+            "Error trying to connect to the skyview server " +
+            f"taking {time.time() - t1}."
         )
         sys.exit()
-    info(f"Connection to skyview server successful taking {time.time() - t1} seconds!")
+    info(
+        "Connection to skyview server " +
+        f"successful taking {time.time() - t1} seconds!"
+    )
 
     endpoint = (
-        f"https://skyview.gsfc.nasa.gov/current/cgi/runquery.pl?Position={celestial_obj}"
-        f"&coordinates=J2000&coordinates=&projection=Tan&pixels={width}%2C{height}"
+        "https://skyview.gsfc.nasa.gov/current/cgi/runquery.pl?" +
+        f"Position={celestial_obj}"
+        "&coordinates=J2000&coordinates=&projection=Tan&" +
+        f"pixels={width}%2C{height}"
         f"&size={image_size}&float=on&scaling={b_scale}&resolver=SIMBAD-NED&"
-        f"Sampler=_skip_&Deedger=_skip_&rotation=&Smooth=&"
-        f"lut=colortables%2Fb-w-linear.bin&PlotColor=&grid=_skip_&gridlabels=1&"
-        f"catalogurl=&CatalogIDs=on&RGB=1&"
-        f"survey=Mellinger+Red&survey=Mellinger+Green&survey=Mellinger+Blue&"
-        f"IOSmooth=&contour=&contourSmooth=&ebins=null"
+        "Sampler=_skip_&Deedger=_skip_&rotation=&Smooth=&"
+        "lut=colortables%2Fb-w-linear.bin&PlotColor=&grid=_skip_" +
+        "&gridlabels=1&catalogurl=&CatalogIDs=on&RGB=1&"
+        "survey=Mellinger+Red&survey=Mellinger+Green&survey=Mellinger+Blue&"
+        "IOSmooth=&contour=&contourSmooth=&ebins=null"
     )
     try:
         t1 = time.time()
@@ -102,22 +113,27 @@ def get_skyview_img(
     try:
         img_url = "https://skyview.gsfc.nasa.gov/" + bs4.BeautifulSoup(
             image_request, features="html.parser"
-        ).find("td", attrs={"colspan": 3, "align": "left"}).find("a", href=True)[
-            "href"
-        ].replace(
-            "../", ""
-        )
+        ).find(
+            "td",
+            attrs={
+                "colspan": 3,
+                "align": "left"
+                }
+            ).find("a", href=True)["href"].replace("../", "")
         info("Webpage parsed!")
     except AttributeError as e:
         critical(
-            f"Error trying to parse the web page of {celestial_obj}!\n\n{str(e)}\n"
+            "Error trying to parse the web page of " +
+            f"{celestial_obj}!\n\n{str(e)}\n"
         )
         return 3
 
     info(f"Downloading image of {celestial_obj}...")
     t1 = time.time()
     urllib.request.urlretrieve(img_url, f"{root_dir}/data/temp.jpg")
-    img_bytes = base64.b64encode(open(f"{root_dir}/data/temp.jpg", "rb").read())
+    img_bytes = base64.b64encode(open(
+        f"{root_dir}/data/temp.jpg", "rb").read()
+    )
     info(f"Downloaded successfully in {time.time() - t1} seconds!")
 
     info(f"Writing {celestial_obj} data to cache...")
@@ -165,11 +181,18 @@ def get_skyview_img(
         # Write image to disk
         img = PIL.Image.open(
             io.BytesIO(
-                base64.b64decode(cache_file[celestial_obj]["image"]["base64"][1:-1])
+                base64.b64decode(
+                    cache_file[celestial_obj]["image"]["base64"][1:-1]
+                )
             )
         )
         img.save(
-            f"{Path.home()}/PySkySlideshow/{celestial_obj.replace(' ', '_')}-{cache_file[celestial_obj]['image']['width']}-{cache_file[celestial_obj]['image']['height']}-{cache_file[celestial_obj]['image']['resolution']}-{cache_file[celestial_obj]['image']['brightness scaling']}.png"
+            f"{Path.home()}/PySkySlideshow/" +
+            f"{celestial_obj.replace(' ', '_')}-" +
+            f"{cache_file[celestial_obj]['image']['width']}-" +
+            f"{cache_file[celestial_obj]['image']['height']}-" +
+            f"{cache_file[celestial_obj]['image']['resolution']}-" +
+            f"{cache_file[celestial_obj]['image']['brightness scaling']}.png"
         )
 
     except TypeError as e:
@@ -202,7 +225,12 @@ def check_cache(
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+        handlers=[
+            logging.FileHandler(
+                f"{root_dir}/data/log"
+            ),
+            logging.StreamHandler()
+        ],
     )
 
     cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
@@ -211,7 +239,9 @@ def check_cache(
         and (cache_file[celestial_obj]["image"]["width"] == width)
         and (cache_file[celestial_obj]["image"]["height"] == height)
         and (cache_file[celestial_obj]["image"]["resolution"] == image_size)
-        and (cache_file[celestial_obj]["image"]["brightness scaling"] == b_scale)
+        and (
+            cache_file[celestial_obj]["image"]["brightness scaling"] == b_scale
+        )
     ):
         files = [
             f
@@ -222,7 +252,8 @@ def check_cache(
             return False
 
         elif (
-            f"{Path.home()}/PySkySlideshow/{celestial_obj}-{width}-{height}-{image_size}-{b_scale}.png"
+            f"{Path.home()}/PySkySlideshow/{celestial_obj}-" +
+            f"{width}-{height}-{image_size}-{b_scale}.png"
             not in files
         ):
             cache_file.pop(celestial_obj, None)
@@ -234,5 +265,7 @@ def check_cache(
 
     else:
         cache_file.pop(celestial_obj, None)
-        error(f"Image of {celestial_obj} not cached.\nPreparing to download...")
+        error(
+            f"Image of {celestial_obj} not cached.\nPreparing to download..."
+        )
     return False

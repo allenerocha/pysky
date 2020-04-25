@@ -16,13 +16,19 @@ def check_integrity(root_dir: str):
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+        handlers=[
+            logging.FileHandler(
+                f"{root_dir}/data/log"
+            ),
+            logging.StreamHandler()
+        ],
     )
 
     info("Checking project integrity...")
     info("Checking for data directory...")
     if not os.path.isdir(f"{root_dir}/data"):
-        warning("Data directory not found.\nCreating data directory and cache file...")
+        warning("Data directory not found.")
+        warning("Creating data directory and cache file...")
         os.makedirs(f"{root_dir}/data")
         with open(f"{root_dir}/data/cache", "w") as cache_file:
             cache_file.write("{}")
@@ -41,18 +47,32 @@ def check_integrity(root_dir: str):
                 cache_file.write("{}")
             info("Created cache file!")
 
-    info(f"Searching in `{root_dir}/data/` for `VisibleCadwellCatalog.json`...")
+    info(
+        f"Searching in `{root_dir}/data/` for `VisibleCadwellCatalog.json`..."
+    )
     if not os.path.isfile(f"{root_dir}/data/VisibleCadwellCatalog.json"):
         error(
-            f"VisibleCadwellCatalog.json not found in the directory `{root_dir}/data/`!\nThe Application will not automatically search for these objects unless they are redownloaded.\n"
+            "VisibleCadwellCatalog.json not found in the directory " +
+            f"`{root_dir}/data/`!"
+        )
+        error(
+            "The Application will not automatically search " +
+            "for these objects unless they are redownloaded.\n"
         )
     else:
         info(f"VisibleCadwellCatalog.json was found!\n")
 
-    info(f"Searching in `{root_dir}/data/` for `VisibleMessierCatalog.json`...")
+    info(
+        f"Searching in `{root_dir}/data/` for `VisibleMessierCatalog.json`..."
+    )
     if not os.path.isfile(f"{root_dir}/data/VisibleMessierCatalog.json"):
         error(
-            f"VisibleMessierCatalog.json not found in the directory `{root_dir}/data/`!\nThe Application will not automatically search for these objects unless they are redownloaded.\n"
+            "VisibleMessierCatalog.json not found in the directory " +
+            f"`{root_dir}/data/`!"
+        )
+        error(
+            "The Application will not automatically search " +
+            "for these objects unless they are redownloaded.\n"
         )
     else:
         info(f"VisibleMessierCatalog.json was found!\n")
@@ -77,14 +97,24 @@ def clean_cache(root_dir: str):
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+        handlers=[
+            logging.FileHandler(
+                f"{root_dir}/data/log"
+            ),
+            logging.StreamHandler()
+        ],
     )
 
     info("Cleaning cache...")
     try:
         cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
     except json.decoder.JSONDecodeError as e:
-        error(f"\nError reading cache file. Generating emptying cache...\n{str(e)}\n")
+        error(
+            "\nError reading cache file."
+            )
+        error(
+            f"Generating emptying cache...\n{str(e)}\n"
+        )
         with open(f"{root_dir}/data/cache", "w") as cache_file:
             cache_file.write("{}")
             info("Created cache file!")
@@ -111,12 +141,22 @@ def read_user_prefs(root_dir: str) -> list:
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+        handlers=[
+            logging.FileHandler(
+                f"{root_dir}/data/log"
+            ),
+            logging.StreamHandler()
+        ],
     )
     info(f"Searching `{root_dir}/data/` for `user_prefs.cfg`...")
     if not os.path.isfile(f"{root_dir}/data/user_prefs.cfg"):
         critical(
-            f"User preferences file `user_prefs.cfg` not found in the directory `{root_dir}/data/`!\nApplication will continue, only looking for planets, Messier catalog, and Cadwell catalog objects.\n"
+            "User preferences file `user_prefs.cfg` not found " +
+            f"in the directory `{root_dir}/data/`!"
+        )
+        critical(
+            "Application will continue, only looking for planets, " +
+            "Messier catalog, and Cadwell catalog objects.\n"
         )
         return None
     else:

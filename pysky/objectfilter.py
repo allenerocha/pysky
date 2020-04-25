@@ -16,7 +16,12 @@ def emphemeries_filter(root_dir: str, *args) -> list:
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+        handlers=[
+            logging.FileHandler(
+                f"{root_dir}/data/log"
+            ),
+            logging.StreamHandler()
+        ],
     )
 
     info("Filtering objects.")

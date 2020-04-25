@@ -9,7 +9,8 @@ import astroquery.simbad
 
 def get_brightness(celestial_obj: str, root_dir: str) -> float:
     """
-    This function makes a request to the simbad website to retrieve a brightness
+    This function makes a request to the
+    simbad website to retrieve a brightness
     :param celestial_obj: name celestial object to retreieve the brightness of
     :return: the brightness of the passed celestial object
     """
@@ -17,10 +18,13 @@ def get_brightness(celestial_obj: str, root_dir: str) -> float:
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+        handlers=[
+            logging.FileHandler(
+                f"{root_dir}/data/log"
+            ),
+            logging.StreamHandler()
+        ],
     )
-
-    # view all possible fields => astroquery.simbad.Simbad.list_votable_fields()
 
     info(f"Retrieving brightness for {celestial_obj}...")
 
@@ -34,16 +38,20 @@ def get_brightness(celestial_obj: str, root_dir: str) -> float:
         astroquery.simbad.Simbad.remove_votable_fields("coordinates")
 
         # Check result for "--"
-        if str(astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0]) == "--":
+        if str(
+            astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0]
+        ) == "--":
             celestial_obj = celestial_obj + "_A"
-            brightness = float(
-                str(astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0])
+            BRIGHTNESS_FEILD = str(
+                astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0]
             )
+            brightness = float(BRIGHTNESS_FEILD)
 
         else:
-            brightness = float(
-                str(astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0])
+            BRIGHTNESS_FEILD = str(
+                astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0]
             )
+            brightness = float(BRIGHTNESS_FEILD)
         # Return brightness
         info(f"Retrieved brightness for {celestial_obj}!\n")
         return brightness
@@ -51,14 +59,17 @@ def get_brightness(celestial_obj: str, root_dir: str) -> float:
     # Occurs when the object is not in SIMBADS's database
     except TypeError as e:
         critical(
-            f"Error parsing the data for {celestial_obj}. Simbad only contains info on stars.\n\n{str(e)}"
+            f"Error parsing the data for {celestial_obj}. " +
+            f"Simbad only contains info on stars.\n\n{str(e)}"
         )
         return None
 
     # Occurs for multiple stars
     except ValueError as e:
         critical(
-            f"Error converting brightness for {celestial_obj}. Simbad does not contain brightnesses for double or multiple stars.\n\n{str(e)}"
+            f"Error converting brightness for {celestial_obj}. " +
+            "Simbad does not contain brightnesses for double or " +
+            f"multiple stars.\n\n{str(e)}"
         )
         return None
 
@@ -72,7 +83,12 @@ def get_constellation(celestial_obj: str, root_dir) -> str:
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+        handlers=[
+            logging.FileHandler(
+                f"{root_dir}/data/log"
+            ),
+            logging.StreamHandler()
+        ],
     )
     astroquery.simbad.Simbad.reset_votable_fields()
     info(f"Retrieving constellation for {celestial_obj}...")
@@ -87,13 +103,16 @@ def get_constellation(celestial_obj: str, root_dir) -> str:
     # Occurs when the object is not in SIMBAS's database
     except TypeError as e:
         critical(
-            f"Error parsing the data for {celestial_obj}. Simbad only contains info on stars.\n\n{str(e)}"
+            f"Error parsing the data for {celestial_obj}. " +
+            f"Simbad only contains info on stars.\n\n{str(e)}"
         )
         sys.exit()
 
     # Occurs for multiple stars
     except ValueError as e:
-        critical(f"Error converting constellation for {celestial_obj}.\n\n{str(e)}")
+        critical(
+            f"Error converting constellation for {celestial_obj}.\n\n{str(e)}"
+        )
         sys.exit()
 
 
@@ -101,20 +120,30 @@ def get_ra_dec(celestial_obj: str, root_dir: str) -> list:
     """
     This function uses simbad to retrieve the right acension
     and declination from the object passed as an argument
-    :param celestial_obj: name of the celestial object to retreive the ra and dec
+    :param celestial_obj: name of the celestial
+                          object to retreive the ra and dec
     :return: [ra, dec]
     """
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(f"{root_dir}/data/log"), logging.StreamHandler()],
+        handlers=[
+            logging.FileHandler(
+                f"{root_dir}/data/log"
+            ),
+            logging.StreamHandler()
+        ],
     )
     astroquery.simbad.Simbad.reset_votable_fields()
     astroquery.simbad.Simbad.remove_votable_fields("main_id")
     info(f"Retreiving right acension and declination for {celestial_obj}...")
-    ras = astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0].split()
+    ras = astroquery.simbad.Simbad.query_object(
+        f"{celestial_obj}"
+    )[0][0].split()
     ra = [int(float(r)) for r in ras]
-    decs = astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][1].split()
+    decs = astroquery.simbad.Simbad.query_object(
+        f"{celestial_obj}"
+    )[0][1].split()
     dec = [int(float(d)) for d in decs]
     ra_dec = [ra, dec]
     info(f"Retrieved ra and dec for {celestial_obj}!\n")
