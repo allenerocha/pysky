@@ -1,6 +1,8 @@
 
 slideshow/__pycache__/
 
+.mypy_cache/
+
 *.swp
 
 utils/__pycache__/
