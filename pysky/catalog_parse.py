@@ -28,24 +28,24 @@ def check_messier(celestial_obj):
     return None
 
 
-def parse_cadwell(root_dir: str) -> dict:
+def parse_caldwell(root_dir: str) -> dict:
     """
-    This function parses VisibleCadwellCatalog.json and returns the
+    This function parses VisibleCaldwellCatalogue.json and returns the
     json object as dictionary
     :param root_dir: Root directory of this application
-    :return: A Python dictionary of the VisibleCadwellCatalog.json
+    :return: A Python dictionary of the VisibleCaldwellCatalogue.json
     """
     if not isinstance(root_dir, str):
         root_dir = Path(os.path.dirname(os.path.realpath((__file__))))
-    cadwell_file = json.loads(
-        open(f"{root_dir}/data/VisibleCadwellCatalog.json", "r").read()
+    caldwell_file = json.loads(
+        open(f"{root_dir}/data/VisibleCaldwellCatalogue.json", "r").read()
     )
-    return cadwell_file
+    return caldwell_file
 
 
-def check_cadwell(celestial_obj):
-    cadwell_catalog = parse_cadwell(None)["NGC number"]
-    for key, value in cadwell_catalog.items():
+def check_caldwell(celestial_obj):
+    caldwell_catalog = parse_caldwell(None)["NGC number"]
+    for key, value in caldwell_catalog.items():
         if key == celestial_obj:
-            return cadwell_catalog[key]["Magnitude"]
+            return caldwell_catalog[key]["Magnitude"]
     return None

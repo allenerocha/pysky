@@ -12,7 +12,7 @@ from tqdm import tqdm
 
 from .argument_parser import cli_parse
 from .astro_info import get_ephemeries_info
-from .catalog_parse import parse_cadwell, parse_messier
+from .catalog_parse import parse_caldwell, parse_messier
 from .check_sky import is_object_visible
 from .image_manipulation import overlay_text
 from .objectfilter import emphemeries_filter
@@ -50,7 +50,7 @@ def invoke(cli_args):
     )
 
     check_integrity(root_dir)
-    CADWELL_OBJECTS = parse_cadwell(root_dir)
+    CALDWELL_OBJECTS = parse_caldwell(root_dir)
     MESSIER_OBJECTS = parse_messier(root_dir)
     USER_OBJECTS = read_user_prefs(root_dir)
 
@@ -106,13 +106,13 @@ def invoke(cli_args):
             destination=f"{Path.home()}/PySkySlideshow",
         )
 
-    cadwell_visible = get_visible(
+    caldwell_visible = get_visible(
         START_TIME,
         END_TIME,
         HAWTHORN_HOLLOW,
-        celestial_objs=list(CADWELL_OBJECTS["NGC number"].keys()),
+        celestial_objs=list(CALDWELL_OBJECTS["NGC number"].keys()),
     )
-    for c_obj in tqdm(cadwell_visible.keys()):
+    for c_obj in tqdm(caldwell_visible.keys()):
         static_data_path = (
             f"{os.path.abspath(os.path.dirname(__file__))}/data/static_data/"
         )
@@ -123,8 +123,8 @@ def invoke(cli_args):
             ) and image.split(".")[0] == c_obj.replace(" ", ""):
                 static_data_path += image
                 info(f"Found {c_obj} in {static_data_path}!")
-        CONSELLATION = CADWELL_OBJECTS['NGC number'][c_obj]['Constellation']
-        BRIGHTNESS = CADWELL_OBJECTS['NGC number'][c_obj]['Magnitude']
+        CONSELLATION = CALDWELL_OBJECTS['NGC number'][c_obj]['Constellation']
+        BRIGHTNESS = CALDWELL_OBJECTS['NGC number'][c_obj]['Magnitude']
         overlay_text(
             static_data_path,
             [
@@ -212,7 +212,7 @@ def get_visible(start_time, end_time, location, celestial_objs=None) -> dict():
 
     for celestial_obj in tqdm(celestial_objs):
         info(
-            "Gathering name, start_altaz.alt, and start_altaz.az for" +
+            "Gathering name, start_altaz.alt, and start_altaz.az for " +
             f"{celestial_obj}..."
         )
         try:

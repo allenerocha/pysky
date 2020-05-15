@@ -15,7 +15,7 @@ import bs4
 import PIL.Image
 import requests
 
-from .catalog_parse import check_cadwell, check_messier
+from .catalog_parse import check_caldwell, check_messier
 from .image_manipulation import overlay_text
 from .simbad import get_brightness, get_constellation, get_ra_dec
 
@@ -59,7 +59,7 @@ def get_skyview_img(
     if brightness is None:
         critical(
             f"Error searching for {celestial_obj} " +
-            "in the cadwell and messier catalogs."
+            "in the caldwell and messier catalogs."
         )
         return 2
 
