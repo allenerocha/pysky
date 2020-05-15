@@ -45,16 +45,34 @@ def overlay_text(
     celestial_obj = overlay_text[0].replace("Name: ", "")
     cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
     info(f"Overlaying text to image...")
+    
+    fonts = [f for f in os.listdir(f"{root_dir}/data/res") if ".ttf" in f]
     overlayed = PIL.ImageDraw.Draw(img, mode="RGBA")
-    overlayed.multiline_text(
-        xy=(10, int(img_h * 0.8)),  # xy for the text to be overlayed
-        text="\n".join(overlay_text),  # concats all passed strings in the list
-        fill=(255, 255, 255, 100),  # white text with alpha=100
-        # stroke_width=1,  # thickness of the stroke
-        # stroke_fill=(0, 0, 0, 100),  # black stroke with alpha=100
-        spacing=1,  # in between each new line
-        align="left",
-    )
+    
+    if len(fonts) >= 1:
+        fnt = PIL.ImageFont.truetype(
+                f"{root_dir}/data/res/{fonts[0]}",
+                int(img_h/50)
+                )
+        overlayed.multiline_text(
+            xy=(10, int(img_h * 0.8)),  # xy for the text to be overlayed
+            text="\n".join(overlay_text),  # concats all passed strings in the list
+            fill=(255, 255, 255, 100),  # white text with alpha=100
+            font=fnt,
+            stroke_width=1,  # thickness of the stroke
+            stroke_fill=(0, 0, 0, 100),  # black stroke with alpha=100
+            spacing=1,  # in between each new line
+            align="left",
+            )
+    else:
+        overlayed.multiline_text(
+            xy=(10, int(img_h * 0.8)),  # xy for the text to be overlayed
+            text="\n".join(overlay_text),  # concats all passed strings in the list
+            fill=(255, 255, 255, 100),  # white text with alpha=100
+            spacing=1,  # in between each new line
+            align="left",
+            )
+
     if len(destination) > 1:
         info(f"Saving image of {celestial_obj} to {destination}...")
         img.save(
