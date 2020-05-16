@@ -37,7 +37,7 @@ def invoke(cli_args):
         ],
     )
 
-    START_TIME, END_TIME = cli_parse(root_dir, cli_args)
+    START_TIME, END_TIME = cli_parse()
 
     HAWTHORN_HOLLOW = astroplan.Observer(
         location=astropy.coordinates.EarthLocation.from_geodetic(
