@@ -70,15 +70,23 @@ Start July 10th, 2012 17:00 End July 10th, 2012 23:00
 
  .. code-block:: bash
 
-   $ pysky 2012-10-07 17:00 2012-10-07 23:00
+   $ pysky -sd 2012-10-07 -st 17:00 -ed 2012-10-07 -et 23:00
 
-Start December 31st, 2015 08:00 End January 1st, 2016 02:00
------------------------------------------------------------
+Start December 31st, 2015 08:00 End January 1st, 2016 02:00 with high verbosity
+-------------------------------------------------------------------------------
 
 
  .. code-block:: bash
 
-   $ pysky 2015-31-12 08:00 2016-01-01 02:00``
+   $ pysky -sd 2015-31-12 -st 08:00 -ed 2016-01-01 -et 02:00 -v 5
+
+Start September 1st, 2019 19:00 for one hour with 2 threads and medium verbosity
+--------------------------------------------------------------------------------
+
+
+ .. code-block:: bash
+
+   $ pysky -sd 2019-01-09 -st 17:00 -t 2 -v 3
 
 Supported Python Versions
 =========================
