@@ -121,10 +121,14 @@ def get_skyview_img(
 
     Logger.log(f"Downloading image of {celestial_obj}...")
     t1 = time.time()
-    urllib.request.urlretrieve(img_url, f"{root_dir}/data/temp.jpg")
-    img_bytes = base64.b64encode(open(
-        f"{root_dir}/data/temp.jpg", "rb").read()
+    urllib.request.urlretrieve(
+        img_url,
+        f"{root_dir}/data/{celestial_obj}.temp.jpg"
     )
+    img_bytes = base64.b64encode(
+        open(
+            f"{root_dir}/data/{celestial_obj}.temp.jpg", "rb").read()
+        )
     Logger.log(f"Downloaded successfully in {time.time() - t1} seconds!")
 
     Logger.log(f"Writing {celestial_obj} data to cache...")
@@ -149,8 +153,11 @@ def get_skyview_img(
         Logger.log("Saving changes to cache...")
         with open(f"{root_dir}/data/cache", "w") as json_out:
             json.dump(cache_file, json_out, indent=4, sort_keys=True)
-            img_bytes = open(f"{root_dir}/data/temp.jpg", "rb").read()
-            os.remove(f"{root_dir}/data/temp.jpg")
+            img_bytes = open(
+                f"{root_dir}/data/{celestial_obj}.temp.jpg",
+                "rb"
+            ).read()
+            os.remove(f"{root_dir}/data/{celestial_obj}.temp.jpg")
         Logger.log("Successfully saved changes to cache!")
 
         # decode the image from the cache file from b64 to bytes

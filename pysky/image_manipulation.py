@@ -70,9 +70,9 @@ def overlay_text(
         return
 
     Logger.log(f"Adding edited image of {celestial_obj} to cache file...")
-    img.save(fp=f"{root_dir}/data/temp.png", format="PNG")
+    img.save(fp=f"{root_dir}/data/{celestial_obj}.temp.png", format="PNG")
     img_bytes = base64.b64encode(
-        open(f"{root_dir}/data/temp.png", "rb").read()
+        open(f"{root_dir}/data/{celestial_obj}.temp.png", "rb").read()
     )
     # write the edited image to the cache file
     cache_file[celestial_obj]["image"]["base64"] = str(img_bytes)[1:]
@@ -81,6 +81,6 @@ def overlay_text(
     with open(f"{root_dir}/data/cache", "w") as json_out:
         Logger.log("Saving edited cache file...")
         json.dump(cache_file, json_out)
-        os.remove(f"{root_dir}/data/temp.png")
+        os.remove(f"{root_dir}/data/{celestial_obj}.temp.png")
         Logger.log("Edited cache file saved!")
 
