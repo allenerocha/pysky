@@ -26,10 +26,22 @@ Usage
 
  .. code-block:: bash
 
-   ~$ pysky [start date] [start time] [end date] [end time]
+   ~$ pysky [start date] [start time] [end date] [end time] [thread count] [verbosity level]
 
 Command line options
 --------------------
+Options
+^^^^^^^
+===================  =================
+``-sd/--startdate``  Starting date.
+``-st/--starttime``  Starting time.
+``-ed/--enddate``    Ending date.
+``-et/--endtime``    Ending time.
+``-t/--threads``     Number of threads
+                     to use.
+``-v/--verbosity``   Verbosity level.
+===================  =================
+
 Date format (YEAR-DAY-MONTH)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 =========   ==============
