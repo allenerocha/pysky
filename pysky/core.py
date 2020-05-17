@@ -185,7 +185,6 @@ def get_visible(start_time, end_time, location, celestial_objs=None) -> dict:
             ).read()
         )
         celestial_objs = cache_file.keys()
-    print(celestial_objs)
     for celestial_obj in tqdm(celestial_objs):
         Logger.log(
             "Gathering name, start_altaz.alt, and start_altaz.az for " +
@@ -193,7 +192,6 @@ def get_visible(start_time, end_time, location, celestial_objs=None) -> dict:
         )
         try:
             obj = astroplan.FixedTarget.from_name(celestial_obj)
-            print(obj)
             alt, azimuth, obj_time = is_object_visible(
                 obj,
                 start_time,

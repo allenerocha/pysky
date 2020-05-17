@@ -54,7 +54,7 @@ def cli_parse() -> tuple:
         '-v',
         '--verbosity',
         help='Verbosity level (1, 2, 3, 4, 5)',
-        default=10,
+        default=2,
         type=int
     )
 
@@ -63,9 +63,11 @@ def cli_parse() -> tuple:
     # Sets the number of threads
     Const.THREADS = args.threads
 
-    print(Const.VERBOSITY)
     # Sets the verbosity level
-    if args.verbosity == 2:
+    if args.verbosity == 1:
+        Const.VERBOSITY = 50
+
+    elif args.verbosity == 2:
         Const.VERBOSITY = 40
 
     elif args.verbosity == 3:
@@ -79,9 +81,6 @@ def cli_parse() -> tuple:
 
     else:
         Const.VERBOSITY = 0
-
-    print("Assigned verbosity")
-    print(Const.VERBOSITY)
 
     # Enter GUI mode
     if args.startdate is None and args.starttime is None:
