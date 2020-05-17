@@ -40,6 +40,8 @@ Options
 ``-t/--threads``     Number of threads
                      to use.
 ``-v/--verbosity``   Verbosity level.
+``-h/--help``        Display help for
+                     the CL options.
 ===================  =================
 
 Date format (YEAR-DAY-MONTH)
@@ -60,20 +62,39 @@ Time format (HOUR:MINUTE)
 
 Help
 ----
+ .. code-block:: bash
 
-``~$ pysky``
+   ~$ pysky -h
+
+ .. code-block:: bash
+
+   ~$ pysky --help
 
 --------------
 
 Images
 ======
-
+Default
+^^^^^^^
 By default images of valid objects will be saved in the filename format:
 
 ``$HOME/PySkySlideshow/object-width-height-resolution-scaling.png``
 
+User Defined
+^^^^^^^^^^^^
+To change the location of the saved images, you can add:
+``slideshow_dir=``
+Followed by the directory to save in. The folder PySkySlideshow will be created in the specified directory.
+
 Examples
-========
+^^^^^^^^
+``slideshow_dir=/home/allen``
+This will set the directory to save the images as:
+``slideshow_dir=/home/allen/PySkySlideshow/``
+
+
+Usage
+=====
 
 
 Start July 10th, 2012 17:00 End July 10th, 2012 23:00
