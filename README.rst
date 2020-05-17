@@ -75,13 +75,13 @@ Help
 Images
 ======
 Default
-^^^^^^^
+-------
 By default images of valid objects will be saved in the filename format:
 
 ``$HOME/PySkySlideshow/object-width-height-resolution-scaling.png``
 
 User Defined
-^^^^^^^^^^^^
+------------
 To change the location of the saved images, you can add:
 ``slideshow_dir=``
 Followed by the directory to save in. The folder PySkySlideshow will be created in the specified directory.
