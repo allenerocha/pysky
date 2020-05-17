@@ -1,8 +1,7 @@
 """This module retrieves basic data from simbad based
 on which itentifier is passed via the command line"""
-import logging
 import sys
-from logging import critical, info
+from .logger import Logger
 
 import astroquery.simbad
 
@@ -15,18 +14,7 @@ def get_brightness(celestial_obj: str, root_dir: str) -> float:
     :return: the brightness of the passed celestial object
     """
 
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[
-            logging.FileHandler(
-                f"{root_dir}/data/log"
-            ),
-            logging.StreamHandler()
-        ],
-    )
-
-    info(f"Retrieving brightness for {celestial_obj}...")
+    Logger.log(f"Retrieving brightness for {celestial_obj}...")
 
     astroquery.simbad.Simbad.reset_votable_fields()
     try:
@@ -53,23 +41,25 @@ def get_brightness(celestial_obj: str, root_dir: str) -> float:
             )
             brightness = float(BRIGHTNESS_FEILD)
         # Return brightness
-        info(f"Retrieved brightness for {celestial_obj}!\n")
+        Logger.log(f"Retrieved brightness for {celestial_obj}!\n")
         return brightness
 
     # Occurs when the object is not in SIMBADS's database
     except TypeError as e:
-        critical(
+        Logger.log(
             f"Error parsing the data for {celestial_obj}. " +
-            f"Simbad only contains info on stars.\n\n{str(e)}"
+            f"Simbad only contains info on stars.\n\n{str(e)}",
+            50
         )
         return None
 
     # Occurs for multiple stars
     except ValueError as e:
-        critical(
+        Logger.log(
             f"Error converting brightness for {celestial_obj}. " +
             "Simbad does not contain brightnesses for double or " +
-            f"multiple stars.\n\n{str(e)}"
+            f"multiple stars.\n\n{str(e)}",
+            50
         )
         return None
 
@@ -80,38 +70,30 @@ def get_constellation(celestial_obj: str, root_dir) -> str:
     :param celestial_obj: name celestial object to retreieve the TLA
     :return: TLA of the constellation
     """
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[
-            logging.FileHandler(
-                f"{root_dir}/data/log"
-            ),
-            logging.StreamHandler()
-        ],
-    )
     astroquery.simbad.Simbad.reset_votable_fields()
-    info(f"Retrieving constellation for {celestial_obj}...")
+    Logger.log(f"Retrieving constellation for {celestial_obj}...")
     try:
         astroquery.simbad.Simbad.remove_votable_fields("coordinates")
         constellation = str(
             astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0]
         ).split()[-1][:-1]
-        info(f"Retrieved constellation for {celestial_obj}!\n")
+        Logger.log(f"Retrieved constellation for {celestial_obj}!\n")
         return constellation
 
     # Occurs when the object is not in SIMBAS's database
     except TypeError as e:
-        critical(
+        Logger.log(
             f"Error parsing the data for {celestial_obj}. " +
-            f"Simbad only contains info on stars.\n\n{str(e)}"
+            f"Simbad only contains info on stars.\n\n{str(e)}",
+            50
         )
         sys.exit()
 
     # Occurs for multiple stars
     except ValueError as e:
-        critical(
-            f"Error converting constellation for {celestial_obj}.\n\n{str(e)}"
+        Logger.log(
+            f"Error converting constellation for {celestial_obj}.\n\n{str(e)}",
+            50
         )
         sys.exit()
 
@@ -124,19 +106,11 @@ def get_ra_dec(celestial_obj: str, root_dir: str) -> list:
                           object to retreive the ra and dec
     :return: [ra, dec]
     """
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[
-            logging.FileHandler(
-                f"{root_dir}/data/log"
-            ),
-            logging.StreamHandler()
-        ],
-    )
     astroquery.simbad.Simbad.reset_votable_fields()
     astroquery.simbad.Simbad.remove_votable_fields("main_id")
-    info(f"Retreiving right acension and declination for {celestial_obj}...")
+    Logger.log(
+        f"Retreiving right acension and declination for {celestial_obj}..."
+    )
     ras = astroquery.simbad.Simbad.query_object(
         f"{celestial_obj}"
     )[0][0].split()
@@ -146,5 +120,5 @@ def get_ra_dec(celestial_obj: str, root_dir: str) -> list:
     )[0][1].split()
     dec = [int(float(d)) for d in decs]
     ra_dec = [ra, dec]
-    info(f"Retrieved ra and dec for {celestial_obj}!\n")
+    Logger.log(f"Retrieved ra and dec for {celestial_obj}!\n")
     return ra_dec

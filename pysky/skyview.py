@@ -3,13 +3,12 @@
 import base64
 import io
 import json
-import logging
 import os
 import sys
 import time
 import urllib.request
-from logging import critical, error, info
 from pathlib import Path
+from .logger import Logger
 
 import bs4
 import PIL.Image
@@ -34,21 +33,10 @@ def get_skyview_img(
     :param b_scale
     :return: Bytes
     """
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[
-            logging.FileHandler(
-                f"{root_dir}/data/log"
-            ),
-            logging.StreamHandler()
-        ],
-    )
-
     BRIGHTNESS_THREASHOLD = 4.5
 
     # the image in in cache
-    info(f"Checking if image of {celestial_obj} is cached...")
+    Logger.log(f"Checking if image of {celestial_obj} is cached...")
     if check_cache(
         celestial_obj, width, height,
         image_size, b_scale, root_dir
@@ -57,9 +45,10 @@ def get_skyview_img(
 
     brightness = get_brightness(celestial_obj, root_dir)
     if brightness is None:
-        critical(
+        Logger.log(
             f"Error searching for {celestial_obj} " +
-            "in the caldwell and messier catalogs."
+            "in the caldwell and messier catalogs.",
+            50
         )
         return 2
 
@@ -69,7 +58,7 @@ def get_skyview_img(
     if brightness > BRIGHTNESS_THREASHOLD:
         return 1
 
-    info("Establishing connection to skyview server...")
+    Logger.log("Establishing connection to skyview server...")
     t1 = time.time()
     if (
         urllib.request.urlopen(
@@ -77,12 +66,13 @@ def get_skyview_img(
         ).getcode()
         != 200
     ):
-        critical(
+        Logger.log(
             "Error trying to connect to the skyview server " +
-            f"taking {time.time() - t1}."
+            f"taking {time.time() - t1}.",
+            50
         )
         sys.exit()
-    info(
+    Logger.log(
         "Connection to skyview server " +
         f"successful taking {time.time() - t1} seconds!"
     )
@@ -101,15 +91,15 @@ def get_skyview_img(
     )
     try:
         t1 = time.time()
-        info(f"Downloading webpage for {celestial_obj}...")
+        Logger.log(f"Downloading webpage for {celestial_obj}...")
         image_request = requests.get(endpoint).text
     except requests.exceptions.RequestException as e:
-        critical(f"{str(e)}")
-        critical("Error searching for object.")
+        Logger.log(f"{str(e)}", 50)
+        Logger.log("Error searching for object.", 50)
         return 2
-    info(f"Downloaded successfully in {time.time() - t1} seconds!")
+    Logger.log(f"Downloaded successfully in {time.time() - t1} seconds!")
 
-    info("Parsing webpage...")
+    Logger.log("Parsing webpage...")
     try:
         img_url = "https://skyview.gsfc.nasa.gov/" + bs4.BeautifulSoup(
             image_request, features="html.parser"
@@ -120,23 +110,24 @@ def get_skyview_img(
                 "align": "left"
                 }
             ).find("a", href=True)["href"].replace("../", "")
-        info("Webpage parsed!")
+        Logger.log("Webpage parsed!")
     except AttributeError as e:
-        critical(
+        Logger.log(
             "Error trying to parse the web page of " +
-            f"{celestial_obj}!\n\n{str(e)}\n"
+            f"{celestial_obj}!\n\n{str(e)}\n",
+            50
         )
         return 3
 
-    info(f"Downloading image of {celestial_obj}...")
+    Logger.log(f"Downloading image of {celestial_obj}...")
     t1 = time.time()
     urllib.request.urlretrieve(img_url, f"{root_dir}/data/temp.jpg")
     img_bytes = base64.b64encode(open(
         f"{root_dir}/data/temp.jpg", "rb").read()
     )
-    info(f"Downloaded successfully in {time.time() - t1} seconds!")
+    Logger.log(f"Downloaded successfully in {time.time() - t1} seconds!")
 
-    info(f"Writing {celestial_obj} data to cache...")
+    Logger.log(f"Writing {celestial_obj} data to cache...")
     cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
     try:
         cache_file[celestial_obj] = {
@@ -153,14 +144,14 @@ def get_skyview_img(
                 "base64": str(img_bytes),
             },
         }
-        info(f"Finished writing {celestial_obj} data to cache!")
+        Logger.log(f"Finished writing {celestial_obj} data to cache!")
 
-        info("Saving changes to cache...")
+        Logger.log("Saving changes to cache...")
         with open(f"{root_dir}/data/cache", "w") as json_out:
             json.dump(cache_file, json_out, indent=4, sort_keys=True)
             img_bytes = open(f"{root_dir}/data/temp.jpg", "rb").read()
             os.remove(f"{root_dir}/data/temp.jpg")
-        info("Successfully saved changes to cache!")
+        Logger.log("Successfully saved changes to cache!")
 
         # decode the image from the cache file from b64 to bytes
         decoded_img = base64.b64decode(
@@ -196,10 +187,10 @@ def get_skyview_img(
         )
 
     except TypeError as e:
-        critical(str(e))
+        Logger.log(str(e), 50)
         sys.exit()
     except ConnectionResetError as e:
-        critical(str(e))
+        Logger.log(str(e), 50)
         sys.exit()
     return 4
 
@@ -222,17 +213,6 @@ def check_cache(
     :param b_scale brightness scale for image processing
     :return: boolean if depending on if the specific cache exists
     """
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[
-            logging.FileHandler(
-                f"{root_dir}/data/log"
-            ),
-            logging.StreamHandler()
-        ],
-    )
-
     cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
     if (
         (celestial_obj in cache_file)
@@ -259,13 +239,13 @@ def check_cache(
             cache_file.pop(celestial_obj, None)
             return False
 
-        info(files)
-        info(f"Image of {celestial_obj} is cached.\n")
+        Logger.log(f"Image of {celestial_obj} is cached.\n")
         return True
 
     else:
         cache_file.pop(celestial_obj, None)
-        error(
-            f"Image of {celestial_obj} not cached.\nPreparing to download..."
+        Logger.log(
+            f"Image of {celestial_obj} not cached.\nPreparing to download...",
+            30
         )
     return False

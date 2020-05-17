@@ -1,35 +1,23 @@
 """This module continas all functions related to filtering
 out all stars from planets and deep space objects"""
-import logging
-from logging import info
+from .logger import Logger
 
 from .astro_info import get_bodies
 
 
-def emphemeries_filter(root_dir: str, *args) -> list:
+def emphemeries_filter(args) -> tuple:
     """
     This function takes the passed list and filters
     out all the ephemeries bodies into another list
     :param arg: List of passed bodies
     :return: [[STARS], [EPHEMERIES BODIES]]
     """
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[
-            logging.FileHandler(
-                f"{root_dir}/data/log"
-            ),
-            logging.StreamHandler()
-        ],
-    )
-
-    info("Filtering objects.")
+    Logger.log("Filtering objects.")
     # Converts tuple to list
-    celestial_objs = args[0]
+    celestial_objs = args
 
     # Retrieves a list of all ephemeriers bodies in that list
-    EPHEMERIES_BODIES = get_bodies(root_dir, list(args))
+    EPHEMERIES_BODIES = get_bodies(args)
 
     # Removes all ephemeries bodies from the list
     STARS = [
@@ -37,5 +25,5 @@ def emphemeries_filter(root_dir: str, *args) -> list:
         for celestial_obj in celestial_objs
         if celestial_obj not in EPHEMERIES_BODIES
     ]
-    info("Filtering complete.\n")
-    return [STARS, EPHEMERIES_BODIES]
+    Logger.log("Filtering complete.\n")
+    return STARS, EPHEMERIES_BODIES

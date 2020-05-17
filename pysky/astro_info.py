@@ -1,6 +1,5 @@
-import logging
 import time
-from logging import critical, info
+from .logger import Logger
 
 import astropy.coordinates
 import astropy.time
@@ -8,24 +7,14 @@ import astropy.units
 from tqdm import tqdm
 
 
-def get_bodies(root_dir: str, *args) -> list:
+def get_bodies(args: list):
     """
-    Checks the passed values if they are in the solar system ephemeries
+    Check the passed values if they are in the solar system ephemeries.
     :*args: List of arguements to check
     :return: List of bodies or False if there are none
     """
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[
-            logging.FileHandler(
-                f"{root_dir}/data/log"
-            ),
-            logging.StreamHandler()
-        ],
-    )
 
-    celestial_objs = list(args)[0][0]
+    celestial_objs = args
 
     if len(celestial_objs) > 0:
         bodies = []
@@ -38,14 +27,17 @@ def get_bodies(root_dir: str, *args) -> list:
                     # Adds body to the list
                     bodies.append(celestial_obj)
             except TypeError as e:
-                critical(f"Error parsing object {celestial_obj}.\n\n{str(e)}")
+                Logger.log(
+                    f"Error parsing object {celestial_obj}.\n\n{str(e)}",
+                    50
+                )
         # Returns the list of bodies in the tuples
         return bodies
     # No bodies found in the passed list
     return False
 
 
-def get_info(root_dir: str, celestial_obj: str) -> list:
+def get_info(atime: str, celestial_obj: str) -> list:
     """
     This function uses the astropy module to retrieve
     distance information from the passed celestial object
@@ -63,17 +55,6 @@ def get_info(root_dir: str, celestial_obj: str) -> list:
             ]
     """
 
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[
-            logging.FileHandler(
-                f"{root_dir}/data/log"
-            ),
-            logging.StreamHandler()
-        ],
-    )
-
     # Type checking
     if not isinstance(celestial_obj, str):
         raise TypeError(f"{type(celestial_obj)} is not of type str.")
@@ -85,19 +66,17 @@ def get_info(root_dir: str, celestial_obj: str) -> list:
             height=204 * astropy.units.m,
         )
 
-        # Current time
-
         # retrives the inforamtion of the body
-        info(f"Retreiving coordinates for {celestial_obj}")
+        Logger.log(f"Retreiving coordinates for {celestial_obj}")
         t1 = time.time()
         with astropy.coordinates.solar_system_ephemeris.set("builtin"):
             body_coordinates = astropy.coordinates.get_body(
                 f"{celestial_obj}",
-                astropy.time.Time("2020-01-22 23:22"),
+                astropy.time.Time(atime),
                 static_location,
             )
 
-        info(
+        Logger.log(
             f"Retreived coordinates for {celestial_obj} in {time.time() - t1}!"
         )
         return [
@@ -112,43 +91,35 @@ def get_info(root_dir: str, celestial_obj: str) -> list:
         ]
 
     except Exception as e:
-        critical(str(e))
+        print("aaaaaaaaaa")
+        Logger.log(str(e), 50)
 
 
-def get_ephemeries_info(bodies: list, root_dir, cache_file: dict) -> dict:
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[
-            logging.FileHandler(
-                f"{root_dir}/data/log"
-            ),
-            logging.StreamHandler()
-        ],
+def get_ephemeries_info(body: str, atime: str, cache_file: dict) -> dict:
+    Logger.log(
+        f"Retreiving coordinates for {body}..."
     )
-    # Iterate through the ephemeries to add information
-    for body in tqdm(bodies):
-        info(
-            f"Retreiving coordinates for {body}..."
-        )
-        COORDS = get_info(root_dir, body)
-        cache_file[f"{body}"] = {}
-        cache_file[f"{body}"]["type"] = "planet"
-        cache_file[f"{body}"]["created"] = time.strftime(
-            "%Y-%d-%m %H:%M", time.gmtime()
-        )
-        info(
-            f"Coordinates for {body} retreived."
-        )
-        info(
-            f"Writing coordinates for {body} to cache..."
-        )
+    COORDS = get_info(atime, body)
+    cache_file[f"{body}"] = {}
+    cache_file[f"{body}"]["type"] = "planet"
+    cache_file[f"{body}"]["created"] = time.strftime(
+        "%Y-%d-%m %H:%M", time.gmtime()
+    )
+    Logger.log(
+        f"Coordinates for {body} retreived."
+    )
+    Logger.log(
+        f"Writing coordinates for {body} to cache..."
+    )
+    try:
         cache_file[f"{body}"]["coordinates"] = {  # Right acension
             "ra": [str(COORDS[0]), str(COORDS[1]), str(COORDS[2])],
             "dec": str(COORDS[3]),
             "cartesian": [str(COORDS[5]), str(COORDS[6]), str(COORDS[7])],
         }
-        info(
-            f"Successfully wrote coordinates for {body} to cache!"
-        )
+    except TypeError:
+        print(body)
+    Logger.log(
+        f"Successfully wrote coordinates for {body} to cache!"
+    )
     return cache_file

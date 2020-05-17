@@ -8,6 +8,7 @@ import argparse
 from datetime import date, timedelta
 from astropy import time as atime
 from .const import Const
+from .logger import Logger
 
 def cli_parse() -> tuple:
     parser = argparse.ArgumentParser(
@@ -53,7 +54,7 @@ def cli_parse() -> tuple:
         '-v',
         '--verbosity',
         help='Verbosity level (1, 2, 3, 4, 5)',
-        default=1,
+        default=10,
         type=int
     )
 
@@ -62,8 +63,25 @@ def cli_parse() -> tuple:
     # Sets the number of threads
     Const.THREADS = args.threads
 
+    print(Const.VERBOSITY)
     # Sets the verbosity level
-    Const.VERBOSITY = args.verbosity
+    if args.verbosity == 2:
+        Const.VERBOSITY = 40
+
+    elif args.verbosity == 3:
+        Const.VERBOSITY = 30
+
+    elif args.verbosity == 4:
+        Const.VERBOSITY = 20
+
+    elif args.verbosity == 5:
+        Const.VERBOSITY = 10
+
+    else:
+        Const.VERBOSITY = 0
+
+    print("Assigned verbosity")
+    print(Const.VERBOSITY)
 
     # Enter GUI mode
     if args.startdate is None and args.starttime is None:
