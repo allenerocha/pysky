@@ -83,13 +83,17 @@ By default images of valid objects will be saved in the filename format:
 User Defined
 ------------
 To change the location of the saved images, you can add:
+
 ``slideshow_dir=``
+
 Followed by the directory to save in. The folder PySkySlideshow will be created in the specified directory.
 
 Examples
 ^^^^^^^^
 ``slideshow_dir=/home/allen``
+
 This will set the directory to save the images as:
+
 ``slideshow_dir=/home/allen/PySkySlideshow/``
 
 
