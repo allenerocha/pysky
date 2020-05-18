@@ -7,7 +7,6 @@ import os
 import sys
 import time
 import urllib.request
-from pathlib import Path
 from .logger import Logger
 
 import bs4
@@ -17,6 +16,7 @@ import requests
 from .catalog_parse import check_caldwell, check_messier
 from .image_manipulation import overlay_text
 from .simbad import get_brightness, get_constellation, get_ra_dec
+from .const import Const
 
 
 def get_skyview_img(
@@ -185,7 +185,7 @@ def get_skyview_img(
             )
         )
         img.save(
-            f"{Path.home()}/PySkySlideshow/" +
+            f"{Const.SLIDESHOW_DIR}/PySkySlideshow/" +
             f"{celestial_obj.replace(' ', '_')}-" +
             f"{cache_file[celestial_obj]['image']['width']}-" +
             f"{cache_file[celestial_obj]['image']['height']}-" +
@@ -232,14 +232,14 @@ def check_cache(
     ):
         files = [
             f
-            for f in os.listdir(f"{Path.home()}/PySkySlideshow")
-            if os.path.isfile(f"{Path.home()}/PySkySlideshow/{f}")
+            for f in os.listdir(f"{Const.SLIDESHOW_DIR}/PySkySlideshow")
+            if os.path.isfile(f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{f}")
         ]
         if len(files) < 1:
             return False
 
         elif (
-            f"{Path.home()}/PySkySlideshow/{celestial_obj}-" +
+            f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{celestial_obj}-" +
             f"{width}-{height}-{image_size}-{b_scale}.png"
             not in files
         ):

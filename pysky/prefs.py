@@ -6,6 +6,7 @@ import os.path
 from pathlib import Path
 
 from tqdm import tqdm
+from .const import Const
 
 
 def check_integrity(root_dir: str):
@@ -70,18 +71,6 @@ def check_integrity(root_dir: str):
     else:
         Logger.log(f"VisibleMessierCatalog.json was found!\n")
 
-    Logger.log("Checking for slideshow directory...")
-    if not os.path.isdir(f"{Path.home()}/PySkySlideshow"):
-        Logger.log("Slideshow directory not found.", 30)
-
-        Logger.log("Creating slideshow directory...")
-        os.makedirs(f"{Path.home()}/PySkySlideshow")
-        Logger.log("Created slideshow directory!")
-
-    else:
-        Logger.log("Slideshow directory found!")
-    Logger.log("Project integrity verified.\n")
-
 
 def clean_cache(root_dir: str):
     """
@@ -140,10 +129,39 @@ def read_user_prefs(root_dir: str):
         Logger.log("User preferences file `user_prefs.cfg` found!")
         Logger.log("Parsing `user_prefs.cfg`...")
         with open(f"{root_dir}/data/user_prefs.cfg", "r") as u_prefs_file:
-            u_prefs_lines = [
-                line.strip()
-                for line in u_prefs_file.readlines()
-                if len(line.strip()) > 0 and line.strip()[0] != "#"
-            ]
+            user_objs = list()
+            user_save_loc = str()
+            for line in u_prefs_file.readlines():
+                if (
+                        (len(line.strip()) > 0)
+                        and (line.strip()[0] != "#")
+                        and ('slideshow_dir' not in line.strip())
+                ):
+                    user_objs.append(line.strip())
+                elif (
+                        (len(line.strip()) > 0)
+                        and (line.strip()[0] != "#")
+                        and ('slideshow_dir' in line.strip())
+                ):
+                    user_save_loc = line.strip().split("=")[1].strip()
+
             Logger.log("Finished parsing user preferences!\n")
-        return u_prefs_lines
+
+        if user_save_loc == "":
+            user_save_loc = str(Path.home())
+
+        Const.SLIDESHOW_DIR = user_save_loc
+        Logger.log("Checking for slideshow directory...")
+        if not os.path.isdir(f"{Const.SLIDESHOW_DIR}/PySkySlideshow"):
+            Logger.log("Slideshow directory not found.", 30)
+
+            Logger.log("Creating slideshow directory...")
+            os.makedirs(f"{Const.SLIDESHOW_DIR}/PySkySlideshow")
+            Logger.log(
+                f"Created slideshow directory in {Const.SLIDESHOW_DIR}!"
+            )
+
+        else:
+            Logger.log("Slideshow directory found!")
+
+        return user_objs

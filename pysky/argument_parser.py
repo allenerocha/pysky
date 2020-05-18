@@ -2,7 +2,6 @@
 import logging
 import os
 import sys
-from logging import info
 from pathlib import Path
 import argparse
 from datetime import date, timedelta

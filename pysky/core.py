@@ -18,6 +18,7 @@ from .objectfilter import emphemeries_filter
 from .prefs import check_integrity, read_user_prefs
 from .skyview import get_skyview_img
 from .logger import Logger
+from .const import Const
 
 
 def invoke():
@@ -99,7 +100,7 @@ def invoke():
                 f"Brightness: {MESSIER_OBJECTS[m_obj]['Apparent magnitude']}",
             ],
             root_dir,
-            destination=f"{Path.home()}/PySkySlideshow",
+            destination=f"{Const.SLIDESHOW_DIR}/PySkySlideshow",
         )
 
     caldwell_visible = get_visible(
@@ -129,7 +130,7 @@ def invoke():
                 f"Brightness: {BRIGHTNESS}",
             ],
             root_dir,
-            destination=f"{Path.home()}/PySkySlideshow",
+            destination=f"{Const.SLIDESHOW_DIR}/PySkySlideshow",
         )
 
 
