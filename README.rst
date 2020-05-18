@@ -82,7 +82,7 @@ By default images of valid objects will be saved in the filename format:
 
 User Defined
 ------------
-To change the location of the saved images, you can add:
+To change the location of the saved images, you can add the following line to the ``user_prefs.cfg`` file:
 
 ``slideshow_dir=``
 
