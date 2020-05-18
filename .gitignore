@@ -26,3 +26,7 @@ pysky/__pycache__/
 pysky/PySky.egg-info/
 
 *_test.py
+
+pysky/data/cache
+
+pysky/data/log
