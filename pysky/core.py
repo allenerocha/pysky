@@ -1,5 +1,7 @@
+"""Main module that calls all relevant modules."""
 import json
 import os.path
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import astropy
