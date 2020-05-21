@@ -2,11 +2,12 @@
 on which itentifier is passed via the command line"""
 import sys
 from .logger import Logger
+from .const import Const
 
 import astroquery.simbad
 
 
-def get_brightness(celestial_obj: str, root_dir: str) -> float:
+def get_brightness(celestial_obj: str) -> float:
     """
     This function makes a request to the
     simbad website to retrieve a brightness
@@ -64,7 +65,7 @@ def get_brightness(celestial_obj: str, root_dir: str) -> float:
         return None
 
 
-def get_constellation(celestial_obj: str, root_dir) -> str:
+def get_constellation(celestial_obj: str) -> str:
     """
     This function returns the TLA of the constellation from the passed object
     :param celestial_obj: name celestial object to retreieve the TLA
@@ -98,7 +99,7 @@ def get_constellation(celestial_obj: str, root_dir) -> str:
         sys.exit()
 
 
-def get_ra_dec(celestial_obj: str, root_dir: str) -> list:
+def get_ra_dec(celestial_obj: str) -> list:
     """
     This function uses simbad to retrieve the right acension
     and declination from the object passed as an argument
@@ -114,7 +115,11 @@ def get_ra_dec(celestial_obj: str, root_dir: str) -> list:
     ras = astroquery.simbad.Simbad.query_object(
         f"{celestial_obj}"
     )[0][0].split()
-    ra = [int(float(r)) for r in ras]
+    try:
+        ra = [int(float(r)) for r in ras]
+    except ValueError as e:
+        print(str(e))
+        exit()
     decs = astroquery.simbad.Simbad.query_object(
         f"{celestial_obj}"
     )[0][1].split()

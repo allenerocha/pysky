@@ -19,10 +19,7 @@ from .simbad import get_brightness, get_constellation, get_ra_dec
 from .const import Const
 
 
-def get_skyview_img(
-    celestial_obj: str, width: int, height: int,
-    image_size: float, b_scale: str, root_dir: str,
-) -> int:
+def get_skyview_img(celestial_obj: str) -> int:
     """
     This module retrieves the image from the skyview endpoint
     if it not already cached. After retrieval, it will cache the image.
@@ -33,7 +30,10 @@ def get_skyview_img(
     :param b_scale
     :return: Bytes
     """
-    BRIGHTNESS_THREASHOLD = 4.5
+    width, height = (1080, 1080)
+    image_size = 3.5
+    b_scale = "Linear"
+    root_dir = os.path.abspath(os.path.dirname(__file__))
 
     # the image in in cache
     Logger.log(f"Checking if image of {celestial_obj} is cached...")
@@ -42,21 +42,6 @@ def get_skyview_img(
         image_size, b_scale, root_dir
     ):
         return
-
-    brightness = get_brightness(celestial_obj, root_dir)
-    if brightness is None:
-        Logger.log(
-            f"Error searching for {celestial_obj} " +
-            "in the caldwell and messier catalogs.",
-            50
-        )
-        return 2
-
-    constellation = get_constellation(celestial_obj, root_dir)
-    ra_dec = get_ra_dec(celestial_obj, root_dir)
-
-    if brightness > BRIGHTNESS_THREASHOLD:
-        return 1
 
     Logger.log("Establishing connection to skyview server...")
     t1 = time.time()
@@ -136,10 +121,7 @@ def get_skyview_img(
     try:
         cache_file[celestial_obj] = {
             "type": "star",
-            "constellation": f"{constellation}",
             "created": time.strftime("%Y-%d-%m %H:%M", time.gmtime()),
-            "brightness": brightness,
-            "coordinates": {"ra": ra_dec[0], "dec": ra_dec[1]},
             "image": {
                 "width": width,
                 "height": height,
@@ -157,41 +139,7 @@ def get_skyview_img(
                 f"{root_dir}/data/{celestial_obj}.temp.jpg",
                 "rb"
             ).read()
-            os.remove(f"{root_dir}/data/{celestial_obj}.temp.jpg")
         Logger.log("Successfully saved changes to cache!")
-
-        # decode the image from the cache file from b64 to bytes
-        decoded_img = base64.b64decode(
-            cache_file[celestial_obj]["image"]["base64"][1:-1]
-        )
-        # save the returned image containing the overlayed information
-        overlay_text(
-            PIL.Image.open(io.BytesIO(decoded_img)),
-            [
-                f"Name: {celestial_obj}",
-                f"Constellation: {cache_file[celestial_obj]['constellation']}",
-                f"Brightness: {cache_file[celestial_obj]['brightness']}",
-            ],
-            root_dir,
-        )
-        # Reload edited cache file
-        cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
-        # Write image to disk
-        img = PIL.Image.open(
-            io.BytesIO(
-                base64.b64decode(
-                    cache_file[celestial_obj]["image"]["base64"][1:-1]
-                )
-            )
-        )
-        img.save(
-            f"{Const.SLIDESHOW_DIR}/PySkySlideshow/" +
-            f"{celestial_obj.replace(' ', '_')}-" +
-            f"{cache_file[celestial_obj]['image']['width']}-" +
-            f"{cache_file[celestial_obj]['image']['height']}-" +
-            f"{cache_file[celestial_obj]['image']['resolution']}-" +
-            f"{cache_file[celestial_obj]['image']['brightness scaling']}.png"
-        )
 
     except TypeError as e:
         Logger.log(str(e), 50)
@@ -221,20 +169,23 @@ def check_cache(
     :return: boolean if depending on if the specific cache exists
     """
     cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
-    if (
-        (celestial_obj in cache_file)
-        and (cache_file[celestial_obj]["image"]["width"] == width)
-        and (cache_file[celestial_obj]["image"]["height"] == height)
-        and (cache_file[celestial_obj]["image"]["resolution"] == image_size)
-        and (
-            cache_file[celestial_obj]["image"]["brightness scaling"] == b_scale
-        )
-    ):
-        files = [
-            f
-            for f in os.listdir(f"{Const.SLIDESHOW_DIR}/PySkySlideshow")
-            if os.path.isfile(f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{f}")
-        ]
+    try:
+        if (
+            (celestial_obj in cache_file)
+            and (cache_file[celestial_obj]["image"]["width"] == width)
+            and (cache_file[celestial_obj]["image"]["height"] == height)
+            and (cache_file[celestial_obj]["image"]["resolution"] == image_size)
+            and (
+                cache_file[celestial_obj]["image"]["brightness scaling"] == b_scale
+            )
+        ):
+            files = [
+                f
+                for f in os.listdir(f"{Const.SLIDESHOW_DIR}/PySkySlideshow")
+                if os.path.isfile(f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{f}")
+            ]
+    except KeyError:
+        return False
         if len(files) < 1:
             return False
 
