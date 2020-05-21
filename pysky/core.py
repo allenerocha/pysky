@@ -21,6 +21,7 @@ from .prefs import check_integrity, read_user_prefs
 from .skyview import get_skyview_img
 from .logger import Logger
 from .const import Const
+from .simbad import get_brightness, get_constellation, get_ra_dec
 
 
 def invoke():
@@ -30,8 +31,6 @@ def invoke():
     :param root_dir: absolute path to this file
     """
     download_IERS_A()
-
-    root_dir = os.path.abspath(os.path.dirname(__file__))
 
     START_TIME, END_TIME = cli_parse()
 
@@ -45,18 +44,28 @@ def invoke():
         timezone="US/Central",
     )
 
-    check_integrity(root_dir)
-    CALDWELL_OBJECTS = parse_caldwell(root_dir)
-    MESSIER_OBJECTS = parse_messier(root_dir)
-    USER_OBJECTS = read_user_prefs(root_dir)
+    check_integrity(Const.ROOT_DIR)
+    CALDWELL_OBJECTS = parse_caldwell(Const.ROOT_DIR)
+    MESSIER_OBJECTS = parse_messier(Const.ROOT_DIR)
+    USER_OBJECTS = read_user_prefs(Const.ROOT_DIR)
 
     STARS, EPHEMERIES_BODIES = emphemeries_filter(USER_OBJECTS)
+
     # Calls the skyview api and simbad
     # api and returns the the list of stars
-    STARS = invoke_skyview(STARS, root_dir)
+    invoke_skyview(STARS)
     # Open cache file
-    cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
+    cache_file = json.loads(open(f"{Const.ROOT_DIR}/data/cache", "r").read())
+    for star in STARS:
+        cache_file = get_br(star, cache_file)
+        cache_file = get_cn(star, cache_file)
+        cache_file = get_loc(star, cache_file)
+    # Dump cache file
+    with open(f"{Const.ROOT_DIR}/data/cache", "w") as json_out:
+        json.dump(cache_file, json_out, indent=4, sort_keys=True)
+    cache_file = json.loads(open(f"{Const.ROOT_DIR}/data/cache", "r").read())
 
+    set_img_txt(STARS)
     # Iterate through the ephemeries to add information
     for body in tqdm(EPHEMERIES_BODIES):
         cache_file = get_ephemeries_info(
@@ -66,7 +75,7 @@ def invoke():
         )
 
     # Dump cache file
-    with open(f"{root_dir}/data/cache", "w") as json_out:
+    with open(f"{Const.ROOT_DIR}/data/cache", "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
 
     cached_visible = get_visible(
@@ -88,22 +97,12 @@ def invoke():
         Logger.log(f"Looking for {m_obj} in {static_data_path}...")
         for image in os.listdir(f"{static_data_path}"):
             if os.path.isfile(
-                f"{static_data_path}/{image}"
+                    f"{static_data_path}/{image}"
             ) and image.split(".")[0] == m_obj.replace(" ", ""):
                 static_data_path += image
                 Logger.log(
                     f"Found {m_obj} in {static_data_path}!"
                 )
-        overlay_text(
-            static_data_path,
-            [
-                f"Name: {m_obj}",
-                f"Constellation: {MESSIER_OBJECTS[m_obj]['Constellation']}",
-                f"Brightness: {MESSIER_OBJECTS[m_obj]['Apparent magnitude']}",
-            ],
-            root_dir,
-            destination=f"{Const.SLIDESHOW_DIR}/PySkySlideshow",
-        )
 
     caldwell_visible = get_visible(
         START_TIME,
@@ -118,63 +117,48 @@ def invoke():
         Logger.log(f"Looking for {c_obj} in {static_data_path}...")
         for image in os.listdir(f"{static_data_path}"):
             if os.path.isfile(
-                f"{static_data_path}/{image}"
+              f"{static_data_path}/{image}"
             ) and image.split(".")[0] == c_obj.replace(" ", ""):
                 static_data_path += image
                 Logger.log(f"Found {c_obj} in {static_data_path}!")
         CONSELLATION = CALDWELL_OBJECTS['NGC number'][c_obj]['Constellation']
         BRIGHTNESS = CALDWELL_OBJECTS['NGC number'][c_obj]['Magnitude']
-        overlay_text(
-            static_data_path,
-            [
-                f"Name: {c_obj}",
-                f"Constellation: {CONSELLATION}",
-                f"Brightness: {BRIGHTNESS}",
-            ],
-            root_dir,
-            destination=f"{Const.SLIDESHOW_DIR}/PySkySlideshow",
-        )
 
 
-def invoke_skyview(stars, root_dir):
-    root_dir = os.path.abspath(os.path.dirname(__file__))
-    del_stars = list()
-    
-    # Iterate STARS to get images and data
-    for celestial_obj in tqdm(stars):
-        STATUS_CODE = get_skyview_img(
-            celestial_obj, 1080, 1080, 3.5, "Linear", root_dir
-        )
-        # Call to download images
-        if STATUS_CODE == 1:
-            Logger.log(
-                f"Brightness of {celestial_obj} is below 4.5!", 50
-            )
-            Logger.log(f"Removing {celestial_obj} from queue...", 50)
-            del_stars.append(celestial_obj)
-        elif STATUS_CODE == 2:
-            Logger.log(
-                f"Error downloading webpage for {celestial_obj}!", 50
-            )
-            Logger.log(f"Removing {celestial_obj} from queue...", 50)
-            del_stars.append(celestial_obj)
-        elif STATUS_CODE == 3:
-            Logger.log(
-                f"Error trying to parse the web page of {celestial_obj}!", 50
-            )
-            Logger.log(f"Removing {celestial_obj} from queue...", 50)
-            del_stars.append(celestial_obj)
-        elif STATUS_CODE == 4:
-            continue
-        else:
-            Logger.log(
-                "Ran into an unknown error please create a issue on:\n\t" +
-                "https://github.com/allenerocha/pysky/issues/new\n", 50
-            )
-            Logger.log(f"Removing {celestial_obj} from queue...", 50)
-            del_stars.append(celestial_obj)
+def get_br(celestial_obj: str, cache_file: dict):
+    """Call the simbad module and get the brightness."""
+    brightness = get_brightness(celestial_obj)
+    cache_file[celestial_obj]["brightness"] = brightness
+    return cache_file
 
-    return list(set(del_stars) ^ set(stars))
+
+def get_cn(celestial_obj: str, cache_file: dict):
+    """Call the simbad module and get the constellation."""
+    constellation = get_constellation(celestial_obj)
+    cache_file[celestial_obj]["constellation"] = constellation
+    return cache_file
+
+
+def get_loc(celestial_obj: str, cache_file: dict):
+    """Call the simbad module and get the location"""
+    ra_dec = get_ra_dec(celestial_obj)
+    cache_file[celestial_obj]["coordinates"] = {
+        "ra": ra_dec[0],
+        "dec": ra_dec[1]
+    }
+    return cache_file
+
+
+def invoke_skyview(stars):
+    """Run skyview in as many threads as specified."""
+    with ThreadPoolExecutor(max_workers=Const.THREADS) as executor:
+        executor.map(get_skyview_img, stars)
+
+
+def set_img_txt(celestial_objs):
+    """Set the text on the image of the object."""
+    with ThreadPoolExecutor(max_workers=Const.THREADS) as executor:
+        executor.map(overlay_text, celestial_objs)
 
 
 def get_visible(start_time, end_time, location, celestial_objs=None) -> dict:
