@@ -35,11 +35,22 @@ def overlay_text(celestial_obj: str) -> None:
         img = PIL.Image.open(
             f"{static_data_path}{celestial_obj.replace(' ', '')}.jpg"
         )
-        overlay_txt = [
-            f"Name: {celestial_obj}",
-            f"Constellation: {m_catalog[celestial_obj]['Constellation']}",
-            f"Brightness: {m_catalog[celestial_obj]['Apparent magnitude']}",
-        ]
+        if m_catalog[celestial_obj]['Common name'] != "":
+            overlay_txt = [
+                "Common Name: " +
+                f"{m_catalog[celestial_obj]['Common name']}",
+                f"Catalogue Name: {celestial_obj}",
+                f"Constellation: {m_catalog[celestial_obj]['Constellation']}",
+                "Brightness: " +
+                f"{m_catalog[celestial_obj]['Apparent magnitude']}",
+            ]
+        else:
+            overlay_txt = [
+                f"Catalogue Name: {celestial_obj}",
+                f"Constellation: {m_catalog[celestial_obj]['Constellation']}",
+                "Brightness: " +
+                f"{m_catalog[celestial_obj]['Apparent magnitude']}",
+            ]
         img = add_text(img, overlay_txt)
         img.save(
             fp=f"{Const.SLIDESHOW_DIR}/PySkySlideshow/" +
@@ -53,13 +64,24 @@ def overlay_text(celestial_obj: str) -> None:
         img = PIL.Image.open(
             f"{static_data_path}{celestial_obj.replace(' ', '')}.jpg"
         )
-        overlay_txt = [
-            f"Name: {celestial_obj}",
-            "Constellation: " +
-            f"{c_catalogue['NGC number'][celestial_obj]['Constellation']}",
-            "Brightness: " +
-            f"{c_catalogue['NGC number'][celestial_obj]['Magnitude']}",
-        ]
+        if c_catalogue['NGC number'][celestial_obj]['Common name'] != "":
+            overlay_txt = [
+                "Common Name: " +
+                f"{c_catalogue['NGC number'][celestial_obj]['Common name']}",
+                f"Catalogue Name: {celestial_obj}",
+                "Constellation: " +
+                f"{c_catalogue['NGC number'][celestial_obj]['Constellation']}",
+                "Brightness: " +
+                f"{c_catalogue['NGC number'][celestial_obj]['Magnitude']}",
+            ]
+        else:
+            overlay_txt = [
+                f"Catalogue Name: {celestial_obj}",
+                "Constellation: " +
+                f"{c_catalogue['NGC number'][celestial_obj]['Constellation']}",
+                "Brightness: " +
+                f"{c_catalogue['NGC number'][celestial_obj]['Magnitude']}",
+            ]
         img = add_text(img, overlay_txt)
         img.save(
             fp=f"{Const.SLIDESHOW_DIR}/PySkySlideshow/" +
