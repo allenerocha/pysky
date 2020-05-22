@@ -42,10 +42,10 @@ def invoke():
         timezone="US/Central",
     )
 
-    check_integrity(Const.ROOT_DIR)
+    check_integrity()
     CALDWELL_OBJECTS = parse_caldwell(Const.ROOT_DIR)
     MESSIER_OBJECTS = parse_messier(Const.ROOT_DIR)
-    USER_OBJECTS = read_user_prefs(Const.ROOT_DIR)
+    USER_OBJECTS = read_user_prefs()
 
     STARS, EPHEMERIES_BODIES = emphemeries_filter(USER_OBJECTS)
 
@@ -55,9 +55,8 @@ def invoke():
     # Open cache file
     cache_file = json.loads(open(f"{Const.ROOT_DIR}/data/cache", "r").read())
     for star in STARS:
-        cache_file = get_br(star, cache_file)
-        cache_file = get_cn(star, cache_file)
-        cache_file = get_loc(star, cache_file)
+        cache_file = set_simbad_values(star, cache_file)
+
     # Dump cache file
     with open(f"{Const.ROOT_DIR}/data/cache", "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
