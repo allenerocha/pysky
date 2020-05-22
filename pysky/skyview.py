@@ -1,7 +1,6 @@
 """This module retrieves the image from the passed star """
 
 import base64
-import io
 import json
 import os
 import sys
@@ -10,12 +9,8 @@ import urllib.request
 from .logger import Logger
 
 import bs4
-import PIL.Image
 import requests
 
-from .catalog_parse import check_caldwell, check_messier
-from .image_manipulation import overlay_text
-from .simbad import get_brightness, get_constellation, get_ra_dec
 from .const import Const
 
 
@@ -23,12 +18,8 @@ def get_skyview_img(celestial_obj: str) -> int:
     """
     This module retrieves the image from the skyview endpoint
     if it not already cached. After retrieval, it will cache the image.
-    :param celestial_obj: Name of object to view
-    :param width: Width of the output picture desired
-    :param height: Height of the output picture desired
-    :param image_size: Degrees of the image
-    :param b_scale
-    :return: Bytes
+    :param celestial_obj: Name of object to download.
+    :return: Integer code.
     """
     width, height = (1080, 1080)
     image_size = 3.5
@@ -38,18 +29,17 @@ def get_skyview_img(celestial_obj: str) -> int:
     # the image in in cache
     Logger.log(f"Checking if image of {celestial_obj} is cached...")
     if check_cache(
-        celestial_obj, width, height,
-        image_size, b_scale, root_dir
+            celestial_obj, width, height,
+            image_size, b_scale, root_dir
     ):
         return
 
     Logger.log("Establishing connection to skyview server...")
     t1 = time.time()
     if (
-        urllib.request.urlopen(
-            "https://skyview.gsfc.nasa.gov/current/cgi/runquery.pl"
-        ).getcode()
-        != 200
+            urllib.request.urlopen(
+                "https://skyview.gsfc.nasa.gov/current/cgi/runquery.pl"
+                ).getcode() != 200
     ):
         Logger.log(
             "Error trying to connect to the skyview server " +
@@ -78,8 +68,8 @@ def get_skyview_img(celestial_obj: str) -> int:
         t1 = time.time()
         Logger.log(f"Downloading webpage for {celestial_obj}...")
         image_request = requests.get(endpoint).text
-    except requests.exceptions.RequestException as e:
-        Logger.log(f"{str(e)}", 50)
+    except requests.exceptions.RequestException as req_except:
+        Logger.log(f"{str(req_except)}", 50)
         Logger.log("Error searching for object.", 50)
         return 2
     Logger.log(f"Downloaded successfully in {time.time() - t1} seconds!")
@@ -96,10 +86,10 @@ def get_skyview_img(celestial_obj: str) -> int:
                 }
             ).find("a", href=True)["href"].replace("../", "")
         Logger.log("Webpage parsed!")
-    except AttributeError as e:
+    except AttributeError as attrib_except:
         Logger.log(
             "Error trying to parse the web page of " +
-            f"{celestial_obj}!\n\n{str(e)}\n",
+            f"{celestial_obj}!\n\n{str(attrib_except)}\n",
             50
         )
         return 3
@@ -141,23 +131,23 @@ def get_skyview_img(celestial_obj: str) -> int:
             ).read()
         Logger.log("Successfully saved changes to cache!")
 
-    except TypeError as e:
-        Logger.log(str(e), 50)
+    except TypeError as type_err:
+        Logger.log(str(type_err), 50)
         sys.exit()
-    except ConnectionResetError as e:
-        Logger.log(str(e), 50)
+    except ConnectionResetError as conn_err:
+        Logger.log(str(conn_err), 50)
         sys.exit()
     return 4
 
 
 def check_cache(
-    celestial_obj: str,
-    width: int,
-    height: int,
-    image_size: float,
-    b_scale: str,
-    root_dir: str,
-) -> bool:
+        celestial_obj: str,
+        width: int,
+        height: int,
+        image_size: float,
+        b_scale: str,
+        root_dir: str,
+        ) -> bool:
     """
     This module retrieves the image from the skyview endpoint
     if it not already cached. After retrieval, it will cache the image.
@@ -171,13 +161,15 @@ def check_cache(
     cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
     try:
         if (
-            (celestial_obj in cache_file)
-            and (cache_file[celestial_obj]["image"]["width"] == width)
-            and (cache_file[celestial_obj]["image"]["height"] == height)
-            and (cache_file[celestial_obj]["image"]["resolution"] == image_size)
-            and (
-                cache_file[celestial_obj]["image"]["brightness scaling"] == b_scale
-            )
+                (celestial_obj in cache_file)
+                and (cache_file[celestial_obj]["image"]["width"] == width)
+                and (cache_file[celestial_obj]["image"]["height"] == height)
+                and (cache_file[celestial_obj]["image"]["resolution"]
+                     == image_size)
+                and (
+                    cache_file[celestial_obj]["image"]["brightness scaling"]
+                    == b_scale
+                )
         ):
             files = [
                 f
