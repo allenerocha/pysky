@@ -6,11 +6,10 @@ import os
 import sys
 import time
 import urllib.request
-from .logger import Logger
-
 import bs4
 import requests
 
+from .logger import Logger
 from .const import Const
 
 
