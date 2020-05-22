@@ -1,16 +1,17 @@
+"""Get astropy information of ephemeries."""
 import time
-from .logger import Logger
-
 import astropy.coordinates
 import astropy.time
 import astropy.units
 from tqdm import tqdm
 
+from .logger import Logger
+
 
 def get_bodies(args: list):
     """
     Check the passed values if they are in the solar system ephemeries.
-    :*args: List of arguements to check
+    :param args: List of arguements to check.
     :return: List of bodies or False if there are none
     """
 
@@ -26,9 +27,10 @@ def get_bodies(args: list):
                 if celestial_obj in EPH_BODIES:
                     # Adds body to the list
                     bodies.append(celestial_obj)
-            except TypeError as e:
+            except TypeError as type_err:
                 Logger.log(
-                    f"Error parsing object {celestial_obj}.\n\n{str(e)}",
+                    f"Error parsing object {celestial_obj}.\n\n" +
+                    f"{str(type_err)}",
                     50
                 )
         # Returns the list of bodies in the tuples
@@ -40,19 +42,9 @@ def get_bodies(args: list):
 def get_info(atime: str, celestial_obj: str) -> list:
     """
     This function uses the astropy module to retrieve
-    distance information from the passed celestial object
-    :celestial_obj: Name of the celestial object
-    :return:
-            [
-                "hour",
-                "minute",
-                "second",
-                "degree",
-                "radian",
-                "x",
-                "y",
-                "z",
-            ]
+    distance information from the passed celestial object.
+    :celestial_obj: Name of the celestial object.
+    :return: List of the location of the object.
     """
 
     # Type checking
@@ -91,11 +83,17 @@ def get_info(atime: str, celestial_obj: str) -> list:
         ]
 
     except Exception as e:
-        print("aaaaaaaaaa")
         Logger.log(str(e), 50)
 
 
 def get_ephemeries_info(body: str, atime: str, cache_file: dict) -> dict:
+    """
+    Retrieve the ephemeries information.
+    :param body: Object to check.
+    :param atime: astropy.time object.
+    :param cache_file: Cache file.
+    :return: Dictionary of the object.
+    """
     Logger.log(
         f"Retreiving coordinates for {body}..."
     )
