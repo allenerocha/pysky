@@ -52,7 +52,8 @@ def overlay_text(celestial_obj: str) -> None:
             )
             overlay_txt.append(
                 "Distance (petameters): " +
-                f"{m_catalog[celestial_obj]['Distance (petameters)']} Pm"
+                f"{m_catalog[celestial_obj]['Distance (petameters)']} Pm. " +
+                "[Add 14 zeroes to get meters]"
             )
         img = add_text(img, overlay_txt)
         img.save(
@@ -83,7 +84,8 @@ def overlay_text(celestial_obj: str) -> None:
             )
         overlay_txt.append(
             "Distance (petameters): " +
-            f"{c_catalogue['NGC number'][celestial_obj]['Distance (petameters)']} Pm"
+            f"{c_catalogue['NGC number'][celestial_obj]['Distance (petameters)']} Pm. " +
+            "[Add 14 zeroes to get meters]"
             )
         img = add_text(img, overlay_txt)
         img.save(
