@@ -4,12 +4,12 @@ import base64
 import json
 import os
 import io
-
-from .logger import Logger
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
-from .catalog_parse import check_messier, check_caldwell, parse_messier, parse_caldwell
+from .logger import Logger
+from .catalog_parse import check_messier, check_caldwell
+from .catalog_parse import parse_messier, parse_caldwell
 from .const import Const
 PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
@@ -33,7 +33,9 @@ def overlay_text(celestial_obj: str) -> object:
     if check_messier(celestial_obj):
         m_catalog = parse_messier(Const.ROOT_DIR)
         static_data_path = f"{Const.ROOT_DIR}/data/static_data/"
-        img = PIL.Image.open(f"{static_data_path}{celestial_obj.replace(' ', '')}.jpg")
+        img = PIL.Image.open(
+            f"{static_data_path}{celestial_obj.replace(' ', '')}.jpg"
+        )
         overlay_txt = [
             f"Name: {celestial_obj}",
             f"Constellation: {m_catalog[celestial_obj]['Constellation']}",
@@ -41,22 +43,28 @@ def overlay_text(celestial_obj: str) -> object:
         ]
         img = add_text(img, overlay_txt)
         img.save(
-            fp=f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{celestial_obj.replace(' ', '')}.png",
+            fp=f"{Const.SLIDESHOW_DIR}/PySkySlideshow/" +
+            f"{celestial_obj.replace(' ', '')}.png",
             format="PNG"
         )
 
     elif check_caldwell(celestial_obj):
         c_catalogue = parse_caldwell(Const.ROOT_DIR)
         static_data_path = f"{Const.ROOT_DIR}/data/static_data/"
-        img = PIL.Image.open(f"{static_data_path}{celestial_obj.replace(' ', '')}.jpg")
+        img = PIL.Image.open(
+            f"{static_data_path}{celestial_obj.replace(' ', '')}.jpg"
+        )
         overlay_txt = [
             f"Name: {celestial_obj}",
-            f"Constellation: {c_catalogue['NGC number'][celestial_obj]['Constellation']}",
-            f"Brightness: {c_catalogue['NGC number'][celestial_obj]['Magnitude']}",
+            "Constellation: " +
+            f"{c_catalogue['NGC number'][celestial_obj]['Constellation']}",
+            "Brightness: " +
+            f"{c_catalogue['NGC number'][celestial_obj]['Magnitude']}",
         ]
         img = add_text(img, overlay_txt)
         img.save(
-            fp=f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{celestial_obj.replace(' ', '')}.png",
+            fp=f"{Const.SLIDESHOW_DIR}/PySkySlideshow/" +
+            f"{celestial_obj.replace(' ', '')}.png",
             format="PNG"
         )
 
@@ -88,12 +96,13 @@ def overlay_text(celestial_obj: str) -> object:
                 f"{cache_file[celestial_obj]['image']['width']}-" +
                 f"{cache_file[celestial_obj]['image']['height']}-" +
                 f"{cache_file[celestial_obj]['image']['resolution']}-" +
-                f"{cache_file[celestial_obj]['image']['brightness scaling']}.png"
+                f"{cache_file[celestial_obj]['image']['brightness scaling']}" +
+                ".png"
             )
     os.remove(f"{Const.ROOT_DIR}/data/{celestial_obj}.temp.jpg")
 
 
-def add_text(img, overlay_txt):
+def add_text(img: object, overlay_txt: list) -> object:
     """Add the text on the image."""
     # only save the height of the image
     try:
@@ -114,7 +123,7 @@ def add_text(img, overlay_txt):
         )
         overlayed.multiline_text(
             xy=(10, int(img_h * 0.8)),  # xy for the text to be overlayed
-            text="\n".join(overlay_txt),  # concats all passed strings in the list
+            text="\n".join(overlay_txt),  # concats all strings in the list
             fill=(255, 255, 255, 100),  # white text with alpha=100
             font=fnt,
             stroke_width=1,  # thickness of the stroke
@@ -125,11 +134,10 @@ def add_text(img, overlay_txt):
     else:
         overlayed.multiline_text(
             xy=(10, int(img_h * 0.8)),  # xy for the text to be overlayed
-            text="\n".join(overlay_text),  # concats all passed strings in the list
+            text="\n".join(overlay_text),  # concats all strings in the list
             fill=(255, 255, 255, 100),  # white text with alpha=100
             spacing=1,  # in between each new line
             align="left",
         )
 
     return img
-
