@@ -1,15 +1,16 @@
 """This module is called after utils/prefs and parses the passed CLI options"""
-import logging
 import os
-import sys
 from pathlib import Path
 import argparse
 from datetime import date, timedelta
 from astropy import time as atime
 from .const import Const
-from .logger import Logger
 
 def cli_parse() -> tuple:
+    """
+    Parse the given arguments and return the start and end time objects
+    :return: astropy.time objects
+    """
     parser = argparse.ArgumentParser(
         description='pysky is an interactive module that allows the ' +
         'user to check the sky given a date and time allowing them ' +
@@ -112,7 +113,12 @@ def gui_launch():
 
 
 def one_hour_mode(sdate: str, stime: str) -> tuple:
-    """Generate end date and time."""
+    """
+    Generate end date and time.
+    :param sdate: Start date arguemnt.
+    :param stime: Start time argument.
+    :return: Tuple of astropy.time objects.
+    """
     # Adding an hour changes the date and time
     if int(stime.split(":")[0]) == 23:
 
@@ -136,7 +142,9 @@ def one_hour_mode(sdate: str, stime: str) -> tuple:
 
 
 def print_help():
-    """Print out README when there is an issue with the args."""
+    """
+    Print out README when there is an issue with the args.
+    """
     root_dir = Path(os.path.dirname(os.path.realpath((__file__)))).parent
     with open(f"{root_dir}/README.rst", "r") as help_file:
         for line in help_file.readlines():
