@@ -41,20 +41,20 @@ def overlay_text(celestial_obj: str) -> None:
                 "Common Name: " +
                 f"{m_catalog[celestial_obj]['Common name']}"
             )
-            overlay_txt.append(f"Catalogue Name: {celestial_obj}")
-            overlay_txt.append(
-                "Constellation: " +
-                f"{m_catalog[celestial_obj]['Constellation']}"
-            )
-            overlay_txt.append(
-                "Brightness: " +
-                f"{m_catalog[celestial_obj]['Apparent magnitude']}"
-            )
-            overlay_txt.append(
-                "Distance (petameters): " +
-                f"{m_catalog[celestial_obj]['Distance (petameters)']} Pm. " +
-                "[Add 14 zeroes to get meters]"
-            )
+        overlay_txt.append(f"Catalogue Name: {celestial_obj}")
+        overlay_txt.append(
+            "Constellation: " +
+            f"{m_catalog[celestial_obj]['Constellation']}"
+        )
+        overlay_txt.append(
+            "Brightness: " +
+            f"{m_catalog[celestial_obj]['Apparent magnitude']}"
+        )
+        overlay_txt.append(
+            "Distance (petameters): " +
+            f"{m_catalog[celestial_obj]['Distance (petameters)']} Pm. " +
+            "[Add 14 zeroes to get meters]"
+        )
         img = add_text(img, overlay_txt)
         img.save(
             fp=f"{Const.SLIDESHOW_DIR}/PySkySlideshow/" +
