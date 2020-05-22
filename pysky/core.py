@@ -103,6 +103,7 @@ def invoke():
                 Logger.log(
                     f"Found {m_obj} in {static_data_path}!"
                 )
+    set_img_txt(messier_visible.keys())
 
     caldwell_visible = get_visible(
         START_TIME,
@@ -117,12 +118,11 @@ def invoke():
         Logger.log(f"Looking for {c_obj} in {static_data_path}...")
         for image in os.listdir(f"{static_data_path}"):
             if os.path.isfile(
-              f"{static_data_path}/{image}"
+                f"{static_data_path}/{image}"
             ) and image.split(".")[0] == c_obj.replace(" ", ""):
                 static_data_path += image
                 Logger.log(f"Found {c_obj} in {static_data_path}!")
-        CONSELLATION = CALDWELL_OBJECTS['NGC number'][c_obj]['Constellation']
-        BRIGHTNESS = CALDWELL_OBJECTS['NGC number'][c_obj]['Magnitude']
+    set_img_txt(caldwell_visible.keys())
 
 
 def get_br(celestial_obj: str, cache_file: dict):

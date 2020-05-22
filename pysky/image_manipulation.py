@@ -32,23 +32,23 @@ def overlay_text(celestial_obj: str) -> object:
 
     if check_messier(celestial_obj):
         m_catalog = parse_messier(Const.ROOT_DIR)
-        img = PIL.Image.open(
-            f"{Const.ROOT_DIR}/data/" +
-            "static_data/{celestial_obj.replace(' ', '')}"
-        )
+        static_data_path = f"{Const.ROOT_DIR}/data/static_data/"
+        img = PIL.Image.open(f"{static_data_path}{celestial_obj.replace(' ', '')}.jpg")
         overlay_txt = [
             f"Name: {celestial_obj}",
             f"Constellation: {m_catalog[celestial_obj]['Constellation']}",
             f"Brightness: {m_catalog[celestial_obj]['Apparent magnitude']}",
         ]
         img = add_text(img, overlay_txt)
+        img.save(
+            fp=f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{celestial_obj.replace(' ', '')}.png",
+            format="PNG"
+        )
 
     elif check_caldwell(celestial_obj):
         c_catalogue = parse_caldwell(Const.ROOT_DIR)
-        img = PIL.Image.open(
-            f"{Const.ROOT_DIR}/data/" +
-            "static_data/{celestial_obj.replace(' ', '')}"
-        )
+        static_data_path = f"{Const.ROOT_DIR}/data/static_data/"
+        img = PIL.Image.open(f"{static_data_path}{celestial_obj.replace(' ', '')}.jpg")
         overlay_txt = [
             f"Name: {celestial_obj}",
             f"Constellation: {c_catalogue['NGC number'][celestial_obj]['Constellation']}",
@@ -56,7 +56,8 @@ def overlay_text(celestial_obj: str) -> object:
         ]
         img = add_text(img, overlay_txt)
         img.save(
-            fp=f"{Const.ROOT_DIR}/data/{celestial_obj}.temp.png", format="PNG"
+            fp=f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{celestial_obj.replace(' ', '')}.png",
+            format="PNG"
         )
 
     else:
@@ -71,7 +72,6 @@ def overlay_text(celestial_obj: str) -> object:
         ]
         img = add_text(img, overlay_txt)
         Logger.log(f"Adding edited image of {celestial_obj} to cache file...")
-        img.show()
         img.save(
             fp=f"{Const.ROOT_DIR}/data/{celestial_obj}.temp.png", format="PNG"
         )
