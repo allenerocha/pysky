@@ -21,8 +21,13 @@ def parse_messier(root_dir: str) -> dict:
 
 
 def check_messier(celestial_obj):
+    """
+    Check the messier catalog if the passed object is a member.
+    :param celestial_obj: Object to check in the messier catalog.
+    :return: The object if it exists
+    """
     messier_catalog = parse_messier(None)
-    for key, value in messier_catalog.items():
+    for key, _ in messier_catalog.items():
         if key == celestial_obj:
             return messier_catalog[key]["Apparent magnitude"]
     return None
@@ -44,8 +49,13 @@ def parse_caldwell(root_dir: str) -> dict:
 
 
 def check_caldwell(celestial_obj):
+    """
+    Check the caldwell catalogue if the passed object is a member.
+    :param celestial_obj: Object to check in the caldwell catalouge.
+    :return: The object if it exists
+    """
     caldwell_catalog = parse_caldwell(None)["NGC number"]
-    for key, value in caldwell_catalog.items():
+    for key, _ in caldwell_catalog.items():
         if key == celestial_obj:
             return caldwell_catalog[key]["Magnitude"]
     return None
