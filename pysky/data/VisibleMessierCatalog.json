@@ -6,7 +6,7 @@
         "Declination": "+41 16 9",
         "Distance (petameters)": 22990000,
         "NGC/IC number": "NGC 224",
-        "Object type": "Spiral galaxy",
+        "Type": "Spiral galaxy",
         "Picture": "static_data/M31.jpg",
         "Right ascension": "00h 42m 44.3s"
     },
@@ -17,7 +17,7 @@
         "Declination": "-20 46",
         "Distance (petameters)": 21800,
         "NGC/IC number": "NGC 2287",
-        "Object type": "Open cluster",
+        "Type": "Open cluster",
         "Picture": "static_data/M41.png",
         "Right ascension": "06h 46.0m"
     },
@@ -28,7 +28,7 @@
         "Declination": "-05 23 28",
         "Distance (petameters)": 12526,
         "NGC/IC number": "NGC 1976",
-        "Object type": "H II region nebula",
+        "Type": "H II region nebula",
         "Picture": "static_data/M42.jpg",
         "Right ascension": "05h 35m 17.3"
     },
@@ -39,7 +39,7 @@
         "Declination": "+19 59",
         "Distance (petameters)": 5459,
         "NGC/IC number": "NGC 2632",
-        "Object type": "Open cluster",
+        "Type": "Open cluster",
         "Picture": "static_data/M44.jpg",
         "Right ascension": "08h 40.4m"
     },
@@ -50,7 +50,7 @@
         "Declination": "+24 07 00",
         "Distance (petameters)": 3690,
         "NGC/IC number": "-",
-        "Object type": "Open cluster",
+        "Type": "Open cluster",
         "Picture": "static_data/M45.jpg",
         "Right ascension": "03h 47m 24s"
     },
@@ -61,7 +61,7 @@
         "Declination": "-14 30",
         "Distance (petameters)": 15100,
         "NGC/IC number": "NGC 2422",
-        "Object type": "Open cluster",
+        "Type": "Open cluster",
         "Picture": "static_data/M47.jpg",
         "Right ascension": "07h 36.6m"
     },
@@ -72,7 +72,7 @@
         "Declination": "-32 13",
         "Distance (petameters)": 15100,
         "NGC/IC number": "NGC 6405",
-        "Object type": "Open cluster",
+        "Type": "Open cluster",
         "Picture": "static_data/M6.jpg",
         "Right ascension": "17h 40.1m"
     },
@@ -83,7 +83,7 @@
         "Declination": "-34 47 34",
         "Distance (petameters)": 9461,
         "NGC/IC number": "NGC 6475",
-        "Object type": "Open cluster",
+        "Type": "Open cluster",
         "Picture": "static_data/M7.jpg",
         "Right ascension": "17h 53m 51.2s"
     }
