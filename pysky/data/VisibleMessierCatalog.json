@@ -2,6 +2,7 @@
     "M31": {
         "Apparent magnitude": 3.4,
         "Constellation": "Andromeda",
+        "Common name": "Andromeda Galaxy",
         "Declination": "+41 16 9",
         "Distance (kly)": "2430-2650",
         "NGC/IC number": "NGC 224",
@@ -12,6 +13,7 @@
     "M41": {
         "Apparent magnitude": 4.5,
         "Constellation": "Canis Major",
+        "Common name": "",
         "Declination": "-20 46",
         "Distance (kly)": 2.3,
         "NGC/IC number": "NGC 2287",
@@ -22,6 +24,7 @@
     "M42": {
         "Apparent magnitude": 4,
         "Constellation": "Orion",
+        "Common name": "Orion Nebula",
         "Declination": "-05 23 28",
         "Distance (kly)": "1.324-1.364",
         "NGC/IC number": "NGC 1976",
@@ -32,6 +35,7 @@
     "M44": {
         "Apparent magnitude": 3.7,
         "Constellation": "Cancer",
+        "Common name": "Beehive Cluster",
         "Declination": "+19 59",
         "Distance (kly)": 0.577,
         "NGC/IC number": "NGC 2632",
@@ -42,6 +46,7 @@
     "M45": {
         "Apparent magnitude": 1.6,
         "Constellation": "Taurus",
+        "Common name": "Pleiades",
         "Declination": "+24 07 00",
         "Distance (kly)": "0.39-0.46",
         "NGC/IC number": "-",
@@ -52,6 +57,7 @@
     "M47": {
         "Apparent magnitude": 4.2,
         "Constellation": "Puppis",
+        "Common name": "",
         "Declination": "-14 30",
         "Distance (kly)": 1.6,
         "NGC/IC number": "NGC 2422",
@@ -62,6 +68,7 @@
     "M6": {
         "Apparent magnitude": 4.2,
         "Constellation": "Scorpius",
+        "Common name": "Butterfly Cluster",
         "Declination": "-32 13",
         "Distance (kly)": 1.6,
         "NGC/IC number": "NGC 6405",
@@ -72,6 +79,7 @@
     "M7": {
         "Apparent magnitude": 3.3,
         "Constellation": "Scorpius",
+        "Common name": "Ptolemy Cluster",
         "Declination": "-34 47 34",
         "Distance (kly)": "0.65-1.31",
         "NGC/IC number": "NGC 6475",
