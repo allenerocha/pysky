@@ -2,11 +2,11 @@
 
 
 def is_object_visible(
-    celestial_obj: object,
-    start_time: object,
-    end_time: object,
-    location: object,
-    secz_max=2.0
+        celestial_obj: object,
+        start_time: object,
+        end_time: object,
+        location: object,
+        secz_max=2.0
 ) -> tuple:
     """
     :param celestial_obj: object to view (astropy.coordinates.SkyCoord())
