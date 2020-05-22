@@ -27,8 +27,6 @@ from .simbad import get_brightness, get_constellation, get_ra_dec
 def invoke():
     """
     Call all other relevant functions.
-
-    :param root_dir: absolute path to this file
     """
     download_IERS_A()
 
@@ -147,19 +145,39 @@ def set_simbad_values(celestial_obj: str, cache_file: dict) -> dict:
     return cache_file
 
 
-def invoke_skyview(stars):
-    """Run skyview in as many threads as specified."""
+def invoke_skyview(stars: list) -> None:
+    """
+    Run skyview in as many threads as specified.
+    :param stars: List of string of the stars download witrh skyview.
+    """
     with ThreadPoolExecutor(max_workers=Const.THREADS) as executor:
         executor.map(get_skyview_img, stars)
 
 
-def set_img_txt(celestial_objs):
-    """Set the text on the image of the object."""
+def set_img_txt(celestial_objs: list) -> None:
+    """
+    Set the text on the image of the object.
+    :param celestial_objs: List of strings of the objects to overlay text on.
+    """
     with ThreadPoolExecutor(max_workers=Const.THREADS) as executor:
         executor.map(overlay_text, celestial_objs)
 
 
-def get_visible(start_time, end_time, location, celestial_objs=None) -> dict:
+def get_visible(
+    start_time: object,
+    end_time: object,
+    location: object,
+    celestial_objs=None
+) -> dict:
+    """
+    Check to see if the given object is
+    visible at a location in a certain time.
+    :param start_time: Astropy.time object starting time range.
+    :param end_time: Astropy.time object ending time range.
+    :param location: Astroplan.observer object as your location.
+    :param celestial_objs: List of objects to check.
+    :return: Dictionary of visible objects.
+    """
     visible = dict()
     if celestial_objs is None:
         cache_file = json.loads(
