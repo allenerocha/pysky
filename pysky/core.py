@@ -125,7 +125,7 @@ def invoke():
     set_img_txt(caldwell_visible.keys())
 
 
-def set_simbad_values(celestial_obj: str, cache_file: dict):
+def set_simbad_values(celestial_obj: str, cache_file: dict) -> dict:
     """
     Call the simbad module and get the brightness, constellation,
     and location.
