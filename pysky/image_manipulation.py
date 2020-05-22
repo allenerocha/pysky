@@ -39,12 +39,16 @@ def overlay_text(celestial_obj: str) -> None:
         if m_catalog[celestial_obj]['Common name'] != "":
             overlay_txt.append(
                 "Common Name: " +
-                f"{m_catalog[celestial_obj]['Common name']}"
+                f"{m_catalog[celestial_obj]['Common name']}."
             )
-        overlay_txt.append(f"Catalogue Name: {celestial_obj}")
+        overlay_txt.append(f"Catalogue Name: {celestial_obj}.")
+        overlay_txt.append(
+            "Type: " +
+            f"{m_catalog[celestial_obj]['Type']}."
+        )
         overlay_txt.append(
             "Constellation: " +
-            f"{m_catalog[celestial_obj]['Constellation']}"
+            f"{m_catalog[celestial_obj]['Constellation']}."
         )
         overlay_txt.append(
             "Brightness: " +
@@ -71,12 +75,16 @@ def overlay_text(celestial_obj: str) -> None:
         if c_catalogue['NGC number'][celestial_obj]['Common name'] != "":
             overlay_txt.append(
                 "Common Name: " +
-                f"{c_catalogue['NGC number'][celestial_obj]['Common name']}",
+                f"{c_catalogue['NGC number'][celestial_obj]['Common name']}."
             )
-        overlay_txt.append(f"Catalogue Name: {celestial_obj}")
+        overlay_txt.append(f"Catalogue Name: {celestial_obj}.")
+        overlay_txt.append(
+            "Type: " +
+            f"{c_catalogue['NGC number'][celestial_obj]['Type']}."
+        )
         overlay_txt.append(
             "Constellation: " +
-            f"{c_catalogue['NGC number'][celestial_obj]['Constellation']}"
+            f"{c_catalogue['NGC number'][celestial_obj]['Constellation']}."
             )
         overlay_txt.append(
             "Brightness: " +
