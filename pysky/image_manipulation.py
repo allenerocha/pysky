@@ -14,12 +14,11 @@ from .const import Const
 PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
 
-def overlay_text(celestial_obj: str) -> object:
+def overlay_text(celestial_obj: str) -> None:
     """
     This adds text to the image
     :img: Image file to overlay the text
     :overlay_text: List of text to overlay on the image
-    :return: None
     """
 
     cache_file = json.loads(
@@ -103,7 +102,12 @@ def overlay_text(celestial_obj: str) -> object:
 
 
 def add_text(img: object, overlay_txt: list) -> object:
-    """Add the text on the image."""
+    """
+    Add the text on the image.
+    :param img: PIL.Image object to overlay text on.
+    :param overlay_txt: List of string to overlay on the image.
+    :return: PIL.Image object with the overlayed text.
+    """
     # only save the height of the image
     try:
         _, img_h = img.size
