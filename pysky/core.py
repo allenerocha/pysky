@@ -125,22 +125,20 @@ def invoke():
     set_img_txt(caldwell_visible.keys())
 
 
-def get_br(celestial_obj: str, cache_file: dict):
-    """Call the simbad module and get the brightness."""
-    brightness = get_brightness(celestial_obj)
-    cache_file[celestial_obj]["brightness"] = brightness
-    return cache_file
+def set_simbad_values(celestial_obj: str, cache_file: dict):
+    """
+    Call the simbad module and get the brightness, constellation,
+    and location.
+    :param celestial_obj: Object to get values for.
+    :param cache_file: Opened cache file to apply changes to.
+    :return: Cache file with added simbad values.
+    """
+    cache_file[celestial_obj]["brightness"] = get_brightness(celestial_obj)
 
+    cache_file[celestial_obj]["constellation"] = get_constellation(
+        celestial_obj
+    )
 
-def get_cn(celestial_obj: str, cache_file: dict):
-    """Call the simbad module and get the constellation."""
-    constellation = get_constellation(celestial_obj)
-    cache_file[celestial_obj]["constellation"] = constellation
-    return cache_file
-
-
-def get_loc(celestial_obj: str, cache_file: dict):
-    """Call the simbad module and get the location"""
     ra_dec = get_ra_dec(celestial_obj)
     cache_file[celestial_obj]["coordinates"] = {
         "ra": ra_dec[0],
