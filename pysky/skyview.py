@@ -182,9 +182,9 @@ def check_cache(
             return False
 
         elif (
-            f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{celestial_obj}-" +
-            f"{width}-{height}-{image_size}-{b_scale}.png"
-            not in files
+                f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{celestial_obj}-" +
+                f"{width}-{height}-{image_size}-{b_scale}.png"
+                not in files
         ):
             cache_file.pop(celestial_obj, None)
             return False
