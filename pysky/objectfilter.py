@@ -5,12 +5,12 @@ from .logger import Logger
 from .astro_info import get_bodies
 
 
-def emphemeries_filter(args) -> tuple:
+def emphemeries_filter(args: list) -> tuple:
     """
     This function takes the passed list and filters
-    out all the ephemeries bodies into another list
-    :param arg: List of passed bodies
-    :return: [[STARS], [EPHEMERIES BODIES]]
+    out all the ephemeries bodies into another list.
+    :param arg: List of passed bodies.
+    :return: tuple of objects filtered and sperated.
     """
     Logger.log("Filtering objects.")
     # Converts tuple to list
