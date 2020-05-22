@@ -28,6 +28,7 @@ def overlay_text(celestial_obj: str) -> None:
         )
         .read()
     )
+    overlay_txt = list()
 
     if check_messier(celestial_obj):
         m_catalog = parse_messier(Const.ROOT_DIR)
@@ -36,21 +37,23 @@ def overlay_text(celestial_obj: str) -> None:
             f"{static_data_path}{celestial_obj.replace(' ', '')}.jpg"
         )
         if m_catalog[celestial_obj]['Common name'] != "":
-            overlay_txt = [
+            overlay_txt.append(
                 "Common Name: " +
-                f"{m_catalog[celestial_obj]['Common name']}",
-                f"Catalogue Name: {celestial_obj}",
-                f"Constellation: {m_catalog[celestial_obj]['Constellation']}",
+                f"{m_catalog[celestial_obj]['Common name']}"
+            )
+            overlay_txt.append(f"Catalogue Name: {celestial_obj}")
+            overlay_txt.append(
+                "Constellation: " +
+                f"{m_catalog[celestial_obj]['Constellation']}"
+            )
+            overlay_txt.append(
                 "Brightness: " +
-                f"{m_catalog[celestial_obj]['Apparent magnitude']}",
-            ]
-        else:
-            overlay_txt = [
-                f"Catalogue Name: {celestial_obj}",
-                f"Constellation: {m_catalog[celestial_obj]['Constellation']}",
-                "Brightness: " +
-                f"{m_catalog[celestial_obj]['Apparent magnitude']}",
-            ]
+                f"{m_catalog[celestial_obj]['Apparent magnitude']}"
+            )
+            overlay_txt.append(
+                "Distance (petameters): " +
+                f"{m_catalog[celestial_obj]['Distance (petameters)']} Pm"
+            )
         img = add_text(img, overlay_txt)
         img.save(
             fp=f"{Const.SLIDESHOW_DIR}/PySkySlideshow/" +
@@ -65,23 +68,23 @@ def overlay_text(celestial_obj: str) -> None:
             f"{static_data_path}{celestial_obj.replace(' ', '')}.jpg"
         )
         if c_catalogue['NGC number'][celestial_obj]['Common name'] != "":
-            overlay_txt = [
+            overlay_txt.append(
                 "Common Name: " +
                 f"{c_catalogue['NGC number'][celestial_obj]['Common name']}",
-                f"Catalogue Name: {celestial_obj}",
-                "Constellation: " +
-                f"{c_catalogue['NGC number'][celestial_obj]['Constellation']}",
-                "Brightness: " +
-                f"{c_catalogue['NGC number'][celestial_obj]['Magnitude']}",
-            ]
-        else:
-            overlay_txt = [
-                f"Catalogue Name: {celestial_obj}",
-                "Constellation: " +
-                f"{c_catalogue['NGC number'][celestial_obj]['Constellation']}",
-                "Brightness: " +
-                f"{c_catalogue['NGC number'][celestial_obj]['Magnitude']}",
-            ]
+            )
+        overlay_txt.append(f"Catalogue Name: {celestial_obj}")
+        overlay_txt.append(
+            "Constellation: " +
+            f"{c_catalogue['NGC number'][celestial_obj]['Constellation']}"
+            )
+        overlay_txt.append(
+            "Brightness: " +
+            f"{c_catalogue['NGC number'][celestial_obj]['Magnitude']}"
+            )
+        overlay_txt.append(
+            "Distance (petameters): " +
+            f"{c_catalogue['NGC number'][celestial_obj]['Distance (petameters)']} Pm"
+            )
         img = add_text(img, overlay_txt)
         img.save(
             fp=f"{Const.SLIDESHOW_DIR}/PySkySlideshow/" +
@@ -110,7 +113,6 @@ def overlay_text(celestial_obj: str) -> None:
             json.dump(cache_file, json_out)
             os.remove(f"{Const.ROOT_DIR}/data/{celestial_obj}.temp.png")
             Logger.log("Edited cache file saved!")
-            img.show()
             img.save(
                 f"{Const.SLIDESHOW_DIR}/PySkySlideshow/" +
                 f"{celestial_obj.replace(' ', '_')}-" +
