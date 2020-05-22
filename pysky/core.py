@@ -28,7 +28,7 @@ def invoke():
     """
     Call all other relevant functions.
     """
-    download_IERS_A()
+#    download_IERS_A()
 
     START_TIME, END_TIME = cli_parse()
 
