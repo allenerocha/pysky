@@ -3,6 +3,7 @@
 """The main entry point. Invoke as `pysky' or python -m pysky.
 """
 
+
 def main():
     from .core import invoke
 
