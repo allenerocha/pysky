@@ -30,3 +30,5 @@ pysky/PySky.egg-info/
 pysky/data/cache
 
 pysky/data/log
+
+.idea/
