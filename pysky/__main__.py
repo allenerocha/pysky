@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""The main entry point. Invoke as `pysky' or python -m pysky.
+"""
+The main entry point.
+Invoke as `pysky' or python -m pysky.
 """
 
 
