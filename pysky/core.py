@@ -106,7 +106,7 @@ def invoke():
         START_TIME,
         END_TIME,
         HAWTHORN_HOLLOW,
-        celestial_objs=list(CALDWELL_OBJECTS["NGC number"].keys()),
+        celestial_objs=list(CALDWELL_OBJECTS.keys()),
     )
     for c_obj in tqdm(caldwell_visible.keys()):
         static_data_path = (

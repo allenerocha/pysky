@@ -29,7 +29,7 @@ def check_messier(celestial_obj):
     messier_catalog = parse_messier(None)
     for key, _ in messier_catalog.items():
         if key == celestial_obj:
-            return messier_catalog[key]["Apparent magnitude"]
+            return messier_catalog[key]["Brightness"]
     return None
 
 
@@ -54,8 +54,8 @@ def check_caldwell(celestial_obj):
     :param celestial_obj: Object to check in the caldwell catalouge.
     :return: The object if it exists
     """
-    caldwell_catalog = parse_caldwell(None)["NGC number"]
+    caldwell_catalog = parse_caldwell(None)
     for key, _ in caldwell_catalog.items():
         if key == celestial_obj:
-            return caldwell_catalog[key]["Magnitude"]
+            return caldwell_catalog[key]["Brightness"]
     return None

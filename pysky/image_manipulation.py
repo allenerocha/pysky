@@ -52,7 +52,7 @@ def overlay_text(celestial_obj: str) -> None:
         )
         overlay_txt.append(
             "Brightness: " +
-            f"{m_catalog[celestial_obj]['Apparent magnitude']}"
+            f"{m_catalog[celestial_obj]['Brightness']}"
         )
         overlay_txt.append(
             "Distance (petameters): " +
@@ -72,27 +72,27 @@ def overlay_text(celestial_obj: str) -> None:
         img = PIL.Image.open(
             f"{static_data_path}{celestial_obj.replace(' ', '')}.jpg"
         )
-        if c_catalogue['NGC number'][celestial_obj]['Common name'] != "":
+        if c_catalogue[celestial_obj]['Common name'] != "":
             overlay_txt.append(
                 "Common Name: " +
-                f"{c_catalogue['NGC number'][celestial_obj]['Common name']}."
+                f"{c_catalogue[celestial_obj]['Common name']}."
             )
         overlay_txt.append(f"Catalogue Name: {celestial_obj}.")
         overlay_txt.append(
             "Type: " +
-            f"{c_catalogue['NGC number'][celestial_obj]['Type']}."
+            f"{c_catalogue[celestial_obj]['Type']}."
         )
         overlay_txt.append(
             "Constellation: " +
-            f"{c_catalogue['NGC number'][celestial_obj]['Constellation']}."
+            f"{c_catalogue[celestial_obj]['Constellation']}."
             )
         overlay_txt.append(
             "Brightness: " +
-            f"{c_catalogue['NGC number'][celestial_obj]['Magnitude']}"
+            f"{c_catalogue[celestial_obj]['Brightness']}"
             )
         overlay_txt.append(
             "Distance (petameters): " +
-            f"{c_catalogue['NGC number'][celestial_obj]['Distance (petameters)']} Pm. " +
+            f"{c_catalogue[celestial_obj]['Distance (petameters)']} Pm. " +
             "[Add 14 zeroes to get meters]"
             )
         img = add_text(img, overlay_txt)
