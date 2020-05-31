@@ -1,90 +1,170 @@
 {
     "M31": {
-        "Apparent magnitude": 3.4,
+        "Brightness": 3.4,
         "Constellation": "Andromeda",
         "Common name": "Andromeda Galaxy",
-        "Declination": "+41 16 9",
         "Distance (petameters)": 22990000,
         "NGC/IC number": "NGC 224",
         "Type": "Spiral galaxy",
         "Picture": "static_data/M31.jpg",
-        "Right ascension": "00h 42m 44.3s"
+        "Coordinates": {
+            "dec": [
+                41,
+                16,
+                9
+            ],
+            "ra": [
+                0,
+                42,
+                44.3
+            ]
+        }
     },
     "M41": {
-        "Apparent magnitude": 4.5,
+        "Brightness": 4.5,
         "Constellation": "Canis Major",
         "Common name": "",
-        "Declination": "-20 46",
         "Distance (petameters)": 21800,
         "NGC/IC number": "NGC 2287",
         "Type": "Open cluster",
         "Picture": "static_data/M41.png",
-        "Right ascension": "06h 46.0m"
+        "Coordinates": {
+            "dec": [
+                -21,
+                45,
+                24
+            ],
+            "ra": [
+                6,
+                46,
+                1
+            ]
+        }
     },
     "M42": {
-        "Apparent magnitude": 4,
+        "Brightness": 4,
         "Constellation": "Orion",
         "Common name": "Orion Nebula",
-        "Declination": "-05 23 28",
         "Distance (petameters)": 12526,
         "NGC/IC number": "NGC 1976",
         "Type": "H II region nebula",
         "Picture": "static_data/M42.jpg",
-        "Right ascension": "05h 35m 17.3"
+        "Coordinates": {
+            "dec": [
+                -5,
+                23,
+                28
+            ],
+            "ra": [
+                5,
+                35,
+                17.3
+            ]
+        }
     },
     "M44": {
-        "Apparent magnitude": 3.7,
+        "Brightness": 3.7,
         "Constellation": "Cancer",
         "Common name": "Beehive Cluster",
-        "Declination": "+19 59",
         "Distance (petameters)": 5459,
         "NGC/IC number": "NGC 2632",
         "Type": "Open cluster",
         "Picture": "static_data/M44.jpg",
-        "Right ascension": "08h 40.4m"
+        "Coordinates": {
+            "dec": [
+                19,
+                40,
+                0
+            ],
+            "ra": [
+                8,
+                40,
+                24
+            ]
+        }
     },
     "M45": {
-        "Apparent magnitude": 1.6,
+        "Brightness": 1.6,
         "Constellation": "Taurus",
         "Common name": "Pleiades",
-        "Declination": "+24 07 00",
         "Distance (petameters)": 3690,
         "NGC/IC number": "-",
         "Type": "Open cluster",
         "Picture": "static_data/M45.jpg",
-        "Right ascension": "03h 47m 24s"
+        "Coordinates": {
+            "dec": [
+                24,
+                7,
+                0
+            ],
+            "ra": [
+                03,
+                47,
+                24
+            ]
+        }
     },
     "M47": {
-        "Apparent magnitude": 4.2,
+        "Brightness": 4.2,
         "Constellation": "Puppis",
         "Common name": "",
-        "Declination": "-14 30",
         "Distance (petameters)": 15100,
         "NGC/IC number": "NGC 2422",
         "Type": "Open cluster",
         "Picture": "static_data/M47.jpg",
-        "Right ascension": "07h 36.6m"
+        "Coordinates": {
+            "dec": [
+                -14,
+                29,
+                0
+            ],
+            "ra": [
+                7,
+                36,
+                35
+            ]
+        }
     },
     "M6": {
-        "Apparent magnitude": 4.2,
+        "Brightness": 4.2,
         "Constellation": "Scorpius",
         "Common name": "Butterfly Cluster",
-        "Declination": "-32 13",
         "Distance (petameters)": 15100,
         "NGC/IC number": "NGC 6405",
         "Type": "Open cluster",
         "Picture": "static_data/M6.jpg",
-        "Right ascension": "17h 40.1m"
+        "Coordinates": {
+            "dec": [
+                -32,
+                15,
+                12
+            ],
+            "ra": [
+                17,
+                40,
+                2
+            ]
+        }
     },
     "M7": {
-        "Apparent magnitude": 3.3,
+        "Brightness": 3.3,
         "Constellation": "Scorpius",
         "Common name": "Ptolemy Cluster",
-        "Declination": "-34 47 34",
         "Distance (petameters)": 9461,
         "NGC/IC number": "NGC 6475",
         "Type": "Open cluster",
         "Picture": "static_data/M7.jpg",
-        "Right ascension": "17h 53m 51.2s"
+        "Coordinates": {
+            "dec": [
+                34,
+                47,
+                36
+            ],
+            "ra": [
+                17,
+                53,
+                51
+            ]
+        }
     }
 }

@@ -1,6 +1,4 @@
 {
-  "NGC number" :
-    {
       "Mel 25" : {
         "Caldwell number": "C41",
         "Common name": "Hyades",
@@ -8,7 +6,19 @@
         "Type": "Open Cluster",
         "Distance (petameters)": 1429,
         "Constellation": "Taurus",
-        "Magnitude": 0.5
+        "Brightness": 0.5,
+        "Coordinates": {
+            "dec": [
+                15,
+                52,
+                0
+            ],
+            "ra": [
+                4,
+                26,
+                54
+            ]
+        }
     },
     "IC 2602" : {
       "Caldwell number": "C102",
@@ -17,7 +27,19 @@
       "Type": "Open Cluster",
       "Distance (petameters)": 4655,
       "Constellation": "Carina",
-      "Magnitude": 1.9
+      "Brightness": 1.9,
+        "Coordinates": {
+            "dec": [
+                -64,
+                24,
+                0
+            ],
+            "ra": [
+                10,
+                42,
+                58
+            ]
+        }
     },
     "IC 2391" : {
       "Caldwell number": "C85",
@@ -26,7 +48,19 @@
       "Type": "Open Cluster",
       "Distance (petameters)": 4730,
       "Constellation": "Vela",
-      "Magnitude": 2.5
+      "Brightness": 2.5,
+        "Coordinates": {
+            "dec": [
+                -53,
+                2,
+                0
+            ],
+            "ra": [
+                8,
+                40,
+                32
+            ]
+        }
     },
     "NGC 6231" : {
       "Caldwell number": "C76",
@@ -35,7 +69,19 @@
       "Type": "Open Cluster and Nebula",
       "Distance (petameters)": 56764,
       "Constellation": "Scorpius",
-      "Magnitude": 2.6
+      "Brightness": 2.6,
+        "Coordinates": {
+            "dec": [
+                41,
+                49,
+                36
+            ],
+            "ra": [
+               16,
+               54,
+               8.51 
+            ]
+        }
     },
     "NGC 3372" : {
       "Caldwell number": "C92",
@@ -44,7 +90,19 @@
       "Type": "Nebula",
       "Distance (petameters)": 71000,
       "Constellation": "Carina",
-      "Magnitude": 3
+      "Brightness": 3,
+        "Coordinates": {
+            "dec": [
+                -59,
+                53,
+                21
+            ],
+            "ra": [
+                10,
+                44,
+                19
+            ]
+        }
     },
     "NGC 3532" : {
       "Caldwell number": "C91",
@@ -53,7 +111,19 @@
       "Type": "Open Cluster",
       "Distance (petameters)": 15100,
       "Constellation": "Carina",
-      "Magnitude": 3
+      "Brightness": 3,
+        "Coordinates": {
+            "dec": [
+                -58,
+                45,
+                12
+            ],
+            "ra": [
+                11,
+                5,
+                39
+            ]
+        }
     },
     "NGC 5139" : {
       "Caldwell number": "C80",
@@ -62,7 +132,19 @@
       "Type": "Globular Cluster",
       "Distance (petameters)": 163700,
       "Constellation": "Centaurus",
-      "Magnitude": 3.7
+      "Brightness": 3.7,
+        "Coordinates": {
+            "dec": [
+                -47,
+                28,
+                46.1
+            ],
+            "ra": [
+                13,
+                26,
+                47.28
+            ]
+        }
     },
     "NGC 2516" : {
       "Caldwell number": "C96",
@@ -71,7 +153,19 @@
       "Type": "Open Cluster",
       "Distance (petameters)": 12300,
       "Constellation": "Carina",
-      "Magnitude": 3.8
+      "Brightness": 3.8,
+        "Coordinates": {
+            "dec": [
+                -60,
+                45,
+                12
+            ],
+            "ra": [
+                7,
+                58,
+                4
+            ]
+        }
     },
     "NGC 104" : {
       "Caldwell number": "C106",
@@ -80,7 +174,19 @@
       "Type": "Globular Cluster",
       "Distance (petameters)": 139100,
       "Constellation": "Tucana",
-      "Magnitude": 4
+      "Brightness": 4,
+        "Coordinates": {
+            "dec": [
+                -72,
+                4,
+                53.20
+            ],
+            "ra": [
+                0,
+                24,
+                5.359
+            ]
+        }
     },
     "NGC 869" : {
       "Caldwell number": "C14",
@@ -89,7 +195,19 @@
       "Type": "Open Cluster",
       "Distance (petameters)": 69100,
       "Constellation": "Perseus",
-      "Magnitude": 4
+      "Brightness": 4,
+        "Coordinates": {
+            "dec": [
+                57,
+                7,
+                42
+            ],
+            "ra": [
+                2,
+                19,
+                0
+            ]
+        }
     },
     "NGC 884" : {
       "Caldwell number": "C14",
@@ -98,7 +216,19 @@
       "Type": "Open Cluster",
       "Distance (petameters)": 69100,
       "Constellation": "Perseus",
-      "Magnitude": 4
+      "Brightness": 4,
+        "Coordinates": {
+            "dec": [
+                57,
+                7,
+                30
+            ],
+            "ra": [
+                2,
+                22,
+                23
+            ]
+        }
     },
     "NGC 7000" : {
       "Caldwell number": "C20",
@@ -107,7 +237,19 @@
       "Type": "Nebula",
       "Distance (petameters)": 17000,
       "Constellation": "Cygnus",
-      "Magnitude": 4
+      "Brightness": 4,
+        "Coordinates": {
+            "dec": [
+                20,
+                58,
+                47
+            ],
+            "ra": [
+                44,
+                19,
+                48
+            ]
+        }
     },
     "NGC 2362" : {
       "Caldwell number": "C64",
@@ -116,7 +258,19 @@
       "Type": "Open Cluster and Nebula",
       "Distance (petameters)": 48200,
       "Constellation": "Canis Major",
-      "Magnitude": 4.1
+      "Brightness": 4.1,
+        "Coordinates": {
+            "dec": [
+                -24,
+                57,
+                18
+            ],
+            "ra": [
+                7,
+                18,
+                41
+            ]
+        }
     },
     "NGC 4755" : {
       "Caldwell number": "C94",
@@ -125,7 +279,19 @@
       "Type": "Open Cluster",
       "Distance (petameters)": 46400,
       "Constellation": "Crux",
-      "Magnitude": 4.2
+      "Brightness": 4.2,
+        "Coordinates": {
+            "dec": [
+                -60,
+                21,
+                42
+            ],
+            "ra": [
+                12,
+                53,
+                39
+            ]
+        }
     },
     "IC 2944" : {
       "Caldwell number": "C100",
@@ -134,7 +300,18 @@
       "Type": "Open Cluster and Nebula",
       "Distance (petameters)": 56764,
       "Constellation": "Centaurus",
-      "Magnitude": 4.5
+      "Brightness": 4.5,
+        "Coordinates": {
+            "dec": [
+                -63,
+                22,
+                22
+            ],
+            "ra": [
+                11,
+                38,
+                20
+            ]
+        }
     }
-  }
 }
