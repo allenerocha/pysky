@@ -132,13 +132,16 @@ def get_ra_dec(celestial_obj: str) -> list:
 
 
 def get_distance(celestial_obj: str) -> float:
+
     """
     Calculate the distance in Pm.
     :param celestial_obj: Obejct to query simbad.
     :return: Distance of the object in Pm.
     """
     astroquery.simbad.Simbad.reset_votable_fields()
+    astroquery.simbad.Simbad.add_votable_fields("parallax")
     astroquery.simbad.Simbad.remove_votable_fields("main_id")
+    astroquery.simbad.Simbad.remove_votable_fields("coordinates")
     Logger.log(
         f"Retreiving distance for {celestial_obj}..."
     )
