@@ -21,7 +21,8 @@ from .prefs import check_integrity, read_user_prefs
 from .skyview import get_skyview_img
 from .logger import Logger
 from .const import Const
-from .simbad import get_brightness, get_constellation, get_ra_dec
+from .simbad import get_brightness, get_constellation
+from .simbad import get_ra_dec, get_distance
 
 
 def invoke():
@@ -141,6 +142,8 @@ def set_simbad_values(celestial_obj: str, cache_file: dict) -> dict:
         "ra": ra_dec[0],
         "dec": ra_dec[1]
     }
+    distance = get_distance(celestial_obj)
+    cache_file[celestial_obj]["distance"] = distance
     return cache_file
 
 
