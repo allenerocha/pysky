@@ -112,9 +112,11 @@ def overlay_text(celestial_obj: str) -> None:
         )
         img = PIL.Image.open(io.BytesIO(decoded_img))
         overlay_txt = [
-            f"Name: {celestial_obj}",
+            f"Name: {celestial_obj.capitalize()}",
             f"Constellation: {cache_file[celestial_obj]['constellation']}",
             f"Brightness: {cache_file[celestial_obj]['brightness']}",
+            f"Distance: {cache_file[celestial_obj]['distance']} Pm",
+            "1 Pm = 1 000 000 000 000 000 meters"
         ]
         img = add_text(img, overlay_txt)
         Logger.log(f"Adding edited image of {celestial_obj} to cache file...")
@@ -175,10 +177,10 @@ def add_text(img: object, overlay_txt: list) -> object:
         )
     else:
         overlayed.multiline_text(
-            xy=(10, int(img_h * 0.8)),  # xy for the text to be overlayed
+            xy=(10, int(img_h * 0.75)),  # xy for the text to be overlayed
             text="\n".join(overlay_text),  # concats all strings in the list
             fill=(255, 255, 255, 100),  # white text with alpha=100
-            spacing=1,  # in between each new line
+            spacing=2.0,  # in between each new line
             align="left",
         )
 
