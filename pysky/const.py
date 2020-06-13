@@ -8,4 +8,7 @@ class Const(object):
     SLIDESHOW_DIR = ""
     THREADS = 1
     VERBOSITY = 20
+    LATITUDE = 0.0
+    LONGITUDE = 0.0
+    ELEVATION = 0.0
 
