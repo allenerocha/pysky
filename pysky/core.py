@@ -53,20 +53,20 @@ def invoke():
 
     START_TIME, END_TIME = cli_parse()
 
-    HAWTHORN_HOLLOW = astroplan.Observer(
-        location=astropy.coordinates.EarthLocation.from_geodetic(
-            -87.8791 * astropy.units.deg,
-            42.6499 * astropy.units.deg,
-            height=204 * astropy.units.m,
-        ),
-        name="Hawthorn Hollow",
-        timezone="US/Central",
-    )
-
     check_integrity()
+
     CALDWELL_OBJECTS = parse_caldwell(Const.ROOT_DIR)
     MESSIER_OBJECTS = parse_messier(Const.ROOT_DIR)
     USER_OBJECTS = read_user_prefs()
+
+    LOCATION = astroplan.Observer(
+        location=astropy.coordinates.EarthLocation.from_geodetic(
+            Const.LATITUDE * astropy.units.deg,
+            Const.LONGITUDE * astropy.units.deg,
+            height=(Const.ELEVATION/1000.0) * astropy.units.m,
+        ),
+        name="Location",
+    )
 
     STARS, EPHEMERIES_BODIES = emphemeries_filter(USER_OBJECTS)
 
@@ -99,13 +99,13 @@ def invoke():
     cached_visible = get_visible(
         START_TIME,
         END_TIME,
-        HAWTHORN_HOLLOW,
+        LOCATION,
         celestial_objs=STARS
     )
     messier_visible = get_visible(
         START_TIME,
         END_TIME,
-        HAWTHORN_HOLLOW,
+        LOCATION,
         celestial_objs=list(MESSIER_OBJECTS.keys()),
     )
     for m_obj in tqdm(messier_visible.keys()):
@@ -126,7 +126,7 @@ def invoke():
     caldwell_visible = get_visible(
         START_TIME,
         END_TIME,
-        HAWTHORN_HOLLOW,
+        LOCATION,
         celestial_objs=list(CALDWELL_OBJECTS.keys()),
     )
     for c_obj in tqdm(caldwell_visible.keys()):
