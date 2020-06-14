@@ -43,11 +43,12 @@ from .logger import Logger
 from .const import Const
 from .simbad import get_brightness, get_constellation
 from .simbad import get_ra_dec, get_distance
+from .output import to_html_list
 
 
 def invoke():
     """
-    Call all other relevant functions.
+    Call all othto_html_lister relevant functions.
     """
 #    download_IERS_A()
 
@@ -236,3 +237,8 @@ def get_visible(
             )
             Logger.log(str(e), 40)
     return visible
+
+
+def write_out(celestial_objs: list, code=0):
+    if code == 0:
+        to_html_list(celestial_objs)
