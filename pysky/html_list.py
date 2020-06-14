@@ -36,7 +36,7 @@ class HTML_list:
                    "</span>" + \
                    "<span style='font-weight: 400;'>" + \
                    f"{item['distance']} " + \
-                   "petameters." + \
+                   "Pm." + \
                    "</span>" + \
                    "</li>\n"
         return out
