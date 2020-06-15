@@ -17,26 +17,14 @@ class HTML_list:
         for index, item in enumerate(self.html_list):
             if index == 0:
                 out += "<ol>\n"
-            elif index == (len(self.html_list) - 1):
-                out += "</ol>\n"
-                break
 
-            out += "<li>" + \
-                   "<span style='font-weight: 400;'>" + \
-                   f"{item['name']} " + \
-                   "</span>" + \
-                   "<span style='font-weight: 400;'>" + \
-                   f"{item['constellation']} " + \
-                   "</span>" + \
-                   "<span style='font-weight: 400;'>" + \
-                   f"{item['type']} " + \
-                   "</span>" + \
-                   "<span style='font-weight: 400;'>" + \
-                   f"{item['brightness']} " + \
-                   "</span>" + \
-                   "<span style='font-weight: 400;'>" + \
-                   f"{item['distance']} " + \
-                   "Pm." + \
-                   "</span>" + \
-                   "</li>\n"
+            out += "<li>"
+
+            for _, value in item.items():
+                out += "<span style='font-weight: 400;'>" + f"{value} " + "</span>"
+            out += "</li>\n"
+            
+            if index == (len(self.html_list) - 1):
+                out += "</ol>\n"
+                
         return out
