@@ -39,16 +39,16 @@ def overlay_text(celestial_obj: str) -> None:
         if m_catalog[celestial_obj]['Common name'] != "":
             overlay_txt.append(
                 "Common Name: " +
-                f"{m_catalog[celestial_obj]['Common name']}."
+                f"{m_catalog[celestial_obj]['Common name']}"
             )
-        overlay_txt.append(f"Catalogue Name: {celestial_obj}.")
+        overlay_txt.append(f"Catalogue Name: {celestial_obj}")
         overlay_txt.append(
             "Type: " +
-            f"{m_catalog[celestial_obj]['Type']}."
+            f"{m_catalog[celestial_obj]['Type']}"
         )
         overlay_txt.append(
             "Constellation: " +
-            f"{m_catalog[celestial_obj]['Constellation']}."
+            f"{m_catalog[celestial_obj]['Constellation']}"
         )
         overlay_txt.append(
             "Brightness: " +
@@ -56,8 +56,10 @@ def overlay_text(celestial_obj: str) -> None:
         )
         overlay_txt.append(
             "Distance (petameters): " +
-            f"{m_catalog[celestial_obj]['Distance (petameters)']} Pm. " +
-            "[Add 14 zeroes to get meters]"
+            f"{m_catalog[celestial_obj]['Distance (petameters)']} Pm "
+        )
+        overlay_txt.append(
+            "1 Pm = 1 000 000 000 000 000 meters"
         )
         img = add_text(img, overlay_txt)
         img.save(
@@ -75,16 +77,16 @@ def overlay_text(celestial_obj: str) -> None:
         if c_catalogue[celestial_obj]['Common name'] != "":
             overlay_txt.append(
                 "Common Name: " +
-                f"{c_catalogue[celestial_obj]['Common name']}."
+                f"{c_catalogue[celestial_obj]['Common name']}"
             )
-        overlay_txt.append(f"Catalogue Name: {celestial_obj}.")
+        overlay_txt.append(f"Catalogue Name: {celestial_obj}")
         overlay_txt.append(
             "Type: " +
-            f"{c_catalogue[celestial_obj]['Type']}."
+            f"{c_catalogue[celestial_obj]['Type']}"
         )
         overlay_txt.append(
             "Constellation: " +
-            f"{c_catalogue[celestial_obj]['Constellation']}."
+            f"{c_catalogue[celestial_obj]['Constellation']}"
             )
         overlay_txt.append(
             "Brightness: " +
@@ -92,9 +94,11 @@ def overlay_text(celestial_obj: str) -> None:
             )
         overlay_txt.append(
             "Distance (petameters): " +
-            f"{c_catalogue[celestial_obj]['Distance (petameters)']} Pm. " +
-            "[Add 14 zeroes to get meters]"
+            f"{c_catalogue[celestial_obj]['Distance (petameters)']} Pm "
             )
+        overlay_txt.append(
+            "1 Pm = 1 000 000 000 000 000 meters"
+        )
         img = add_text(img, overlay_txt)
         img.save(
             fp=f"{Const.SLIDESHOW_DIR}/PySkySlideshow/" +
@@ -108,9 +112,11 @@ def overlay_text(celestial_obj: str) -> None:
         )
         img = PIL.Image.open(io.BytesIO(decoded_img))
         overlay_txt = [
-            f"Name: {celestial_obj}",
+            f"Name: {celestial_obj.capitalize()}",
             f"Constellation: {cache_file[celestial_obj]['constellation']}",
             f"Brightness: {cache_file[celestial_obj]['brightness']}",
+            f"Distance: {cache_file[celestial_obj]['distance']} Pm",
+            "1 Pm = 1 000 000 000 000 000 meters"
         ]
         img = add_text(img, overlay_txt)
         Logger.log(f"Adding edited image of {celestial_obj} to cache file...")
@@ -157,24 +163,24 @@ def add_text(img: object, overlay_txt: list) -> object:
     if len(fonts) >= 1:
         fnt = PIL.ImageFont.truetype(
             f"{Const.ROOT_DIR}/data/res/{fonts[0]}",
-            int(img_h/50)
+            int(img_h/33)
         )
         overlayed.multiline_text(
-            xy=(10, int(img_h * 0.8)),  # xy for the text to be overlayed
+            xy=(20, int(img_h * 0.75)),  # xy for the text to be overlayed
             text="\n".join(overlay_txt),  # concats all strings in the list
             fill=(255, 255, 255, 100),  # white text with alpha=100
             font=fnt,
             stroke_width=1,  # thickness of the stroke
             stroke_fill=(0, 0, 0, 100),  # black stroke with alpha=100
-            spacing=1,  # in between each new line
+            spacing=2.0,  # in between each new line
             align="left",
         )
     else:
         overlayed.multiline_text(
-            xy=(10, int(img_h * 0.8)),  # xy for the text to be overlayed
+            xy=(10, int(img_h * 0.75)),  # xy for the text to be overlayed
             text="\n".join(overlay_text),  # concats all strings in the list
             fill=(255, 255, 255, 100),  # white text with alpha=100
-            spacing=1,  # in between each new line
+            spacing=2.0,  # in between each new line
             align="left",
         )
 

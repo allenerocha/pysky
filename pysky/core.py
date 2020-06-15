@@ -4,10 +4,32 @@ import os.path
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+from datetime import datetime
+
 import astropy
 
-import astroplan
-from astroplan import download_IERS_A
+import warnings
+
+# Set up the thing to catch the warning (and potentially others)
+with warnings.catch_warnings(record=True) as w:
+    # import the modules
+    import astroplan
+    from astroplan import OldEarthOrientationDataWarning
+
+    # One want to know aout the first time a warning is thrown
+    warnings.simplefilter("once")
+
+#Look through all the warnings to see if one is OldEarthOrientationDataWarning,
+# update the table if it is.
+for i in w:
+    if i.category == OldEarthOrientationDataWarning:
+        # This new_mess statement isn't really needed I just didn't want to print
+        #  all the information that is produce in the warning.
+        new_mess = '.'.join(str(i.message).split('.')[:3])
+        print('WARNING:',new_mess)
+        print('Updating IERS bulletin table...')
+        from astroplan import download_IERS_A
+        download_IERS_A()
 
 from tqdm import tqdm
 
@@ -21,31 +43,36 @@ from .prefs import check_integrity, read_user_prefs
 from .skyview import get_skyview_img
 from .logger import Logger
 from .const import Const
-from .simbad import get_brightness, get_constellation, get_ra_dec
+from .simbad import get_brightness, get_constellation
+from .simbad import get_ra_dec, get_distance
+from .output import to_html_list
+from .moonquery import query
 
 
 def invoke():
     """
-    Call all other relevant functions.
+    Call all othto_html_lister relevant functions.
     """
 #    download_IERS_A()
 
     START_TIME, END_TIME = cli_parse()
 
-    HAWTHORN_HOLLOW = astroplan.Observer(
-        location=astropy.coordinates.EarthLocation.from_geodetic(
-            -87.8791 * astropy.units.deg,
-            42.6499 * astropy.units.deg,
-            height=204 * astropy.units.m,
-        ),
-        name="Hawthorn Hollow",
-        timezone="US/Central",
-    )
-
     check_integrity()
+
     CALDWELL_OBJECTS = parse_caldwell(Const.ROOT_DIR)
     MESSIER_OBJECTS = parse_messier(Const.ROOT_DIR)
     USER_OBJECTS = read_user_prefs()
+
+    gen_moon_data()
+
+    LOCATION = astroplan.Observer(
+        location=astropy.coordinates.EarthLocation.from_geodetic(
+            Const.LATITUDE * astropy.units.deg,
+            Const.LONGITUDE * astropy.units.deg,
+            height=(Const.ELEVATION/1000.0) * astropy.units.m,
+        ),
+        name="Location",
+    )
 
     STARS, EPHEMERIES_BODIES = emphemeries_filter(USER_OBJECTS)
 
@@ -78,13 +105,13 @@ def invoke():
     cached_visible = get_visible(
         START_TIME,
         END_TIME,
-        HAWTHORN_HOLLOW,
+        LOCATION,
         celestial_objs=STARS
     )
     messier_visible = get_visible(
         START_TIME,
         END_TIME,
-        HAWTHORN_HOLLOW,
+        LOCATION,
         celestial_objs=list(MESSIER_OBJECTS.keys()),
     )
     for m_obj in tqdm(messier_visible.keys()):
@@ -105,7 +132,7 @@ def invoke():
     caldwell_visible = get_visible(
         START_TIME,
         END_TIME,
-        HAWTHORN_HOLLOW,
+        LOCATION,
         celestial_objs=list(CALDWELL_OBJECTS.keys()),
     )
     for c_obj in tqdm(caldwell_visible.keys()):
@@ -141,6 +168,8 @@ def set_simbad_values(celestial_obj: str, cache_file: dict) -> dict:
         "ra": ra_dec[0],
         "dec": ra_dec[1]
     }
+    distance = get_distance(celestial_obj)
+    cache_file[celestial_obj]["distance"] = distance
     return cache_file
 
 
@@ -213,3 +242,19 @@ def get_visible(
             )
             Logger.log(str(e), 40)
     return visible
+
+
+def gen_moon_data():
+    Logger.log("Retreiving data for tonight's moon...")
+    today = datetime.now().strftime("%Y-%m-%d")
+    illumination, phase = query()
+    Logger.log("Data for tonight's moon:")
+    Logger.log(f"Illumination: {illumination}\tPhase: {phase}")
+    Logger.log(f"Writing data to `{Const.SLIDESHOW_DIR}/PySkySlideshow/`...")
+    write_out(celestial_objs=[{'name': 'Moon', 'date': str(today), 'illumination': illumination, 'phase': phase}], filename='moon')
+    Logger.log("Wrote file!")
+
+
+def write_out(celestial_objs: list, code=0, filename=None):
+    if code == 0:
+        to_html_list(celestial_objs, filename=filename)

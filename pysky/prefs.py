@@ -145,18 +145,17 @@ def read_user_prefs():
         user_objs = list()
         user_save_loc = str()
         for line in u_prefs_file.readlines():
-            if (
-                    (len(line.strip()) > 0)
-                    and (line.strip()[0] != "#")
-                    and ('slideshow_dir' not in line.strip())
-            ):
-                user_objs.append(line.strip())
-            elif (
-                    (len(line.strip()) > 0)
-                    and (line.strip()[0] != "#")
-                    and ('slideshow_dir' in line.strip())
-            ):
-                user_save_loc = line.strip().split("=")[1].strip()
+            if len(line.strip()) > 0 and line.strip()[0] != "#":
+                if ('slideshow_dir' in line.strip()):
+                    user_save_loc = line.strip().split("=")[1].strip()
+                elif ('latitude' in line.strip()):
+                    Const.LATITUDE = float(line.strip().split('=')[1].strip())
+                elif ('longitude' in line.strip()):
+                    Const.LONGITUDE = float(line.strip().split('=')[1].strip())
+                elif ('elevation' in line.strip()):
+                    Const.ELEVATION = float(line.strip().split('=')[1].strip())
+                else:
+                    user_objs.append(line.strip())
 
         Logger.log("Finished parsing user preferences!\n")
 
