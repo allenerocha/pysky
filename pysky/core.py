@@ -4,6 +4,8 @@ import os.path
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+from datetime import datetime
+
 import astropy
 
 import warnings
@@ -44,6 +46,7 @@ from .const import Const
 from .simbad import get_brightness, get_constellation
 from .simbad import get_ra_dec, get_distance
 from .output import to_html_list
+from .moonquery import query
 
 
 def invoke():
@@ -59,6 +62,8 @@ def invoke():
     CALDWELL_OBJECTS = parse_caldwell(Const.ROOT_DIR)
     MESSIER_OBJECTS = parse_messier(Const.ROOT_DIR)
     USER_OBJECTS = read_user_prefs()
+
+    gen_moon_data()
 
     LOCATION = astroplan.Observer(
         location=astropy.coordinates.EarthLocation.from_geodetic(
@@ -239,6 +244,17 @@ def get_visible(
     return visible
 
 
-def write_out(celestial_objs: list, code=0):
+def gen_moon_data():
+    Logger.log("Retreiving data for tonight's moon...")
+    today = datetime.now().strftime("%Y-%m-%d")
+    illumination, phase = query()
+    Logger.log("Data for tonight's moon:")
+    Logger.log(f"Illumination: {illumination}\tPhase: {phase}")
+    Logger.log(f"Writing data to `{Const.SLIDESHOW_DIR}/PySkySlideshow/`...")
+    write_out(celestial_objs=[{'name': 'Moon', 'date': str(today), 'illumination': illumination, 'phase': phase}], filename='moon')
+    Logger.log("Wrote file!")
+
+
+def write_out(celestial_objs: list, code=0, filename=None):
     if code == 0:
-        to_html_list(celestial_objs)
+        to_html_list(celestial_objs, filename=filename)
