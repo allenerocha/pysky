@@ -19,14 +19,15 @@ with warnings.catch_warnings(record=True) as w:
     # One want to know aout the first time a warning is thrown
     warnings.simplefilter("once")
 
-#Look through all the warnings to see if one is OldEarthOrientationDataWarning,
-# update the table if it is.
+# Look through all the warnings to see if one
+# is OldEarthOrientationDataWarning, update the table if it is.
 for i in w:
     if i.category == OldEarthOrientationDataWarning:
-        # This new_mess statement isn't really needed I just didn't want to print
-        #  all the information that is produce in the warning.
+        # This new_mess statement isn't really needed
+        # I just didn't want to print all the
+        # information that is produce in the warning.
         new_mess = '.'.join(str(i.message).split('.')[:3])
-        print('WARNING:',new_mess)
+        print('WARNING:', new_mess)
         print('Updating IERS bulletin table...')
         from astroplan import download_IERS_A
         download_IERS_A()
@@ -38,7 +39,7 @@ from .astro_info import get_ephemeries_info
 from .catalog_parse import parse_caldwell, parse_messier
 from .check_sky import is_object_visible
 from .image_manipulation import overlay_text
-from .objectfilter import emphemeries_filter
+from .objectfilter import ephemeries_filter
 from .prefs import check_integrity, read_user_prefs
 from .skyview import get_skyview_img
 from .logger import Logger
@@ -47,15 +48,18 @@ from .simbad import get_brightness, get_constellation
 from .simbad import get_ra_dec, get_distance
 from .output import to_html_list
 from .moonquery import query
+from .jpl_horizons_query import ephemeries_query
 
 
 def invoke():
     """
-    Call all othto_html_lister relevant functions.
+    Call all other relevant functions.
     """
-#    download_IERS_A()
 
-    START_TIME, END_TIME = cli_parse()
+    cli_parse()
+
+    START_TIME = Const.START_TIME
+    END_TIME = Const.END_TIME
 
     check_integrity()
 
@@ -74,7 +78,12 @@ def invoke():
         name="Location",
     )
 
-    STARS, EPHEMERIES_BODIES = emphemeries_filter(USER_OBJECTS)
+    STARS, EPHEMERIES = query_jpl_horizons(USER_OBJECTS)
+
+    EPHEMERIES_BODIES = list(EPHEMERIES.keys())
+
+    with open(f"{Const.SLIDESHOW_DIR}/PySkySlideshow/ephemerides.json", "w") as json_out:
+        json.dump(EPHEMERIES, json_out, indent=4)
 
     # Calls the skyview api and simbad
     # api and returns the the list of stars
@@ -173,6 +182,28 @@ def set_simbad_values(celestial_obj: str, cache_file: dict) -> dict:
     return cache_file
 
 
+def query_jpl_horizons(ephemeries_objs: list) -> tuple:
+    """
+    Run ephemeries_query in as many threads as specified.
+    :param :
+    """
+    with ThreadPoolExecutor(max_workers=Const.THREADS) as executor:
+        results = executor.map(ephemeries_query, ephemeries_objs)
+
+    unknown_objs = list()
+    known_objs = list()
+    for result in results:
+        ephemeris, celestial_obj = result
+        if ephemeris is not None:
+            known_objs.append(ephemeris)
+        else:
+            unknown_objs.append(celestial_obj)
+    ephemerides = dict()
+    for obj in known_objs:
+        ephemerides.update(obj)
+    return (unknown_objs, ephemerides)
+
+
 def invoke_skyview(stars: list) -> None:
     """
     Run skyview in as many threads as specified.
@@ -251,7 +282,17 @@ def gen_moon_data():
     Logger.log("Data for tonight's moon:")
     Logger.log(f"Illumination: {illumination}\tPhase: {phase}")
     Logger.log(f"Writing data to `{Const.SLIDESHOW_DIR}/PySkySlideshow/`...")
-    write_out(celestial_objs=[{'name': 'Moon', 'date': str(today), 'illumination': illumination, 'phase': phase}], filename='moon')
+    write_out(
+        celestial_objs=[
+            {
+                'name': 'Moon',
+                'date': str(today),
+                'illumination': illumination,
+                'phase': phase
+            }
+        ],
+        filename='moon'
+    )
     Logger.log("Wrote file!")
 
 
