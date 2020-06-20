@@ -102,9 +102,8 @@ def cli_parse() -> tuple:
             and (args.enddate is not None)
             and (args.endtime is not None)
     ):
-        a_start = atime.Time(f"{args.startdate} {args.starttime}")
-        a_end = atime.Time(f"{args.enddate} {args.endtime}")
-        return a_start, a_end
+        Const.START_TIME = f"{args.startdate} {args.starttime}"
+        Const.END_TIME = f"{args.enddate} {args.endtime}"
 
 
 def gui_launch():
@@ -112,7 +111,7 @@ def gui_launch():
     exit()
 
 
-def one_hour_mode(sdate: str, stime: str) -> tuple:
+def one_hour_mode(sdate: str, stime: str):
     """
     Generate end date and time.
     :param sdate: Start date arguemnt.
@@ -131,14 +130,12 @@ def one_hour_mode(sdate: str, stime: str) -> tuple:
             month=int(sdate.split("-")[1]),
             day=int(sdate.split("-")[2])
         ) + timedelta(days=1)
-        a_start = atime.Time(f"{sdate} {stime}")
-        a_end = atime.Time(f"{edate} {etime}")
-        return a_start, a_end
-
-    etime = f"{int(stime.split(':')[0]) + 1}:{stime.split(':')[1]}"
-    a_start = atime.Time(f"{sdate} {stime}")
-    a_end = atime.Time(f"{sdate} {etime}")
-    return a_start, a_end
+        Const.START_TIME = f"{sdate} {stime}"
+        Const.END_TIME = f"{edate} {etime}"
+    else:
+        etime = f"{int(stime.split(':')[0]) + 1}:{stime.split(':')[1]}"
+        Const.START_TIME = f"{sdate} {stime}"
+        Const.END_TIME = f"{sdate} {etime}"
 
 
 def print_help():
