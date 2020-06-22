@@ -109,14 +109,14 @@ def get_skyview_img(celestial_obj: str) -> int:
     cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
     try:
         cache_file[celestial_obj] = {
-            "type": "star",
-            "created": time.strftime("%Y-%d-%m %H:%M", time.gmtime()),
-            "image": {
-                "width": width,
-                "height": height,
-                "resolution": image_size,
-                "brightness scaling": b_scale,
-                "base64": str(img_bytes),
+            "Type": "star",
+            "Created": time.strftime("%Y-%d-%m %H:%M", time.gmtime()),
+            "Image": {
+                "Width": width,
+                "Height": height,
+                "Resolution": image_size,
+                "Brightness scaling": b_scale,
+                "Base64": str(img_bytes),
             },
         }
         Logger.log(f"Finished writing {celestial_obj} data to cache!")
@@ -161,12 +161,12 @@ def check_cache(
     try:
         if (
                 (celestial_obj in cache_file)
-                and (cache_file[celestial_obj]["image"]["width"] == width)
-                and (cache_file[celestial_obj]["image"]["height"] == height)
-                and (cache_file[celestial_obj]["image"]["resolution"]
+                and (cache_file[celestial_obj]["Image"]["Width"] == width)
+                and (cache_file[celestial_obj]["Image"]["Height"] == height)
+                and (cache_file[celestial_obj]["Image"]["Resolution"]
                      == image_size)
                 and (
-                    cache_file[celestial_obj]["image"]["brightness scaling"]
+                    cache_file[celestial_obj]["Image"]["Brightness scaling"]
                     == b_scale
                 )
         ):
