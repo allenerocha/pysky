@@ -1,12 +1,15 @@
-"""This module is used to see if an object is visible"""
+"""This module is used to see if an object is visible."""
+from .logger import Logger
+from astroplan import Observer
+import numpy as np
 
 
 def is_object_visible(
-        celestial_obj: object,
-        start_time: object,
-        end_time: object,
-        location: object,
-        secz_max=2.0
+        celestial_obj,
+        start_time,
+        end_time,
+        location,
+        secz_max
 ) -> tuple:
     """
     :param celestial_obj: object to view (astropy.coordinates.SkyCoord())
@@ -19,11 +22,15 @@ def is_object_visible(
     :return: tuple if the object is up or not during
              the time range given (string, alt, az || '', '', '')
     """
-
+    Logger.log(f"Checking sec(z) for {celestial_obj}.")
     start_secz = location.altaz(start_time, celestial_obj).secz
     end_secz = location.altaz(end_time, celestial_obj).secz
     start_altaz = location.altaz(start_time, celestial_obj)
 
-    if start_secz < 2.0 or end_secz < 2.0:
-        return celestial_obj.name, start_altaz.alt, start_altaz.az
-    return '', '', ''
+    try:
+        if np.all(start_secz < secz_max) or np.all(end_secz < secz_max):
+            Logger.log(f"Found sec(z) for {celestial_obj.name}.")
+            return start_altaz.zen, start_altaz.alt, start_altaz.az
+    except ValueError:
+        Logger.log(f"Could not find ound sec(z) for {celestial_obj.name}.")
+        return '', '', ''
