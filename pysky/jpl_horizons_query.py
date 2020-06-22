@@ -23,13 +23,13 @@ def ephemeries_query(celestial_obj: str) -> tuple:
     try:
         obj_code = cache_file[celestial_obj.lower()]
     except KeyError:
-        Logger.log('Key not found in pre-defined JPL code dictionary.', 50)
-        Logger.log(f'Removing {celestial_obj} from queue.', 50)
+        Logger.log('Key not found in pre-defined JPL code dictionary.', 40)
+        Logger.log(f'Removing {celestial_obj} from queue.', 40)
         return (None, celestial_obj)
     except Exception as e:
-        Logger.log('Encountered an unknown error.', 50)
+        Logger.log('Encountered an unknown error.', 40)
         Logger.log(f'{str(e)}', 50)
-        Logger.log(f'Removing {celestial_obj} from queue.', 50)
+        Logger.log(f'Removing {celestial_obj} from queue.', 40)
         return (None, celestial_obj)
     try:
         location = {'lon': -87.8791, 'lat': 42.6499, 'elevation': 0.204}
@@ -48,15 +48,24 @@ def ephemeries_query(celestial_obj: str) -> tuple:
             id_type='id'
         )
     except KeyError:
-        Logger.log('Error with key raised by JPL Horizons.', 50)
+        Logger.log('Error with key raised by JPL Horizons.', 40)
         Logger.log(f'Removing {celestial_obj} from queue.')
         return (None, celestial_obj)
     except Exception as e:
-        Logger.log('Unknown error raised by JPL Horizons.', 50)
-        Logger.log(f'{str(e)}', 50)
-        Logger.log(f'Removing {celestial_obj} from queue.', 50)
+        Logger.log('Unknown error raised by JPL Horizons.', 40)
+        Logger.log(f'{str(e)}', 40)
+        Logger.log(f'Removing {celestial_obj} from queue.', 40)
         return (None, celestial_obj)
-    eph = obj.ephemerides()['datetime_str', 'RA', 'DEC', 'V', 'delta']
+
+    eph = obj.ephemerides()[
+        'datetime_str',
+        'RA',
+        'DEC',
+        'V',
+        'delta',
+        'illumination'
+    ]
+
     time_ra_dec = dict()
     if len(eph["RA"]) == len(eph["DEC"]):
         time_ra_dec[celestial_obj] = dict()
@@ -66,11 +75,12 @@ def ephemeries_query(celestial_obj: str) -> tuple:
             row_dec = eph['DEC'][index]
             row_mag = eph['V'][index]
             row_delta = eph['delta'][index]
+            row_illumination = eph['illumination'][index]
             time_ra_dec[celestial_obj][row_time] = {
                 'ra': row_ra,
                 'dec': row_dec,
                 'brightness': row_mag,
-                'delta': row_delta * 0.000149597870691
+                'delta': row_delta * 0.000149597870691,
+                'illumination': row_illumination
             }
     return (time_ra_dec, None)
-
