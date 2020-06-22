@@ -99,8 +99,8 @@ def get_ephemeries_info(body: str, atime: str, cache_file: dict) -> dict:
     )
     COORDS = get_info(atime, body)
     cache_file[f"{body}"] = {}
-    cache_file[f"{body}"]["type"] = "planet"
-    cache_file[f"{body}"]["created"] = time.strftime(
+    cache_file[f"{body}"]["Type"] = "planet"
+    cache_file[f"{body}"]["Created"] = time.strftime(
         "%Y-%d-%m %H:%M", time.gmtime()
     )
     Logger.log(
@@ -110,7 +110,7 @@ def get_ephemeries_info(body: str, atime: str, cache_file: dict) -> dict:
         f"Writing coordinates for {body} to cache..."
     )
     try:
-        cache_file[f"{body}"]["coordinates"] = {  # Right acension
+        cache_file[f"{body}"]["Coordinates"] = {  # Right acension
             "ra": [str(COORDS[0]), str(COORDS[1]), str(COORDS[2])],
             "dec": str(COORDS[3]),
             "cartesian": [str(COORDS[5]), str(COORDS[6]), str(COORDS[7])],
