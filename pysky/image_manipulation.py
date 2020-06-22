@@ -108,14 +108,14 @@ def overlay_text(celestial_obj: str) -> None:
 
     else:
         decoded_img = base64.b64decode(
-            cache_file[celestial_obj]["image"]["base64"][1:-1]
+            cache_file[celestial_obj]["Image"]["Base64"][1:-1]
         )
         img = PIL.Image.open(io.BytesIO(decoded_img))
         overlay_txt = [
             f"Name: {celestial_obj.capitalize()}",
-            f"Constellation: {cache_file[celestial_obj]['constellation']}",
-            f"Brightness: {cache_file[celestial_obj]['brightness']}",
-            f"Distance: {cache_file[celestial_obj]['distance']} Pm",
+            f"Constellation: {cache_file[celestial_obj]['Constellation']}",
+            f"Brightness: {cache_file[celestial_obj]['Brightness']}",
+            f"Distance: {cache_file[celestial_obj]['Distance']} Pm",
             "1 Pm = 1 000 000 000 000 000 meters"
         ]
         img = add_text(img, overlay_txt)
@@ -132,10 +132,10 @@ def overlay_text(celestial_obj: str) -> None:
             img.save(
                 f"{Const.SLIDESHOW_DIR}/PySkySlideshow/" +
                 f"{celestial_obj.replace(' ', '_')}-" +
-                f"{cache_file[celestial_obj]['image']['width']}-" +
-                f"{cache_file[celestial_obj]['image']['height']}-" +
-                f"{cache_file[celestial_obj]['image']['resolution']}-" +
-                f"{cache_file[celestial_obj]['image']['brightness scaling']}" +
+                f"{cache_file[celestial_obj]['Image']['Width']}-" +
+                f"{cache_file[celestial_obj]['Image']['Height']}-" +
+                f"{cache_file[celestial_obj]['Image']['Resolution']}-" +
+                f"{cache_file[celestial_obj]['Image']['Brightness scaling']}" +
                 ".png"
             )
     os.remove(f"{Const.ROOT_DIR}/data/{celestial_obj}.temp.jpg")

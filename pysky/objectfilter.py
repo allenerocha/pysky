@@ -5,7 +5,7 @@ from .logger import Logger
 from .astro_info import get_bodies
 
 
-def emphemeries_filter(args: list) -> tuple:
+def ephemeries_filter(args: list) -> tuple:
     """
     This function takes the passed list and filters
     out all the ephemeries bodies into another list.

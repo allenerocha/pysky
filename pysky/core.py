@@ -3,12 +3,26 @@ import json
 import os.path
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+import warnings
 
 from datetime import datetime
+from .argument_parser import cli_parse
+from .astro_info import get_ephemeries_info
+from .catalog_parse import parse_caldwell, parse_messier
+from .check_sky import is_object_visible
+from .image_manipulation import overlay_text
+from .prefs import check_integrity, read_user_prefs
+from .skyview import get_skyview_img
+from .logger import Logger
+from .const import Const
+from .simbad import get_brightness, get_constellation
+from .simbad import get_ra_dec, get_distance
+from .output import to_html_list
+from .moonquery import query
+from .jpl_horizons_query import ephemeries_query
 
 import astropy
-
-import warnings
+from astropy.coordinates import SkyCoord
 
 # Set up the thing to catch the warning (and potentially others)
 with warnings.catch_warnings(record=True) as w:
@@ -19,43 +33,30 @@ with warnings.catch_warnings(record=True) as w:
     # One want to know aout the first time a warning is thrown
     warnings.simplefilter("once")
 
-#Look through all the warnings to see if one is OldEarthOrientationDataWarning,
-# update the table if it is.
+# Look through all the warnings to see if one
+# is OldEarthOrientationDataWarning, update the table if it is.
 for i in w:
     if i.category == OldEarthOrientationDataWarning:
-        # This new_mess statement isn't really needed I just didn't want to print
-        #  all the information that is produce in the warning.
-        new_mess = '.'.join(str(i.message).split('.')[:3])
-        print('WARNING:',new_mess)
+        # This new_mess statement isn't really needed
+        # I just didn't want to print all the
+        # information that is produce in the warning.
+        NEW_MESS = '.'.join(str(i.message).split('.')[:3])
+        print('WARNING:', NEW_MESS)
         print('Updating IERS bulletin table...')
         from astroplan import download_IERS_A
         download_IERS_A()
 
 from tqdm import tqdm
 
-from .argument_parser import cli_parse
-from .astro_info import get_ephemeries_info
-from .catalog_parse import parse_caldwell, parse_messier
-from .check_sky import is_object_visible
-from .image_manipulation import overlay_text
-from .objectfilter import emphemeries_filter
-from .prefs import check_integrity, read_user_prefs
-from .skyview import get_skyview_img
-from .logger import Logger
-from .const import Const
-from .simbad import get_brightness, get_constellation
-from .simbad import get_ra_dec, get_distance
-from .output import to_html_list
-from .moonquery import query
-
-
 def invoke():
     """
-    Call all othto_html_lister relevant functions.
+    Call all other relevant functions.
     """
-#    download_IERS_A()
 
-    START_TIME, END_TIME = cli_parse()
+    cli_parse()
+
+    START_TIME = Const.START_TIME
+    END_TIME = Const.END_TIME
 
     check_integrity()
 
@@ -74,7 +75,10 @@ def invoke():
         name="Location",
     )
 
-    STARS, EPHEMERIES_BODIES = emphemeries_filter(USER_OBJECTS)
+    STARS, EPHEMERIES = query_jpl_horizons(USER_OBJECTS)
+
+    EPHEMERIES_BODIES = list(EPHEMERIES.keys())
+
 
     # Calls the skyview api and simbad
     # api and returns the the list of stars
@@ -102,51 +106,88 @@ def invoke():
     with open(f"{Const.ROOT_DIR}/data/cache", "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
 
-    cached_visible = get_visible(
-        START_TIME,
-        END_TIME,
-        LOCATION,
-        celestial_objs=STARS
-    )
-    messier_visible = get_visible(
-        START_TIME,
-        END_TIME,
-        LOCATION,
-        celestial_objs=list(MESSIER_OBJECTS.keys()),
-    )
-    for m_obj in tqdm(messier_visible.keys()):
-        static_data_path = (
-            f"{os.path.abspath(os.path.dirname(__file__))}/data/static_data/"
+    visible_objs = dict()
+    for objs in cache_file.keys():
+        Logger.log(
+            "Gathering zen, altitude, and " +
+            f"azimuth for {objs}..."
         )
-        Logger.log(f"Looking for {m_obj} in {static_data_path}...")
-        for image in os.listdir(f"{static_data_path}"):
-            if os.path.isfile(
-                    f"{static_data_path}/{image}"
-            ) and image.split(".")[0] == m_obj.replace(" ", ""):
-                static_data_path += image
-                Logger.log(
-                    f"Found {m_obj} in {static_data_path}!"
-                )
-    set_img_txt(messier_visible.keys())
+        try:
+            zen, altitude, azimuth = get_visible(
+                START_TIME,
+                END_TIME,
+                LOCATION,
+                5.0,
+                cache_file[objs]['Coordinates']['ra'],
+                cache_file[objs]['Coordinates']['dec']
+            )
+        except KeyError:
+            print(cache_file[objs])
+#            exit()
+        if '' not in (zen, altitude, azimuth):
+            Logger.log(f"Sucessfully gathered data for {objs}!\n")
+            visible = {str(objs): cache_file[objs]}
+            visible[objs].pop('Image', None)
+            visible[objs]['Zenith'] = zen
+            visible[objs]['Altitude'] = altitude
+            visible[objs]['Azimuth'] = azimuth
+            visible_objs.update(visible)
+            
+    visible_messier = dict()
+    for m_obj in MESSIER_OBJECTS.keys():
+        Logger.log(
+            "Gathering zen, altitude, and " +
+            f"azimuth for {m_obj}..."
+        )
+    
+        zen, altitude, azimuth = get_visible(
+            START_TIME,
+            END_TIME,
+            LOCATION,
+            2.0,
+            MESSIER_OBJECTS[m_obj]['Coordinates']['ra'],
+            MESSIER_OBJECTS[m_obj]['Coordinates']['dec']
+        )
+        if '' not in (zen, altitude, azimuth):
+            Logger.log(f"Sucessfully gathered data for {m_obj}!\n")
+            visible = {str(m_obj): MESSIER_OBJECTS[m_obj]}
+            visible[m_obj]['Zenith'] = zen
+            visible[m_obj]['Altitude'] = altitude
+            visible[m_obj]['Azimuth'] = azimuth
+            visible_messier.update(visible)
+            
+    visible_caldwell = dict()
+    for c_obj in CALDWELL_OBJECTS.keys():
+        Logger.log(
+            "Gathering zen, altitude, and " +
+            f"azimuth for {c_obj}..."
+        )
+    
+        zen, altitude, azimuth = get_visible(
+            START_TIME,
+            END_TIME,
+            LOCATION,
+            2.0,
+            CALDWELL_OBJECTS[c_obj]['Coordinates']['ra'],
+            CALDWELL_OBJECTS[c_obj]['Coordinates']['dec']
+        )
+        if '' not in (zen, altitude, azimuth):
+            Logger.log(f"Sucessfully gathered data for {c_obj}!\n")
+            visible = {str(c_obj): CALDWELL_OBJECTS[c_obj]}
+            visible[c_obj]['Zenith'] = zen
+            visible[c_obj]['Altitude'] = altitude
+            visible[c_obj]['Azimuth'] = azimuth
+            visible_caldwell.update(visible)
+            
+    set_img_txt(visible_messier)
+    
+    set_img_txt(visible_caldwell)
 
-    caldwell_visible = get_visible(
-        START_TIME,
-        END_TIME,
-        LOCATION,
-        celestial_objs=list(CALDWELL_OBJECTS.keys()),
-    )
-    for c_obj in tqdm(caldwell_visible.keys()):
-        static_data_path = (
-            f"{os.path.abspath(os.path.dirname(__file__))}/data/static_data/"
-        )
-        Logger.log(f"Looking for {c_obj} in {static_data_path}...")
-        for image in os.listdir(f"{static_data_path}"):
-            if os.path.isfile(
-                f"{static_data_path}/{image}"
-            ) and image.split(".")[0] == c_obj.replace(" ", ""):
-                static_data_path += image
-                Logger.log(f"Found {c_obj} in {static_data_path}!")
-    set_img_txt(caldwell_visible.keys())
+    # write_out(mclist, code=0, filename='VisibleMessier')
+    
+    # write_out(cclist, code=0, filename='VisibleCaldwell')
+    
+
 
 
 def set_simbad_values(celestial_obj: str, cache_file: dict) -> dict:
@@ -157,20 +198,42 @@ def set_simbad_values(celestial_obj: str, cache_file: dict) -> dict:
     :param cache_file: Opened cache file to apply changes to.
     :return: Cache file with added simbad values.
     """
-    cache_file[celestial_obj]["brightness"] = get_brightness(celestial_obj)
+    cache_file[celestial_obj]["Brightness"] = get_brightness(celestial_obj)
 
-    cache_file[celestial_obj]["constellation"] = get_constellation(
+    cache_file[celestial_obj]["Constellation"] = get_constellation(
         celestial_obj
     )
 
     ra_dec = get_ra_dec(celestial_obj)
-    cache_file[celestial_obj]["coordinates"] = {
+    cache_file[celestial_obj]["Coordinates"] = {
         "ra": ra_dec[0],
         "dec": ra_dec[1]
     }
     distance = get_distance(celestial_obj)
-    cache_file[celestial_obj]["distance"] = distance
+    cache_file[celestial_obj]["Distance"] = distance
     return cache_file
+
+
+def query_jpl_horizons(ephemeries_objs: list) -> tuple:
+    """
+    Run ephemeries_query in as many threads as specified.
+    :param :
+    """
+    with ThreadPoolExecutor(max_workers=Const.THREADS) as executor:
+        results = executor.map(ephemeries_query, ephemeries_objs)
+
+    unknown_objs = list()
+    known_objs = list()
+    for result in results:
+        ephemeris, celestial_obj = result
+        if ephemeris is not None:
+            known_objs.append(ephemeris)
+        else:
+            unknown_objs.append(celestial_obj)
+    ephemerides = dict()
+    for obj in known_objs:
+        ephemerides.update(obj)
+    return (unknown_objs, ephemerides)
 
 
 def invoke_skyview(stars: list) -> None:
@@ -192,11 +255,13 @@ def set_img_txt(celestial_objs: list) -> None:
 
 
 def get_visible(
-    start_time: object,
-    end_time: object,
-    location: object,
-    celestial_objs=None
-) -> dict:
+    start_time,
+    end_time,
+    location,
+    secz_max,
+    ra,
+    dec
+) -> tuple:
     """
     Check to see if the given object is
     visible at a location in a certain time.
@@ -204,44 +269,33 @@ def get_visible(
     :param end_time: Astropy.time object ending time range.
     :param location: Astroplan.observer object as your location.
     :param celestial_objs: List of objects to check.
-    :return: Dictionary of visible objects.
+    :return: Tuple of visible objects.
     """
-    visible = dict()
-    if celestial_objs is None:
-        cache_file = json.loads(
-            open(
-                f"{Path(os.path.dirname(os.path.realpath((__file__))))}" +
-                "/data/cache",
-                "r",
-            ).read()
+    
+    celestial_obj = SkyCoord(ra, dec, frame="icrs", unit="deg")
+    
+    
+    try:
+        zen, altitude, azimuth = is_object_visible(
+            celestial_obj=celestial_obj,
+            start_time=start_time,
+            end_time=end_time,
+            location=location,
+            secz_max=secz_max
         )
-        celestial_objs = cache_file.keys()
-    for celestial_obj in tqdm(celestial_objs):
+        return (zen, altitude, azimuth)
+    except astropy.coordinates.name_resolve.NameResolveError as e:
         Logger.log(
-            "Gathering name, start_altaz.alt, and start_altaz.az for " +
-            f"{celestial_obj}..."
+            "Unable to gather name, start_altaz.alt, and " +
+            f"start_altaz.az for ra={ra} dec={dec}!\n", 40
         )
-        try:
-            obj = astroplan.FixedTarget.from_name(celestial_obj)
-            alt, azimuth, obj_time = is_object_visible(
-                obj,
-                start_time,
-                end_time,
-                location
-            )
-            visible[celestial_obj] = {
-                "altitude": str(alt),
-                "azimuth": str(azimuth),
-                "start time": str(obj_time),
-            }
-            Logger.log(f"Sucessfully gathered data for {celestial_obj}!\n")
-        except astropy.coordinates.name_resolve.NameResolveError as e:
-            Logger.log(
-                "Unabale to gather name, start_altaz.alt, and start_altaz.az" +
-                f" for {celestial_obj}!\n", 40
-            )
-            Logger.log(str(e), 40)
-    return visible
+        return '', '', ''
+    except TypeError as e:
+        Logger.log(
+            "Unable to gather name, start_altaz.alt, and " +
+            f"start_altaz.az for ra={ra} dec={dec}!\n", 40
+        )
+        return '', '', ''
 
 
 def gen_moon_data():
@@ -251,7 +305,17 @@ def gen_moon_data():
     Logger.log("Data for tonight's moon:")
     Logger.log(f"Illumination: {illumination}\tPhase: {phase}")
     Logger.log(f"Writing data to `{Const.SLIDESHOW_DIR}/PySkySlideshow/`...")
-    write_out(celestial_objs=[{'name': 'Moon', 'date': str(today), 'illumination': illumination, 'phase': phase}], filename='moon')
+    write_out(
+        celestial_objs=[
+            {
+                'name': 'Moon',
+                'date': str(today),
+                'illumination': illumination,
+                'phase': phase
+            }
+        ],
+        filename='moon'
+    )
     Logger.log("Wrote file!")
 
 
