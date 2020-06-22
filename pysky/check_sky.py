@@ -22,15 +22,15 @@ def is_object_visible(
     :return: tuple if the object is up or not during
              the time range given (string, alt, az || '', '', '')
     """
-    Logger.log(f"Checking sec(z) for {celestial_obj}.")
+    Logger.log(f"Checking sec(z) for {celestial_obj.to_string()}.")
     start_secz = location.altaz(start_time, celestial_obj).secz
     end_secz = location.altaz(end_time, celestial_obj).secz
     start_altaz = location.altaz(start_time, celestial_obj)
 
     try:
         if np.all(start_secz < secz_max) or np.all(end_secz < secz_max):
-            Logger.log(f"Found sec(z) for {celestial_obj.name}.")
+            Logger.log(f"Found sec(z) for {celestial_obj.to_string()}.")
             return start_altaz.zen, start_altaz.alt, start_altaz.az
     except ValueError:
-        Logger.log(f"Could not find ound sec(z) for {celestial_obj.name}.")
+        Logger.log(f"Could not find ound sec(z) for {celestial_obj.to_string()}.")
         return '', '', ''
