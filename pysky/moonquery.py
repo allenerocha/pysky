@@ -21,10 +21,9 @@ def query() -> tuple:
 
     for item in data['2']:
         if 'illumination' in item.lower():
-            illumination = item
+            illumination = item.replace("Illumination: ", "")
         
         elif 'phase' in item.lower():
-            phase = item
-
+            phase = item.replace("Phase: ", "")
     return illumination, phase
 
