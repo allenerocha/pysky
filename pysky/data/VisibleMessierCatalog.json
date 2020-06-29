@@ -6,7 +6,6 @@
         "Distance (petameters)": 22990000,
         "NGC/IC number": "NGC 224",
         "Type": "Spiral galaxy",
-        "Picture": "static_data/M31.jpg",
         "Coordinates": {
             "dec": [
                 41,
@@ -23,11 +22,10 @@
     "M41": {
         "Brightness": 4.5,
         "Constellation": "Canis Major",
-        "Common name": "",
+        "Common name": "-",
         "Distance (petameters)": 21800,
         "NGC/IC number": "NGC 2287",
         "Type": "Open cluster",
-        "Picture": "static_data/M41.png",
         "Coordinates": {
             "dec": [
                 -21,
@@ -48,7 +46,6 @@
         "Distance (petameters)": 12526,
         "NGC/IC number": "NGC 1976",
         "Type": "H II region nebula",
-        "Picture": "static_data/M42.jpg",
         "Coordinates": {
             "dec": [
                 -5,
@@ -69,7 +66,6 @@
         "Distance (petameters)": 5459,
         "NGC/IC number": "NGC 2632",
         "Type": "Open cluster",
-        "Picture": "static_data/M44.jpg",
         "Coordinates": {
             "dec": [
                 19,
@@ -90,7 +86,6 @@
         "Distance (petameters)": 3690,
         "NGC/IC number": "-",
         "Type": "Open cluster",
-        "Picture": "static_data/M45.jpg",
         "Coordinates": {
             "dec": [
                 24,
@@ -107,11 +102,10 @@
     "M47": {
         "Brightness": 4.2,
         "Constellation": "Puppis",
-        "Common name": "",
+        "Common name": "-",
         "Distance (petameters)": 15100,
         "NGC/IC number": "NGC 2422",
         "Type": "Open cluster",
-        "Picture": "static_data/M47.jpg",
         "Coordinates": {
             "dec": [
                 -14,
@@ -132,7 +126,6 @@
         "Distance (petameters)": 15100,
         "NGC/IC number": "NGC 6405",
         "Type": "Open cluster",
-        "Picture": "static_data/M6.jpg",
         "Coordinates": {
             "dec": [
                 -32,
@@ -153,7 +146,6 @@
         "Distance (petameters)": 9461,
         "NGC/IC number": "NGC 6475",
         "Type": "Open cluster",
-        "Picture": "static_data/M7.jpg",
         "Coordinates": {
             "dec": [
                 34,
