@@ -30,7 +30,7 @@ class HTML_list:
                         key = str(key).lower().replace(' (petameters)', '').title()
                         value = '{:,.2f}'.format(value) + ' Pm'
                     out += "<span style='font-weight: 400;'>" +\
-                        f"{key.title()}: {value.title()}"
+                        f"{key.title()}: {str(value).title()}"
                     if jndex != (len(propteries) - 1):
                         out += self.delimiter
                     out += "</span>"

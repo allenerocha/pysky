@@ -1,9 +1,11 @@
 """This module parses the passed CLI options."""
-import os
-from pathlib import Path
 import argparse
+import os
 from datetime import date, timedelta
+from pathlib import Path
+
 from astropy import time as atime
+
 from .const import Const
 
 
@@ -108,8 +110,14 @@ def cli_parse():
             and (args.enddate is not None)
             and (args.endtime is not None)
     ):
-        Const.START_TIME = f"{args.startdate} {args.starttime}"
-        Const.END_TIME = f"{args.enddate} {args.endtime}"
+        Const.START_YEAR = args.startdate.split('-')[0]
+        Const.START_DAY = args.startdate.split('-')[2]
+        Const.START_MONTH = args.startdate.split('-')[1]
+        Const.START_TIME = args.starttime
+        Const.END_YEAR = args.enddate.split('-')[0]
+        Const.END_DAY = args.enddate.split('-')[2]
+        Const.END_MONTH = args.enddate.split('-')[1]
+        Const.END_TIME = args.endtime
 
 
 def gui_launch():
@@ -133,26 +141,26 @@ def one_hour_mode(sdate: str, stime: str):
         # Increment the date by 1 day
         edate = date(
             year=int(sdate.split("-")[0]),
-            month=int(sdate.split("-")[2]),
-            day=int(sdate.split("-")[1])
+            month=int(sdate.split("-")[1]),
+            day=int(sdate.split("-")[2])
         ) + timedelta(days=1)
         Const.START_YEAR = sdate.split('-')[0]
-        Const.START_DAY = sdate.split('-')[1]
-        Const.START_MONTH = sdate.split('-')[2]
+        Const.START_DAY = sdate.split('-')[2]
+        Const.START_MONTH = sdate.split('-')[1]
         Const.START_TIME = stime
         Const.END_YEAR = str(edate).split('-')[0]
-        Const.END_DAY = str(edate).split('-')[2]
-        Const.END_MONTH = str(edate).split('-')[1]
+        Const.END_DAY = str(edate).split('-')[1]
+        Const.END_MONTH = str(edate).split('-')[2]
         Const.END_TIME = etime
     else:
         etime = f"{int(stime.split(':')[0]) + 1}:{stime.split(':')[1]}"
         Const.START_YEAR = sdate.split('-')[0]
-        Const.START_DAY = sdate.split('-')[1]
-        Const.START_MONTH = sdate.split('-')[2]
+        Const.START_DAY = sdate.split('-')[2]
+        Const.START_MONTH = sdate.split('-')[1]
         Const.START_TIME = stime
         Const.END_YEAR = str(sdate).split('-')[0]
-        Const.END_DAY = str(sdate).split('-')[1]
-        Const.END_MONTH = str(sdate).split('-')[2]
+        Const.END_DAY = str(sdate).split('-')[2]
+        Const.END_MONTH = str(sdate).split('-')[1]
         Const.END_TIME = etime
 
 
