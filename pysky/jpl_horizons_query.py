@@ -10,33 +10,41 @@ def ephemeries_query(celestial_obj: str) -> tuple:
     Query the table of the celestial object in a time range.
 
     :param celestial_obj:
-    :param start:
-    :param end:
     :return:
     :useage: object_query('venus', '2020-01-01', '18:00', '2020-01-02', '1:00')
     """
-    cache_file = json.loads(
+    jplcodes = json.loads(
         open(
             f"{Const.ROOT_DIR}/data/jplcodes.json",
             "r"
         ).read())
     try:
-        obj_code = cache_file[celestial_obj.lower()]
+        obj_code = jplcodes[celestial_obj.lower()]
     except KeyError:
         Logger.log('Key not found in pre-defined JPL code dictionary.', 40)
         Logger.log(f'Removing {celestial_obj} from queue.', 40)
         return (None, celestial_obj)
+    except ValueError as e:
+        Logger.log('Encountered an value error.', 40)
+        Logger.log(f'{str(e)}', 50)
+        Logger.log(f'Removing {celestial_obj} from queue.', 40)
+        return (None, celestial_obj)
+
     except Exception as e:
         Logger.log('Encountered an unknown error.', 40)
         Logger.log(f'{str(e)}', 50)
         Logger.log(f'Removing {celestial_obj} from queue.', 40)
         return (None, celestial_obj)
     try:
-        location = {'lon': -87.8791, 'lat': 42.6499, 'elevation': 0.204}
-        startdate = Const.START_TIME.split(' ')[0]
-        starttime = Const.START_TIME.split(' ')[1]
-        enddate = Const.END_TIME.split(' ')[0]
-        endtime = Const.END_TIME.split(' ')[1]
+        location = {
+            'lon': Const.LONGITUDE,
+            'lat': Const.LATITUDE,
+            'elevation': (Const.ELEVATION / 1000.0)
+        }
+        startdate = f'{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}'
+        starttime = Const.START_TIME
+        enddate = f'{Const.END_YEAR}-{Const.END_MONTH}-{Const.END_DAY}'
+        endtime = Const.END_TIME
         obj = Horizons(
             id=obj_code,
             location=location,
@@ -50,6 +58,11 @@ def ephemeries_query(celestial_obj: str) -> tuple:
     except KeyError:
         Logger.log('Error with key raised by JPL Horizons.', 40)
         Logger.log(f'Removing {celestial_obj} from queue.')
+        return (None, celestial_obj)
+    except ValueError as e:
+        Logger.log('Encountered an value error.', 40)
+        Logger.log(f'{str(e)}', 50)
+        Logger.log(f'Removing {celestial_obj} from queue.', 40)
         return (None, celestial_obj)
     except Exception as e:
         Logger.log('Unknown error raised by JPL Horizons.', 40)
