@@ -5,6 +5,7 @@ import astropy.time
 import astropy.units
 from tqdm import tqdm
 
+from .const import Const
 from .logger import Logger
 
 
@@ -33,13 +34,13 @@ def get_bodies(args: list):
                     f"{str(type_err)}",
                     50
                 )
-        # Returns the list of bodies in the tuples
+    # Returns the list of bodies in the tuples
         return bodies
     # No bodies found in the passed list
     return False
 
 
-def get_info(atime: str, celestial_obj: str) -> list:
+def get_info(celestial_obj: str):
     """
     This function uses the astropy module to retrieve
     distance information from the passed celestial object.
@@ -53,9 +54,9 @@ def get_info(atime: str, celestial_obj: str) -> list:
 
     try:
         static_location = astropy.coordinates.EarthLocation.from_geodetic(
-            -87.8791 * astropy.units.deg,
-            42.6499 * astropy.units.deg,
-            height=204 * astropy.units.m,
+            Const.LATITUDE * astropy.units.deg,
+            Const.LONGITUDE * astropy.units.deg,
+            height=(Const.ELEVATION / 1000.0) * astropy.units.m,
         )
 
         # retrives the inforamtion of the body
@@ -64,7 +65,13 @@ def get_info(atime: str, celestial_obj: str) -> list:
         with astropy.coordinates.solar_system_ephemeris.set("builtin"):
             body_coordinates = astropy.coordinates.get_body(
                 f"{celestial_obj}",
-                astropy.time.Time(atime),
+                astropy.time.Time(
+                    f'{Const.START_YEAR}-' +
+                    f'{Const.START_MONTH}-' +
+                    f'{Const.START_DAY} ' +
+                    f'{Const.START_TIME}',
+                    format='iso'
+                ),
                 static_location,
             )
 
@@ -86,7 +93,7 @@ def get_info(atime: str, celestial_obj: str) -> list:
         Logger.log(str(e), 50)
 
 
-def get_ephemeries_info(body: str, atime: str, cache_file: dict) -> dict:
+def get_ephemeries_info(body: str, cache_file: dict) -> dict:
     """
     Retrieve the ephemeries information.
     :param body: Object to check.
@@ -97,7 +104,7 @@ def get_ephemeries_info(body: str, atime: str, cache_file: dict) -> dict:
     Logger.log(
         f"Retreiving coordinates for {body}..."
     )
-    COORDS = get_info(atime, body)
+    COORDS = get_info(body)
     cache_file[f"{body}"] = {}
     cache_file[f"{body}"]["Type"] = "planet"
     cache_file[f"{body}"]["Created"] = time.strftime(
