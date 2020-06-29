@@ -161,17 +161,18 @@ def invoke():
     s_list = list()
     for star, data in cache_file.items():
         for key, value in data.items():
-            if str(key) != "Image":
-                print(key)
-        visible_objs[star]["Brightness"] = cache_file[star]["Brightness"]
-        visible_objs[star]["Constellation"] = cache_file[star]["Constellation"]
-        visible_objs[star]["Distance"] = f'{cache_file[star]["Distance"]} Pm'
-        visible_objs[star]["Type"] = cache_file[star]["Type"]
+            try:
+                if str(key) != "Image":
+                    visible_objs[star]["Brightness"] = cache_file[star]["Brightness"]
+                    visible_objs[star]["Constellation"] = cache_file[star]["Constellation"]
+                    visible_objs[star]["Distance"] = f'{cache_file[star]["Distance"]} Pm'
+                    visible_objs[star]["Type"] = cache_file[star]["Type"]
+            except KeyError as e:
+                Logger.log(str(e), 50)
+                continue
 
     for key, value in visible_objs.items():
         s_list.append({key: value})
-    print(s_list)
-    exit()
 
     m_list = list()
     for key, value in visible_messier.items():

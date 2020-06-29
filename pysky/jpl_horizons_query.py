@@ -1,7 +1,9 @@
 """Module to query JPL Horizons database."""
-from astroquery.jplhorizons import Horizons
-from .const import Const
 import json
+
+from astroquery.jplhorizons import Horizons
+
+from .const import Const
 from .logger import Logger
 
 
@@ -92,8 +94,8 @@ def ephemeries_query(celestial_obj: str) -> tuple:
             time_ra_dec[celestial_obj][row_time] = {
                 'ra': row_ra,
                 'dec': row_dec,
-                'brightness': row_mag,
-                'delta': row_delta * 0.000149597870691,
-                'illumination': row_illumination
+                'Brightness': row_mag,
+                'Delta': row_delta * 0.000149597870691,
+                'Illumination': row_illumination
             }
     return (time_ra_dec, None)

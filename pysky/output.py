@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 def to_html_list(items: list, filename: str) -> None:
-    html_list = HTML_list(items, delimiter=" | ")
+    html_list = HTML_list(items, delimiter=",")
     with open(
             f"{Const.SLIDESHOW_DIR}"
             f"/PySkySlideshow/{filename}.html",
