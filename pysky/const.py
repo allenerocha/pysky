@@ -8,7 +8,13 @@ class Const(object):
     SLIDESHOW_DIR = ""
     THREADS = 1
     VERBOSITY = 20
+    START_YEAR = ""
+    START_DAY = ""
+    START_MONTH = ""
     START_TIME = ""
+    END_YEAR = ""
+    END_DAY = ""
+    END_MONTH = ""
     END_TIME = ""
     LATITUDE = 0.0
     LONGITUDE = 0.0
