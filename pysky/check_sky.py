@@ -10,7 +10,7 @@ import astropy.units as u
 
 def is_object_visible(
         celestial_obj,
-        secz_max=3.0
+        secz_max=4.1
 ) -> tuple:
     """
     :param celestial_obj: object to view (astropy.coordinates.SkyCoord())
@@ -52,8 +52,8 @@ def is_object_visible(
     start_altaz = location.altaz(start_time, celestial_obj)
 
     try:
-        if start_secz < secz_max or end_secz < secz_max:
-            Logger.log(f"Found sec(z) for {celestial_obj.name}.")
+        if (start_secz < secz_max and start_secz > 0) or (end_secz < secz_max and end_secz > 0): 
+            Logger.log(f"Found sec(z) = {start_secz},{end_secz} for {celestial_obj.name}.")
             Logger.log(
                 f"Zenith={start_altaz.zen} " +
                 f"Altitiude={start_altaz.alt}" +
