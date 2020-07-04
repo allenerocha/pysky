@@ -1,16 +1,19 @@
 """This module will be used to overlay information of the
 celestial body over image of the celestial body using PIL"""
 import base64
+import io
 import json
 import os
-import io
+
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
-from .logger import Logger
-from .catalog_parse import check_messier, check_caldwell
-from .catalog_parse import parse_messier, parse_caldwell
+
+from .catalog_parse import (check_caldwell, check_messier, parse_caldwell,
+                            parse_messier)
 from .const import Const
+from .logger import Logger
+
 PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
 
