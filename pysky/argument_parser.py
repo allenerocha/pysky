@@ -15,6 +15,7 @@ def cli_parse():
 
     :return: astropy.time objects
     """
+    open(f"{Const.ROOT_DIR}/data/log", "w").write("")
     parser = argparse.ArgumentParser(
         description='pysky is an interactive module that allows the ' +
         'user to check the sky given a date and time allowing them ' +
