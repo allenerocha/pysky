@@ -2,12 +2,12 @@
 preferences and applies the cache rules to the cache file and saves it"""
 import json
 import os.path
-
 from pathlib import Path
+
 from tqdm import tqdm
 
-from .logger import Logger
 from .const import Const
+from .logger import Logger
 
 
 def check_integrity():
@@ -146,16 +146,22 @@ def read_user_prefs():
         user_save_loc = str()
         for line in u_prefs_file.readlines():
             if len(line.strip()) > 0 and line.strip()[0] != "#":
-                if ('slideshow_dir' in line.strip()):
+                if 'slideshow_dir' in line.strip():
                     user_save_loc = line.strip().split("=")[1].strip()
-                elif ('latitude' in line.strip()):
+                elif 'latitude' in line.strip():
                     Const.LATITUDE = float(line.strip().split('=')[1].strip())
-                elif ('longitude' in line.strip()):
+                elif 'longitude' in line.strip():
                     Const.LONGITUDE = float(line.strip().split('=')[1].strip())
-                elif ('elevation' in line.strip()):
+                elif 'elevation' in line.strip():
                     Const.ELEVATION = float(line.strip().split('=')[1].strip())
                 else:
-                    user_objs.append(line.strip())
+                    if ',' not in line.strip():
+                        user_objs.append(line.strip())
+                    else:
+                        user_objs.extend(line.strip().split(','))
+
+        user_objs = list(map(str.strip, user_objs))
+        print(user_objs)
 
         Logger.log("Finished parsing user preferences!\n")
 
