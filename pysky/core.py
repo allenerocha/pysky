@@ -167,8 +167,7 @@ def invoke():
                     visible_objs[star]["Constellation"] = cache_file[star]["Constellation"]
                     visible_objs[star]["Distance"] = f'{cache_file[star]["Distance"]} Pm'
                     visible_objs[star]["Type"] = cache_file[star]["Type"]
-            except KeyError as e:
-                Logger.log(str(e), 50)
+            except KeyError:
                 continue
 
     for key, value in visible_objs.items():
