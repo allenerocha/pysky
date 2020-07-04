@@ -1,7 +1,11 @@
 """This module retrieves basic data from simbad based
 on which itentifier is passed via the command line"""
+import json
 import sys
+
 import astroquery.simbad
+
+from .const import Const
 from .logger import Logger
 
 
@@ -71,12 +75,18 @@ def get_constellation(celestial_obj: str) -> str:
     """
     astroquery.simbad.Simbad.reset_votable_fields()
     Logger.log(f"Retrieving constellation for {celestial_obj}...")
+    const_abbrvs = json.loads(open(f"{Const.ROOT_DIR}/data/ConstellAbbrevs.json", "r").read())
     try:
         astroquery.simbad.Simbad.remove_votable_fields("coordinates")
         constellation = str(
             astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0]
         ).split()[-1][:-1]
-        Logger.log(f"Retrieved constellation for {celestial_obj}!\n")
+        Logger.log(f"Retrieved constellation abbreviation for {celestial_obj}!\n")
+        try:
+            constellation = const_abbrvs[str(constellation).lower()]
+        except KeyError as e:
+            Logger.log(f"{constellation} not found in constellation abbreviation dictionary", 50)
+            Logger.log(str(e), 50)
         return constellation
 
     # Occurs when the object is not in SIMBAS's database
@@ -153,5 +163,3 @@ def get_distance(celestial_obj: str) -> float:
         return None
 
     return float(parsec_dist) * 30.86
-
-
