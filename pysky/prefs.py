@@ -161,7 +161,6 @@ def read_user_prefs():
                         user_objs.extend(line.strip().split(','))
 
         user_objs = list(map(str.strip, user_objs))
-        print(user_objs)
 
         Logger.log("Finished parsing user preferences!\n")
 
