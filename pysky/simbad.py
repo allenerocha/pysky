@@ -162,4 +162,4 @@ def get_distance(celestial_obj: str) -> float:
     if parsec_dist is None:
         return None
 
-    return float(parsec_dist) * 30.86
+    return int(float(parsec_dist) * 30.86)
