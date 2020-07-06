@@ -1,5 +1,6 @@
 """Get astropy information of ephemeries."""
 import time
+
 import astropy.coordinates
 import astropy.time
 import astropy.units
@@ -78,16 +79,10 @@ def get_info(celestial_obj: str):
         Logger.log(
             f"Retreived coordinates for {celestial_obj} in {time.time() - t1}!"
         )
-        return [
-            body_coordinates.ra.hms[0],
-            body_coordinates.ra.hms[1],
-            body_coordinates.ra.hms[2],
+        return (
+            body_coordinates.ra.degree,
             body_coordinates.dec.degree,
-            body_coordinates.dec.radian,
-            body_coordinates.cartesian.x,
-            body_coordinates.cartesian.y,
-            body_coordinates.cartesian.z,
-        ]
+            )
 
     except Exception as e:
         Logger.log(str(e), 50)
@@ -104,7 +99,7 @@ def get_ephemeries_info(body: str, cache_file: dict) -> dict:
     Logger.log(
         f"Retreiving coordinates for {body}..."
     )
-    COORDS = get_info(body)
+    ra, dec = get_info(body)
     cache_file[f"{body}"] = {}
     cache_file[f"{body}"]["Type"] = "planet"
     cache_file[f"{body}"]["Created"] = time.strftime(
@@ -118,9 +113,8 @@ def get_ephemeries_info(body: str, cache_file: dict) -> dict:
     )
     try:
         cache_file[f"{body}"]["Coordinates"] = {  # Right acension
-            "ra": [str(COORDS[0]), str(COORDS[1]), str(COORDS[2])],
-            "dec": str(COORDS[3]),
-            "cartesian": [str(COORDS[5]), str(COORDS[6]), str(COORDS[7])],
+            "ra": ra,
+            "dec": dec
         }
     except TypeError:
         print(body)
