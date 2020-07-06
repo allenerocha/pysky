@@ -88,7 +88,7 @@ def invoke():
             f"azimuth for {star}..."
         )
         try:
-            zen, altitude, azimuth = get_visible(
+            start_altitude, start_azimuth, end_altitude, end_azimuth = get_visible(
                 star,
                 cache_file[star]['Coordinates']['ra'],
                 cache_file[star]['Coordinates']['dec'],
@@ -96,11 +96,13 @@ def invoke():
             )
         except KeyError:
             continue
-        if '' not in (zen, altitude, azimuth):
+        if '' not in (start_altitude, start_azimuth):
             Logger.log(f"Sucessfully gathered data for {star}!\n")
             visible = {str(star): dict()}
-            visible[star]['Alt.'] = altitude.to_string(decimal=True)
-            visible[star]['Az.'] = azimuth.to_string(decimal=True)
+            visible[star]['Start Alt.'] = start_altitude.to_string(decimal=True)
+            visible[star]['Start Az.'] = start_azimuth.to_string(decimal=True)
+            visible[star]['End Alt.'] = end_altitude.to_string(decimal=True)
+            visible[star]['End Az.'] = end_azimuth.to_string(decimal=True)
             visible_objs.update(visible)
 
     # Dump cache file
@@ -117,6 +119,7 @@ def invoke():
         )
 
     visible = dict()
+    """
     for eph in cache_file:
         if eph in EPHEMERIES_BODIES:
             Logger.log(
@@ -124,7 +127,7 @@ def invoke():
                 f"azimuth for {eph}..."
             )
             try:
-                zen, altitude, azimuth = get_visible(
+                start_altitude, start_azimuth, end_altitude, end_azimuth = get_visible(
                     eph,
                     cache_file[eph]['Coordinates']['ra'],
                     cache_file[eph]['Coordinates']['dec'],
@@ -132,12 +135,15 @@ def invoke():
                 )
             except KeyError:
                 continue
-            if '' not in (zen, altitude, azimuth):
+            if '' not in (start_altitude, start_azimuth):
                 Logger.log(f"Sucessfully gathered data for {eph}!\n")
                 visible = {str(eph): dict()}
-                visible[eph]['Alt.'] = altitude.to_string(decimal=True)
-                visible[eph]['Az.'] = azimuth.to_string(decimal=True)
+                visible[eph]['Start Alt.'] = start_altitude.to_string(decimal=True)
+                visible[eph]['Start Az.'] = start_azimuth.to_string(decimal=True)
+                visible[eph]['End Alt.'] = end_altitude.to_string(decimal=True)
+                visible[eph]['End Az.'] = end_azimuth.to_string(decimal=True)
                 visible_objs.update(visible)
+    """
     # Dump cache file
     with open(f"{Const.ROOT_DIR}/data/cache", "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
@@ -149,18 +155,20 @@ def invoke():
             "Gathering zen, altitude, and " +
             f"azimuth for {m_obj}..."
         )
-        zen, altitude, azimuth = get_visible(
+        start_altitude, start_azimuth, end_altitude, end_azimuth = get_visible(
             m_obj,
             MESSIER_OBJECTS[m_obj]['Coordinates']['ra'],
             MESSIER_OBJECTS[m_obj]['Coordinates']['dec'],
             3.0
         )
-        if '' not in (zen, altitude, azimuth):
+        if '' not in (start_altitude, start_azimuth):
             Logger.log(f"Sucessfully gathered data for {m_obj}!\n")
             visible[str(m_obj)] = dict()
             visible[str(m_obj)]['Type'] = MESSIER_OBJECTS[m_obj]['Type']
-            visible[str(m_obj)]['Alt. (°)'] = altitude.to_string(decimal=True)
-            visible[str(m_obj)]['Az. (°)'] = azimuth.to_string(decimal=True)
+            visible[str(m_obj)]['Start Alt. (°)'] = start_altitude.to_string(decimal=True)
+            visible[str(m_obj)]['Start Az. (°)'] = start_azimuth.to_string(decimal=True)
+            visible[str(m_obj)]['End Alt. (°)'] = end_altitude.to_string(decimal=True)
+            visible[str(m_obj)]['End Az. (°)'] = end_azimuth.to_string(decimal=True)
             visible[str(m_obj)]['Constellation'] = MESSIER_OBJECTS[m_obj]['Constellation']
             visible[str(m_obj)]['Brigntness'] = MESSIER_OBJECTS[m_obj]['Brightness']
             visible[str(m_obj)]['Distance (Pm)'] = MESSIER_OBJECTS[m_obj]['Distance']
@@ -173,18 +181,20 @@ def invoke():
             "Gathering zen, altitude, and " +
             f"azimuth for {c_obj}..."
         )
-        zen, altitude, azimuth = get_visible(
+        start_altitude, start_azimuth, end_altitude, end_azimuth = get_visible(
             c_obj,
             CALDWELL_OBJECTS[c_obj]['Coordinates']['ra'],
             CALDWELL_OBJECTS[c_obj]['Coordinates']['dec'],
             3.0
         )
-        if '' not in (zen, altitude, azimuth):
+        if '' not in (start_altitude, start_azimuth):
             Logger.log(f"Sucessfully gathered data for {c_obj}!\n")
             visible[str(c_obj)] = dict()
             visible[str(c_obj)]['Type'] = CALDWELL_OBJECTS[c_obj]['Type']
-            visible[str(c_obj)]['Alt. (°)'] = altitude.to_string(decimal=True)
-            visible[str(c_obj)]['Az. (°)'] = azimuth.to_string(decimal=True)
+            visible[str(c_obj)]['Start Alt. (°)'] = start_altitude.to_string(decimal=True)
+            visible[str(c_obj)]['Start Az. (°)'] = start_azimuth.to_string(decimal=True)
+            visible[str(c_obj)]['End Alt. (°)'] = end_altitude.to_string(decimal=True)
+            visible[str(c_obj)]['End Az. (°)'] = end_azimuth.to_string(decimal=True)
             visible[str(c_obj)]['Constellation'] = CALDWELL_OBJECTS[c_obj]['Constellation']
             visible[str(c_obj)]['Brigntness'] = CALDWELL_OBJECTS[c_obj]['Brightness']
             visible[str(c_obj)]['Distance (Pm)'] = CALDWELL_OBJECTS[c_obj]['Distance']
@@ -202,13 +212,21 @@ def invoke():
         except KeyError:
             v_obj[star]["Type"] = "-"
         try:
-            v_obj[star]["Alt. (°)"] = visible_objs[star]["Alt."]
+            v_obj[star]["Start Alt. (°)"] = visible_objs[star]["Start Alt."]
         except KeyError:
             v_obj[star]["Alt. (°)"] = "-"
         try:
-            v_obj[star]["Az. (°)"] = visible_objs[star]["Az."]
+            v_obj[star]["Start Az. (°)"] = visible_objs[star]["Start Az."]
         except KeyError:
-            v_obj[star]["Az. (°)"] = "-"
+            v_obj[star]["Start Az. (°)"] = "-"
+        try:
+            v_obj[star]["End Alt. (°)"] = visible_objs[star]["End Alt."]
+        except KeyError:
+            v_obj[star]["End. (°)"] = "-"
+        try:
+            v_obj[star]["End Az. (°)"] = visible_objs[star]["End Az."]
+        except KeyError:
+            v_obj[star]["End Az. (°)"] = "-"
         try:
             v_obj[star]["Constellation"] = cache_file[star]["Constellation"]
         except KeyError:
@@ -332,25 +350,25 @@ def get_visible(
             pass
         #print(f"{object_name} ra:{ra} - type:{type(ra)} dec:{dec} - type:{type(dec)}")
         celestial_obj = FixedTarget.from_name(object_name)
-        zen, altitude, azimuth = is_object_visible(
+        start_altitude, start_azimuth, end_altitude, end_azimuth = is_object_visible(
             celestial_obj=celestial_obj,
             secz_max=secz_max
         )
-        return (zen, altitude, azimuth)
+        return (start_altitude, start_azimuth, end_altitude, end_azimuth)
     except astropy.coordinates.name_resolve.NameResolveError as e:
         Logger.log(
             "Unable to gather name, start_altaz.alt, and " +
             f"start_altaz.az for {object_name}!\n", 40
         )
         Logger.log(str(e), 40)
-        return '', '', ''
+        return '-', '-', '-', '-'
     except TypeError as e:
         Logger.log(
             "Unable to gather name, start_altaz.alt, and " +
             f"start_altaz.az for {object_name}!\n", 40
         )
         Logger.log(str(e), 40)
-        return '', '', ''
+        return '-', '-', '-', '-'
 
 
 def gen_moon_data():

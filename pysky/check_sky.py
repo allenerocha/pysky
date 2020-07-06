@@ -1,11 +1,12 @@
 """This module is used to see if an object is visible."""
-from .const import Const
-from .logger import Logger
+import astropy.units as u
 import numpy as np
 from astroplan import Observer
 from astropy.coordinates import EarthLocation
 from astropy.time import Time
-import astropy.units as u
+
+from .const import Const
+from .logger import Logger
 
 
 def is_object_visible(
@@ -50,16 +51,17 @@ def is_object_visible(
     start_secz = location.altaz(start_time, celestial_obj).secz
     end_secz = location.altaz(end_time, celestial_obj).secz
     start_altaz = location.altaz(start_time, celestial_obj)
+    end_altaz = location.altaz(end_time, celestial_obj)
 
     try:
-        if (start_secz < secz_max and start_secz > 0) or (end_secz < secz_max and end_secz > 0): 
+        if (start_secz < secz_max and start_secz > 0) or (end_secz < secz_max and end_secz > 0):
             Logger.log(f"Found sec(z) = {start_secz},{end_secz} for {celestial_obj.name}.")
             Logger.log(
                 f"Zenith={start_altaz.zen} " +
                 f"Altitiude={start_altaz.alt}" +
                 f"Azimuth={start_altaz.az}"
             )
-            return start_altaz.zen, start_altaz.alt, start_altaz.az
+            return (start_altaz.alt, start_altaz.az, end_altaz.alt, end_altaz.az)
     except ValueError as e:
         Logger.log(
             f"Could not find sec(z) for {celestial_obj.name}.",
@@ -67,5 +69,5 @@ def is_object_visible(
         )
         Logger.log(str(e), 40)
         Logger.log(start_secz, 40)
-        return '', '', ''
-    return '', '', ''
+        return '-', '-', '-', '-'
+    return (start_altaz.alt, start_altaz.az, end_altaz.alt, end_altaz.az)
