@@ -21,7 +21,7 @@ class HTML_list:
             for celestial_obj, propteries in item.items():
                 out += "<li>"
                 out += "<span style='font-weight: 400;'>" +\
-                    f"{celestial_obj.title()}" +\
+                    f"{celestial_obj}" +\
                     self.delimiter +\
                     "</span>"
                 jndex = 0

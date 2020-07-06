@@ -1,13 +1,16 @@
 """Main module that calls all relevant modules."""
 import json
-import os.path
-import warnings
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 
+import astroplan
 import astropy
-from astropy.coordinates import SkyCoord
+import astropy.units as u
+import numpy
+from astroplan import (FixedTarget, OldEarthOrientationDataWarning,
+                       download_IERS_A)
+from astropy.coordinates import Angle, SkyCoord
 from tqdm import tqdm
 
 from .argument_parser import cli_parse
@@ -19,39 +22,19 @@ from .image_manipulation import overlay_text
 from .jpl_horizons_query import ephemeries_query
 from .logger import Logger
 from .moonquery import query
-from .output import to_html_list
+from .output import to_html_list, to_html_table
 from .prefs import check_integrity, read_user_prefs
 from .simbad import get_brightness, get_constellation, get_distance, get_ra_dec
 from .skyview import get_skyview_img
 
-# Set up the thing to catch the warning (and potentially others)
-with warnings.catch_warnings(record=True) as w:
-    # import the modules
-    import astroplan
-    from astroplan import OldEarthOrientationDataWarning
-    from astroplan import FixedTarget
-
-    # One want to know aout the first time a warning is thrown
-    warnings.simplefilter("once")
-
-# Look through all the warnings to see if one
-# is OldEarthOrientationDataWarning, update the table if it is.
-for i in w:
-    if i.category == OldEarthOrientationDataWarning:
-        # This new_mess statement isn't really needed
-        # I just didn't want to print all the
-        # information that is produce in the warning.
-        NEW_MESS = '.'.join(str(i.message).split('.')[:3])
-        print('WARNING:', NEW_MESS)
-        print('Updating IERS bulletin table...')
-        from astroplan import download_IERS_A
-        download_IERS_A()
+download_IERS_A()
 
 
 def invoke():
     """
     Call all other relevant functions.
     """
+    download_IERS_A()
 
     cli_parse()
 
@@ -68,6 +51,37 @@ def invoke():
     EPHEMERIES_BODIES = list(EPHEMERIES.keys())
 
     visible_objs = dict()
+    visible = dict()
+    #for star in STARS:
+    #    Logger.log(
+    #        "Gathering zen, altitude, and " +
+    #        f"azimuth for {star}..."
+    #    )
+    #    try:
+    #        zen, altitude, azimuth = get_visible(
+    #            star,
+    #            
+    #            3.0
+    #        )
+    #    except KeyError:
+    #        continue
+    #    if '' not in (zen, altitude, azimuth):
+    #        Logger.log(f"Sucessfully gathered data for {star}!\n")
+    #        visible = {str(star): dict()}
+    #        visible[star]['Alt.'] = altitude.to_string(decimal=True)
+    #        visible[star]['Az.'] = azimuth.to_string(decimal=True)
+    #        visible_objs.update(visible)
+    #STARS = list(visible_objs.keys())
+    # Calls the skyview api and simbad
+    # api and returns the the list of stars
+    invoke_skyview(STARS)
+    # Open cache file
+    cache_file = json.loads(open(f"{Const.ROOT_DIR}/data/cache", "r").read())
+    for star in STARS:
+        cache_file = set_simbad_values(star, cache_file)
+
+    visible_objs = dict()
+    visible = dict()
     for star in STARS:
         Logger.log(
             "Gathering zen, altitude, and " +
@@ -76,6 +90,8 @@ def invoke():
         try:
             zen, altitude, azimuth = get_visible(
                 star,
+                cache_file[star]['Coordinates']['ra'],
+                cache_file[star]['Coordinates']['dec'],
                 3.0
             )
         except KeyError:
@@ -83,18 +99,9 @@ def invoke():
         if '' not in (zen, altitude, azimuth):
             Logger.log(f"Sucessfully gathered data for {star}!\n")
             visible = {str(star): dict()}
-            visible[star]['Zenith'] = str(zen)
-            visible[star]['Altitude'] = str(altitude)
-            visible[star]['Azimuth'] = str(azimuth)
+            visible[star]['Alt.'] = altitude.to_string(decimal=True)
+            visible[star]['Az.'] = azimuth.to_string(decimal=True)
             visible_objs.update(visible)
-    STARS = list(visible_objs.keys())
-    # Calls the skyview api and simbad
-    # api and returns the the list of stars
-    invoke_skyview(STARS)
-    # Open cache file
-    cache_file = json.loads(open(f"{Const.ROOT_DIR}/data/cache", "r").read())
-    for star in STARS:
-        cache_file = set_simbad_values(star, cache_file)
 
     # Dump cache file
     with open(f"{Const.ROOT_DIR}/data/cache", "w") as json_out:
@@ -109,11 +116,34 @@ def invoke():
             cache_file
         )
 
+    visible = dict()
+    for eph in cache_file:
+        if eph in EPHEMERIES_BODIES:
+            Logger.log(
+                "Gathering zen, altitude, and " +
+                f"azimuth for {eph}..."
+            )
+            try:
+                zen, altitude, azimuth = get_visible(
+                    eph,
+                    cache_file[eph]['Coordinates']['ra'],
+                    cache_file[eph]['Coordinates']['dec'],
+                    3.0
+                )
+            except KeyError:
+                continue
+            if '' not in (zen, altitude, azimuth):
+                Logger.log(f"Sucessfully gathered data for {eph}!\n")
+                visible = {str(eph): dict()}
+                visible[eph]['Alt.'] = altitude.to_string(decimal=True)
+                visible[eph]['Az.'] = azimuth.to_string(decimal=True)
+                visible_objs.update(visible)
     # Dump cache file
     with open(f"{Const.ROOT_DIR}/data/cache", "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
 
     visible_messier = dict()
+    visible = dict()
     for m_obj in MESSIER_OBJECTS.keys():
         Logger.log(
             "Gathering zen, altitude, and " +
@@ -121,20 +151,23 @@ def invoke():
         )
         zen, altitude, azimuth = get_visible(
             m_obj,
+            MESSIER_OBJECTS[m_obj]['Coordinates']['ra'],
+            MESSIER_OBJECTS[m_obj]['Coordinates']['dec'],
             3.0
         )
         if '' not in (zen, altitude, azimuth):
             Logger.log(f"Sucessfully gathered data for {m_obj}!\n")
-            visible = {str(m_obj): MESSIER_OBJECTS[m_obj]}
-            visible[m_obj]['Zenith'] = str(zen)
-            visible[m_obj]['Altitude'] = str(altitude)
-            visible[m_obj]['Azimuth'] = str(azimuth)
-            visible[m_obj].pop("Coordinates", None)
+            visible[str(m_obj)] = dict()
+            visible[str(m_obj)]['Type'] = MESSIER_OBJECTS[m_obj]['Type']
+            visible[str(m_obj)]['Alt.'] = altitude.to_string(decimal=True)
+            visible[str(m_obj)]['Az.'] = azimuth.to_string(decimal=True)
+            visible[str(m_obj)]['Constellation'] = MESSIER_OBJECTS[m_obj]['Constellation']
+            visible[str(m_obj)]['Brigntness'] = MESSIER_OBJECTS[m_obj]['Brightness']
+            visible[str(m_obj)]['Distance'] = MESSIER_OBJECTS[m_obj]['Distance']
             visible_messier.update(visible)
-            # visible_messier = {
-            #     k: v for k, v in visible_messier.items() if v != ''
-            # }
+
     visible_caldwell = dict()
+    visible = dict()
     for c_obj in CALDWELL_OBJECTS.keys():
         Logger.log(
             "Gathering zen, altitude, and " +
@@ -142,36 +175,54 @@ def invoke():
         )
         zen, altitude, azimuth = get_visible(
             c_obj,
+            CALDWELL_OBJECTS[c_obj]['Coordinates']['ra'],
+            CALDWELL_OBJECTS[c_obj]['Coordinates']['dec'],
             3.0
         )
         if '' not in (zen, altitude, azimuth):
             Logger.log(f"Sucessfully gathered data for {c_obj}!\n")
-            visible = {str(c_obj): CALDWELL_OBJECTS[c_obj]}
-            visible[c_obj]['Zenith'] = str(zen)
-            visible[c_obj]['Altitude'] = str(altitude)
-            visible[c_obj]['Azimuth'] = str(azimuth)
-            visible[c_obj].pop("Coordinates", None)
+            visible[str(c_obj)] = dict()
+            visible[str(c_obj)]['Type'] = CALDWELL_OBJECTS[c_obj]['Type']
+            visible[str(c_obj)]['Alt.'] = altitude.to_string(decimal=True)
+            visible[str(c_obj)]['Az.'] = azimuth.to_string(decimal=True)
+            visible[str(c_obj)]['Constellation'] = CALDWELL_OBJECTS[c_obj]['Constellation']
+            visible[str(c_obj)]['Brigntness'] = CALDWELL_OBJECTS[c_obj]['Brightness']
+            visible[str(c_obj)]['Distance'] = CALDWELL_OBJECTS[c_obj]['Distance']
             visible_caldwell.update(visible)
-            # visible_caldwell = {
-            #     k: v for k, v in visible_caldwell.items() if v != ''
-            # }
+
     set_img_txt(visible_messier)
     set_img_txt(visible_caldwell)
 
     s_list = list()
+    v_obj = dict()
     for star, data in cache_file.items():
-        for key, value in data.items():
-            try:
-                if str(key) != "Image":
-                    visible_objs[star]["Brightness"] = cache_file[star]["Brightness"]
-                    visible_objs[star]["Constellation"] = cache_file[star]["Constellation"]
-                    visible_objs[star]["Distance"] = f'{cache_file[star]["Distance"]} Pm'
-                    visible_objs[star]["Type"] = cache_file[star]["Type"]
-            except KeyError:
-                continue
-
-    for key, value in visible_objs.items():
-        s_list.append({key: value})
+        v_obj[star] = {}
+        try:
+            v_obj[star]["Type"] = cache_file[star]["Type"].title()
+        except KeyError:
+            v_obj[star]["Type"] = "-"
+        try:
+            v_obj[star]["Alt."] = visible_objs[star]["Alt."]
+        except KeyError:
+            v_obj[star]["Alt."] = "-"
+        try:
+            v_obj[star]["Az."] = visible_objs[star]["Az."]
+        except KeyError:
+            v_obj[star]["Az."] = "-"
+        try:
+            v_obj[star]["Constellation"] = cache_file[star]["Constellation"]
+        except KeyError:
+            v_obj[star]["Constellation"] = "-"
+        try:
+            v_obj[star]["Brightness"] = cache_file[star]["Brightness"]
+        except KeyError:
+            v_obj[star]["Brightness"] = "-"
+        try:
+            v_obj[star]["Distance"] = f'{cache_file[star]["Distance"]}'
+        except KeyError:
+            v_obj[star]["Distance"] = "-"
+    for key, value in v_obj.items():
+        s_list.append({str(key).title(): value})
 
     m_list = list()
     for key, value in visible_messier.items():
@@ -180,9 +231,13 @@ def invoke():
     c_list = list()
     for key, value in visible_caldwell.items():
         c_list.append({key: value})
+
     write_out(s_list, code=0, filename='Stars')
     write_out(m_list, code=0, filename='VisibleMessier')
     write_out(c_list, code=0, filename='VisibleCaldwell')
+
+    cel_objs = s_list + m_list + c_list
+    write_out(cel_objs, code=1)
 
 
 def set_simbad_values(celestial_obj: str, cache_file: dict) -> dict:
@@ -254,6 +309,8 @@ def set_img_txt(celestial_objs: list) -> None:
 
 def get_visible(
         object_name: str,
+        ra,
+        dec,
         secz_max=3.0
 ) -> tuple:
     """
@@ -267,6 +324,13 @@ def get_visible(
     """
 
     try:
+        if isinstance(ra, list) and isinstance(dec, list):
+            ra = (ra[0] / 24) + (ra[1] / 60) + (ra[2] / 60)
+            dec = dec[0] + (dec[1] / 60) + (dec[2] / 3600)
+            print(f"{object_name} ra={ra} dec={dec}")
+        elif isinstance(ra, numpy.float64) and isinstance(dec, numpy.float64):
+            pass
+        #print(f"{object_name} ra:{ra} - type:{type(ra)} dec:{dec} - type:{type(dec)}")
         celestial_obj = FixedTarget.from_name(object_name)
         zen, altitude, azimuth = is_object_visible(
             celestial_obj=celestial_obj,
@@ -278,12 +342,14 @@ def get_visible(
             "Unable to gather name, start_altaz.alt, and " +
             f"start_altaz.az for {object_name}!\n", 40
         )
+        Logger.log(str(e), 40)
         return '', '', ''
     except TypeError as e:
         Logger.log(
             "Unable to gather name, start_altaz.alt, and " +
             f"start_altaz.az for {object_name}!\n", 40
         )
+        Logger.log(str(e), 40)
         return '', '', ''
 
 
@@ -311,4 +377,10 @@ def gen_moon_data():
 
 def write_out(celestial_objs: list, code=0, filename=None):
     if code == 0:
+        Logger.log("Writing objects to HTML list")
         to_html_list(celestial_objs, filename=filename)
+        Logger.log("Wrote HTML list")
+    if code == 1:
+        Logger.log("Writing objects to HTML table")
+        to_html_table(celestial_objs)
+        Logger.log("Wrote HTML table.")
