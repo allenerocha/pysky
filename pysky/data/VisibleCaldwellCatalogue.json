@@ -3,7 +3,7 @@
         "Caldwell number": "C41",
         "Common name": "Hyades",
         "Type": "Open Cluster",
-        "Distance (petameters)": 1429,
+        "Distance": 1429,
         "Constellation": "Taurus",
         "Brightness": 0.5,
         "Coordinates": {
@@ -23,7 +23,7 @@
       "Caldwell number": "C102",
       "Common name": "Theta Car Cluster",
       "Type": "Open Cluster",
-      "Distance (petameters)": 4655,
+      "Distance": 4655,
       "Constellation": "Carina",
       "Brightness": 1.9,
         "Coordinates": {
@@ -43,7 +43,7 @@
       "Caldwell number": "C85",
       "Common name": "Omicron Velorum Cluster",
       "Type": "Open Cluster",
-      "Distance (petameters)": 4730,
+      "Distance": 4730,
       "Constellation": "Vela",
       "Brightness": 2.5,
         "Coordinates": {
@@ -63,7 +63,7 @@
       "Caldwell number": "C76",
       "Common name": "-",
       "Type": "Open Cluster and Nebula",
-      "Distance (petameters)": 56764,
+      "Distance": 56764,
       "Constellation": "Scorpius",
       "Brightness": 2.6,
         "Coordinates": {
@@ -83,7 +83,7 @@
       "Caldwell number": "C92",
       "Common name": "Eta Carinae Nebula",
       "Type": "Nebula",
-      "Distance (petameters)": 71000,
+      "Distance": 71000,
       "Constellation": "Carina",
       "Brightness": 3,
         "Coordinates": {
@@ -103,7 +103,7 @@
       "Caldwell number": "C91",
       "Common name": "Wishing Well Cluster",
       "Type": "Open Cluster",
-      "Distance (petameters)": 15100,
+      "Distance": 15100,
       "Constellation": "Carina",
       "Brightness": 3,
         "Coordinates": {
@@ -123,7 +123,7 @@
       "Caldwell number": "C80",
       "Common name": "Omega Centauri",
       "Type": "Globular Cluster",
-      "Distance (petameters)": 163700,
+      "Distance": 163700,
       "Constellation": "Centaurus",
       "Brightness": 3.7,
         "Coordinates": {
@@ -143,7 +143,7 @@
       "Caldwell number": "C96",
       "Common name": "-",
       "Type": "Open Cluster",
-      "Distance (petameters)": 12300,
+      "Distance": 12300,
       "Constellation": "Carina",
       "Brightness": 3.8,
         "Coordinates": {
@@ -163,7 +163,7 @@
       "Caldwell number": "C106",
       "Common name": "47 Tucanae",
       "Type": "Globular Cluster",
-      "Distance (petameters)": 139100,
+      "Distance": 139100,
       "Constellation": "Tucana",
       "Brightness": 4,
         "Coordinates": {
@@ -183,7 +183,7 @@
       "Caldwell number": "C14",
       "Common name": "Double Cluster h & χ Persei",
       "Type": "Open Cluster",
-      "Distance (petameters)": 69100,
+      "Distance": 69100,
       "Constellation": "Perseus",
       "Brightness": 4,
         "Coordinates": {
@@ -203,7 +203,7 @@
       "Caldwell number": "C14",
       "Common name": "Double Cluster h & χ Persei",
       "Type": "Open Cluster",
-      "Distance (petameters)": 69100,
+      "Distance": 69100,
       "Constellation": "Perseus",
       "Brightness": 4,
         "Coordinates": {
@@ -223,7 +223,7 @@
       "Caldwell number": "C20",
       "Common name": "North America Nebula",
       "Type": "Nebula",
-      "Distance (petameters)": 17000,
+      "Distance": 17000,
       "Constellation": "Cygnus",
       "Brightness": 4,
         "Coordinates": {
@@ -243,7 +243,7 @@
       "Caldwell number": "C64",
       "Common name": "-",
       "Type": "Open Cluster and Nebula",
-      "Distance (petameters)": 48200,
+      "Distance": 48200,
       "Constellation": "Canis Major",
       "Brightness": 4.1,
         "Coordinates": {
@@ -263,7 +263,7 @@
       "Caldwell number": "C94",
       "Common name": "Jewel Box",
       "Type": "Open Cluster",
-      "Distance (petameters)": 46400,
+      "Distance": 46400,
       "Constellation": "Crux",
       "Brightness": 4.2,
         "Coordinates": {
@@ -283,7 +283,7 @@
       "Caldwell number": "C100",
       "Common name": "Lambda Centauri Nebula",
       "Type": "Open Cluster and Nebula",
-      "Distance (petameters)": 56764,
+      "Distance": 56764,
       "Constellation": "Centaurus",
       "Brightness": 4.5,
         "Coordinates": {

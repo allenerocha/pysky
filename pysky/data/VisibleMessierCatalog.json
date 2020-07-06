@@ -3,7 +3,7 @@
         "Brightness": 3.4,
         "Constellation": "Andromeda",
         "Common name": "Andromeda Galaxy",
-        "Distance (petameters)": 22990000,
+        "Distance": 22990000,
         "NGC/IC number": "NGC 224",
         "Type": "Spiral galaxy",
         "Coordinates": {
@@ -23,7 +23,7 @@
         "Brightness": 4.5,
         "Constellation": "Canis Major",
         "Common name": "-",
-        "Distance (petameters)": 21800,
+        "Distance": 21800,
         "NGC/IC number": "NGC 2287",
         "Type": "Open cluster",
         "Coordinates": {
@@ -43,7 +43,7 @@
         "Brightness": 4,
         "Constellation": "Orion",
         "Common name": "Orion Nebula",
-        "Distance (petameters)": 12526,
+        "Distance": 12526,
         "NGC/IC number": "NGC 1976",
         "Type": "H II region nebula",
         "Coordinates": {
@@ -63,7 +63,7 @@
         "Brightness": 3.7,
         "Constellation": "Cancer",
         "Common name": "Beehive Cluster",
-        "Distance (petameters)": 5459,
+        "Distance": 5459,
         "NGC/IC number": "NGC 2632",
         "Type": "Open cluster",
         "Coordinates": {
@@ -83,7 +83,7 @@
         "Brightness": 1.6,
         "Constellation": "Taurus",
         "Common name": "Pleiades",
-        "Distance (petameters)": 3690,
+        "Distance": 3690,
         "NGC/IC number": "-",
         "Type": "Open cluster",
         "Coordinates": {
@@ -103,7 +103,7 @@
         "Brightness": 4.2,
         "Constellation": "Puppis",
         "Common name": "-",
-        "Distance (petameters)": 15100,
+        "Distance": 15100,
         "NGC/IC number": "NGC 2422",
         "Type": "Open cluster",
         "Coordinates": {
@@ -123,7 +123,7 @@
         "Brightness": 4.2,
         "Constellation": "Scorpius",
         "Common name": "Butterfly Cluster",
-        "Distance (petameters)": 15100,
+        "Distance": 15100,
         "NGC/IC number": "NGC 6405",
         "Type": "Open cluster",
         "Coordinates": {
@@ -143,7 +143,7 @@
         "Brightness": 3.3,
         "Constellation": "Scorpius",
         "Common name": "Ptolemy Cluster",
-        "Distance (petameters)": 9461,
+        "Distance": 9461,
         "NGC/IC number": "NGC 6475",
         "Type": "Open cluster",
         "Coordinates": {
