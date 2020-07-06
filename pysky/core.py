@@ -159,11 +159,11 @@ def invoke():
             Logger.log(f"Sucessfully gathered data for {m_obj}!\n")
             visible[str(m_obj)] = dict()
             visible[str(m_obj)]['Type'] = MESSIER_OBJECTS[m_obj]['Type']
-            visible[str(m_obj)]['Alt.'] = altitude.to_string(decimal=True)
-            visible[str(m_obj)]['Az.'] = azimuth.to_string(decimal=True)
+            visible[str(m_obj)]['Alt. (°)'] = altitude.to_string(decimal=True)
+            visible[str(m_obj)]['Az. (°)'] = azimuth.to_string(decimal=True)
             visible[str(m_obj)]['Constellation'] = MESSIER_OBJECTS[m_obj]['Constellation']
             visible[str(m_obj)]['Brigntness'] = MESSIER_OBJECTS[m_obj]['Brightness']
-            visible[str(m_obj)]['Distance'] = MESSIER_OBJECTS[m_obj]['Distance']
+            visible[str(m_obj)]['Distance (Pm)'] = MESSIER_OBJECTS[m_obj]['Distance']
             visible_messier.update(visible)
 
     visible_caldwell = dict()
@@ -183,11 +183,11 @@ def invoke():
             Logger.log(f"Sucessfully gathered data for {c_obj}!\n")
             visible[str(c_obj)] = dict()
             visible[str(c_obj)]['Type'] = CALDWELL_OBJECTS[c_obj]['Type']
-            visible[str(c_obj)]['Alt.'] = altitude.to_string(decimal=True)
-            visible[str(c_obj)]['Az.'] = azimuth.to_string(decimal=True)
+            visible[str(c_obj)]['Alt. (°)'] = altitude.to_string(decimal=True)
+            visible[str(c_obj)]['Az. (°)'] = azimuth.to_string(decimal=True)
             visible[str(c_obj)]['Constellation'] = CALDWELL_OBJECTS[c_obj]['Constellation']
             visible[str(c_obj)]['Brigntness'] = CALDWELL_OBJECTS[c_obj]['Brightness']
-            visible[str(c_obj)]['Distance'] = CALDWELL_OBJECTS[c_obj]['Distance']
+            visible[str(c_obj)]['Distance (Pm)'] = CALDWELL_OBJECTS[c_obj]['Distance']
             visible_caldwell.update(visible)
 
     set_img_txt(visible_messier)
@@ -202,13 +202,13 @@ def invoke():
         except KeyError:
             v_obj[star]["Type"] = "-"
         try:
-            v_obj[star]["Alt."] = visible_objs[star]["Alt."]
+            v_obj[star]["Alt. (°)"] = visible_objs[star]["Alt."]
         except KeyError:
-            v_obj[star]["Alt."] = "-"
+            v_obj[star]["Alt. (°)"] = "-"
         try:
-            v_obj[star]["Az."] = visible_objs[star]["Az."]
+            v_obj[star]["Az. (°)"] = visible_objs[star]["Az."]
         except KeyError:
-            v_obj[star]["Az."] = "-"
+            v_obj[star]["Az. (°)"] = "-"
         try:
             v_obj[star]["Constellation"] = cache_file[star]["Constellation"]
         except KeyError:
@@ -218,9 +218,9 @@ def invoke():
         except KeyError:
             v_obj[star]["Brightness"] = "-"
         try:
-            v_obj[star]["Distance"] = f'{cache_file[star]["Distance"]}'
+            v_obj[star]["Distance (Pm)"] = f'{cache_file[star]["Distance"]}'
         except KeyError:
-            v_obj[star]["Distance"] = "-"
+            v_obj[star]["Distance (Pm)"] = "-"
     for key, value in v_obj.items():
         s_list.append({str(key).title(): value})
 
@@ -325,7 +325,7 @@ def get_visible(
 
     try:
         if isinstance(ra, list) and isinstance(dec, list):
-            ra = (ra[0] / 24) + (ra[1] / 60) + (ra[2] / 60)
+            ra = ((ra[0] / 24) + (ra[1] / 60) + (ra[2] / 3600)) * 360
             dec = dec[0] + (dec[1] / 60) + (dec[2] / 3600)
             print(f"{object_name} ra={ra} dec={dec}")
         elif isinstance(ra, numpy.float64) and isinstance(dec, numpy.float64):
