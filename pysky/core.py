@@ -171,7 +171,7 @@ def invoke():
             visible[str(m_obj)]['End Az. (°)'] = end_azimuth.to_string(decimal=True)
             visible[str(m_obj)]['Constellation'] = MESSIER_OBJECTS[m_obj]['Constellation']
             visible[str(m_obj)]['Brigntness'] = MESSIER_OBJECTS[m_obj]['Brightness']
-            visible[str(m_obj)]['Distance (Pm)'] = MESSIER_OBJECTS[m_obj]['Distance']
+            visible[str(m_obj)]['Distance (Pm)'] = float('%.2g' % MESSIER_OBJECTS[m_obj]['Distance'])
             visible_messier.update(visible)
 
     visible_caldwell = dict()
@@ -197,7 +197,7 @@ def invoke():
             visible[str(c_obj)]['End Az. (°)'] = end_azimuth.to_string(decimal=True)
             visible[str(c_obj)]['Constellation'] = CALDWELL_OBJECTS[c_obj]['Constellation']
             visible[str(c_obj)]['Brigntness'] = CALDWELL_OBJECTS[c_obj]['Brightness']
-            visible[str(c_obj)]['Distance (Pm)'] = CALDWELL_OBJECTS[c_obj]['Distance']
+            visible[str(c_obj)]['Distance (Pm)'] = float('%.2g' % CALDWELL_OBJECTS[c_obj]['Distance'])
             visible_caldwell.update(visible)
 
     set_img_txt(visible_messier)
@@ -236,7 +236,7 @@ def invoke():
         except KeyError:
             v_obj[star]["Brightness"] = "-"
         try:
-            v_obj[star]["Distance (Pm)"] = f'{cache_file[star]["Distance"]}'
+            v_obj[star]["Distance (Pm)"] = float('%.2g' % cache_file[star]["Distance"])
         except KeyError:
             v_obj[star]["Distance (Pm)"] = "-"
     for key, value in v_obj.items():
@@ -345,7 +345,6 @@ def get_visible(
         if isinstance(ra, list) and isinstance(dec, list):
             ra = ((ra[0] / 24) + (ra[1] / 60) + (ra[2] / 3600)) * 360
             dec = dec[0] + (dec[1] / 60) + (dec[2] / 3600)
-            print(f"{object_name} ra={ra} dec={dec}")
         elif isinstance(ra, numpy.float64) and isinstance(dec, numpy.float64):
             pass
         #print(f"{object_name} ra:{ra} - type:{type(ra)} dec:{dec} - type:{type(dec)}")
