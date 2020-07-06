@@ -70,4 +70,4 @@ def is_object_visible(
         Logger.log(str(e), 40)
         Logger.log(start_secz, 40)
         return '-', '-', '-', '-'
-    return (start_altaz.alt, start_altaz.az, end_altaz.alt, end_altaz.az)
+    return '', '', '', ''
