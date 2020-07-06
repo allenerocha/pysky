@@ -99,10 +99,10 @@ def invoke():
         if '' not in (start_altitude, start_azimuth):
             Logger.log(f"Sucessfully gathered data for {star}!\n")
             visible = {str(star): dict()}
-            visible[star]['Start Alt.'] = start_altitude.to_string(decimal=True)
-            visible[star]['Start Az.'] = start_azimuth.to_string(decimal=True)
-            visible[star]['End Alt.'] = end_altitude.to_string(decimal=True)
-            visible[star]['End Az.'] = end_azimuth.to_string(decimal=True)
+            visible[star]['Start Alt.'] = round(float(start_altitude.to_string(decimal=True)))
+            visible[star]['Start Az.'] = round(float(start_azimuth.to_string(decimal=True)))
+            visible[star]['End Alt.'] = round(float(end_altitude.to_string(decimal=True)))
+            visible[star]['End Az.'] = round(float(end_azimuth.to_string(decimal=True)))
             visible_objs.update(visible)
 
     # Dump cache file
@@ -165,10 +165,10 @@ def invoke():
             Logger.log(f"Sucessfully gathered data for {m_obj}!\n")
             visible[str(m_obj)] = dict()
             visible[str(m_obj)]['Type'] = MESSIER_OBJECTS[m_obj]['Type']
-            visible[str(m_obj)]['Start Alt. (°)'] = start_altitude.to_string(decimal=True)
-            visible[str(m_obj)]['Start Az. (°)'] = start_azimuth.to_string(decimal=True)
-            visible[str(m_obj)]['End Alt. (°)'] = end_altitude.to_string(decimal=True)
-            visible[str(m_obj)]['End Az. (°)'] = end_azimuth.to_string(decimal=True)
+            visible[str(m_obj)]['Start Alt. (°)'] = round(float(start_altitude.to_string(decimal=True)))
+            visible[str(m_obj)]['Start Az. (°)'] = round(float(start_azimuth.to_string(decimal=True)))
+            visible[str(m_obj)]['End Alt. (°)'] = round(float(end_altitude.to_string(decimal=True)))
+            visible[str(m_obj)]['End Az. (°)'] = round(float(end_azimuth.to_string(decimal=True)))
             visible[str(m_obj)]['Constellation'] = MESSIER_OBJECTS[m_obj]['Constellation']
             visible[str(m_obj)]['Brigntness'] = MESSIER_OBJECTS[m_obj]['Brightness']
             visible[str(m_obj)]['Distance (Pm)'] = float('%.2g' % MESSIER_OBJECTS[m_obj]['Distance'])
@@ -191,10 +191,10 @@ def invoke():
             Logger.log(f"Sucessfully gathered data for {c_obj}!\n")
             visible[str(c_obj)] = dict()
             visible[str(c_obj)]['Type'] = CALDWELL_OBJECTS[c_obj]['Type']
-            visible[str(c_obj)]['Start Alt. (°)'] = start_altitude.to_string(decimal=True)
-            visible[str(c_obj)]['Start Az. (°)'] = start_azimuth.to_string(decimal=True)
-            visible[str(c_obj)]['End Alt. (°)'] = end_altitude.to_string(decimal=True)
-            visible[str(c_obj)]['End Az. (°)'] = end_azimuth.to_string(decimal=True)
+            visible[str(c_obj)]['Start Alt. (°)'] = round(float(start_altitude.to_string(decimal=True)))
+            visible[str(c_obj)]['Start Az. (°)'] = round(float(start_azimuth.to_string(decimal=True)))
+            visible[str(c_obj)]['End Alt. (°)'] = round(float(end_altitude.to_string(decimal=True)))
+            visible[str(c_obj)]['End Az. (°)'] = round(float(end_azimuth.to_string(decimal=True)))
             visible[str(c_obj)]['Constellation'] = CALDWELL_OBJECTS[c_obj]['Constellation']
             visible[str(c_obj)]['Brigntness'] = CALDWELL_OBJECTS[c_obj]['Brightness']
             visible[str(c_obj)]['Distance (Pm)'] = float('%.2g' % CALDWELL_OBJECTS[c_obj]['Distance'])
