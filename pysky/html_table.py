@@ -5,7 +5,7 @@ from .const import Const
 
 
 class HTML_table:
-    def __init__(self, delimiter='|'):
+    def __init__(self, delimiter="|"):
         """
         Initialize the table properties.
 
@@ -14,7 +14,7 @@ class HTML_table:
         :param delimiter: Delimiter to seperate the items.
         """
         self.delimiter = delimiter
-        self.header = ['Name']
+        self.header = ["Name"]
         self.rows: List[list] = list()
 
     def add_header(self, star: dict):
@@ -44,7 +44,7 @@ class HTML_table:
         cols.insert(0, name_col)
         self.rows.append(cols)
 
-    def dump(self, filename=''):
+    def dump(self, filename=""):
         """
         Write the CSV file with the given filename.
 
@@ -55,22 +55,24 @@ class HTML_table:
                             `pysky-report-YEAR-MON-DAY` where YEAR-MON-DAY
                             is the starting date argument given.
         """
-        if filename == '' or not isinstance(filename, str):
-            filename = 'pysky-report-' +\
-                    f'{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}'
+        if filename == "" or not isinstance(filename, str):
+            filename = (
+                "pysky-report-"
+                + f"{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}"
+            )
         with open(
-                f'{Const.SLIDESHOW_DIR}/PySkySlideshow/{filename}.html', 'w'
-                ) as html_out:
+            f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{filename}.html", "w"
+        ) as html_out:
             html_out.write("<table>\n")
             html_out.write("<caption>")
             html_out.write(
-                f"{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}" +
-                f"T{Const.START_TIME}Z" +
-                "/" +
-                f"{Const.END_YEAR}-{Const.END_MONTH}-{Const.END_DAY}" +
-                f"T{Const.END_TIME}Z" +
-                f" From " +
-                f"Latitude: {Const.LATITUDE}° Longitude: {Const.LONGITUDE}° Elevation: {Const.ELEVATION} km"
+                f"{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}"
+                + f"T{Const.START_TIME}Z"
+                + "/"
+                + f"{Const.END_YEAR}-{Const.END_MONTH}-{Const.END_DAY}"
+                + f"T{Const.END_TIME}Z"
+                + f" From "
+                + f"Latitude: {Const.LATITUDE}° Longitude: {Const.LONGITUDE}° Elevation: {Const.ELEVATION} km"
             )
             html_out.write("</caption>\n")
             html_out.write("<thead>\n")

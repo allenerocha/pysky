@@ -31,11 +31,10 @@ def get_bodies(args: list):
                     bodies.append(celestial_obj)
             except TypeError as type_err:
                 Logger.log(
-                    f"Error parsing object {celestial_obj}.\n\n" +
-                    f"{str(type_err)}",
-                    50
+                    f"Error parsing object {celestial_obj}.\n\n" + f"{str(type_err)}",
+                    50,
                 )
-    # Returns the list of bodies in the tuples
+        # Returns the list of bodies in the tuples
         return bodies
     # No bodies found in the passed list
     return False
@@ -67,22 +66,20 @@ def get_info(celestial_obj: str):
             body_coordinates = astropy.coordinates.get_body(
                 f"{celestial_obj}",
                 astropy.time.Time(
-                    f'{Const.START_YEAR}-' +
-                    f'{Const.START_MONTH}-' +
-                    f'{Const.START_DAY} ' +
-                    f'{Const.START_TIME}',
-                    format='iso'
+                    f"{Const.START_YEAR}-"
+                    + f"{Const.START_MONTH}-"
+                    + f"{Const.START_DAY} "
+                    + f"{Const.START_TIME}",
+                    format="iso",
                 ),
                 static_location,
             )
 
-        Logger.log(
-            f"Retreived coordinates for {celestial_obj} in {time.time() - t1}!"
-        )
+        Logger.log(f"Retreived coordinates for {celestial_obj} in {time.time() - t1}!")
         return (
             body_coordinates.ra.degree,
             body_coordinates.dec.degree,
-            )
+        )
 
     except Exception as e:
         Logger.log(str(e), 50)
@@ -96,29 +93,16 @@ def get_ephemeries_info(body: str, cache_file: dict) -> dict:
     :param cache_file: Cache file.
     :return: Dictionary of the object.
     """
-    Logger.log(
-        f"Retreiving coordinates for {body}..."
-    )
+    Logger.log(f"Retreiving coordinates for {body}...")
     ra, dec = get_info(body)
     cache_file[f"{body}"] = {}
     cache_file[f"{body}"]["Type"] = "planet"
-    cache_file[f"{body}"]["Created"] = time.strftime(
-        "%Y-%d-%m %H:%M", time.gmtime()
-    )
-    Logger.log(
-        f"Coordinates for {body} retreived."
-    )
-    Logger.log(
-        f"Writing coordinates for {body} to cache..."
-    )
+    cache_file[f"{body}"]["Created"] = time.strftime("%Y-%d-%m %H:%M", time.gmtime())
+    Logger.log(f"Coordinates for {body} retreived.")
+    Logger.log(f"Writing coordinates for {body} to cache...")
     try:
-        cache_file[f"{body}"]["Coordinates"] = {  # Right acension
-            "ra": ra,
-            "dec": dec
-        }
+        cache_file[f"{body}"]["Coordinates"] = {"ra": ra, "dec": dec}  # Right acension
     except TypeError:
         print(body)
-    Logger.log(
-        f"Successfully wrote coordinates for {body} to cache!"
-    )
+    Logger.log(f"Successfully wrote coordinates for {body} to cache!")
     return cache_file

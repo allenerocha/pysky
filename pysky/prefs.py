@@ -39,39 +39,37 @@ def check_integrity():
             Logger.log("Created cache file!")
 
     Logger.log(
-        f"Searching in `{Const.ROOT_DIR}/data/` " +
-        "for `VisibleCaldwellCatalogue.json`..."
+        f"Searching in `{Const.ROOT_DIR}/data/` "
+        + "for `VisibleCaldwellCatalogue.json`..."
     )
-    if not os.path.isfile(
-            f"{Const.ROOT_DIR}/data/VisibleCaldwellCatalogue.json"
-                ):
+    if not os.path.isfile(f"{Const.ROOT_DIR}/data/VisibleCaldwellCatalogue.json"):
         Logger.log(
-            "VisibleCaldwellCatalogue.json not found in the directory " +
-            f"`{Const.ROOT_DIR}/data/`!",
-            40
+            "VisibleCaldwellCatalogue.json not found in the directory "
+            + f"`{Const.ROOT_DIR}/data/`!",
+            40,
         )
         Logger.log(
-            "The Application will not automatically search " +
-            "for these objects unless they are redownloaded.\n",
-            40
+            "The Application will not automatically search "
+            + "for these objects unless they are redownloaded.\n",
+            40,
         )
     else:
         Logger.log("VisibleCaldwellCatalogue.json was found!\n")
 
     Logger.log(
-        f"Searching in `{Const.ROOT_DIR}/data/` " +
-        "for `VisibleMessierCatalog.json`..."
+        f"Searching in `{Const.ROOT_DIR}/data/` "
+        + "for `VisibleMessierCatalog.json`..."
     )
     if not os.path.isfile(f"{Const.ROOT_DIR}/data/VisibleMessierCatalog.json"):
         Logger.log(
-            "VisibleMessierCatalog.json not found in the directory " +
-            f"`{Const.ROOT_DIR}/data/`!",
-            40
+            "VisibleMessierCatalog.json not found in the directory "
+            + f"`{Const.ROOT_DIR}/data/`!",
+            40,
         )
         Logger.log(
-            "The Application will not automatically search " +
-            "for these objects unless they are redownloaded.\n",
-            40
+            "The Application will not automatically search "
+            + "for these objects unless they are redownloaded.\n",
+            40,
         )
     else:
         Logger.log("VisibleMessierCatalog.json was found!\n")
@@ -84,20 +82,10 @@ def clean_cache():
 
     Logger.log("Cleaning cache...")
     try:
-        cache_file = json.loads(
-            open(
-                f"{Const.ROOT_DIR}/data/cache",
-                "r").read()
-                )
+        cache_file = json.loads(open(f"{Const.ROOT_DIR}/data/cache", "r").read())
     except json.decoder.JSONDecodeError as json_dec_err:
-        Logger.log(
-            "\nError reading cache file.",
-            40
-            )
-        Logger.log(
-            f"Generating emptying cache...\n{str(json_dec_err)}\n",
-            40
-        )
+        Logger.log("\nError reading cache file.", 40)
+        Logger.log(f"Generating emptying cache...\n{str(json_dec_err)}\n", 40)
         with open(f"{Const.ROOT_DIR}/data/cache", "w") as cache_file:
             cache_file.write("{}")
             Logger.log("Created cache file!")
@@ -127,38 +115,36 @@ def read_user_prefs():
     Logger.log(f"Searching `{Const.ROOT_DIR}/data/` for `user_prefs.cfg`...")
     if not os.path.isfile(f"{Const.ROOT_DIR}/data/user_prefs.cfg"):
         Logger.log(
-            "User preferences file `user_prefs.cfg` not found " +
-            f"in the directory `{Const.ROOT_DIR}/data/`!",
-            50
+            "User preferences file `user_prefs.cfg` not found "
+            + f"in the directory `{Const.ROOT_DIR}/data/`!",
+            50,
         )
         Logger.log(
-            "Application will continue, only looking for planets, " +
-            "Messier catalog, and Caldwell catalog objects.\n",
-            50
+            "Application will continue, only looking for planets, "
+            + "Messier catalog, and Caldwell catalog objects.\n",
+            50,
         )
         return None
     Logger.log("User preferences file `user_prefs.cfg` found!")
     Logger.log("Parsing `user_prefs.cfg`...")
-    with open(
-            f"{Const.ROOT_DIR}/data/user_prefs.cfg",
-            "r") as u_prefs_file:
+    with open(f"{Const.ROOT_DIR}/data/user_prefs.cfg", "r") as u_prefs_file:
         user_objs = list()
         user_save_loc = str()
         for line in u_prefs_file.readlines():
             if len(line.strip()) > 0 and line.strip()[0] != "#":
-                if 'slideshow_dir' in line.strip():
+                if "slideshow_dir" in line.strip():
                     user_save_loc = line.strip().split("=")[1].strip()
-                elif 'latitude' in line.strip():
-                    Const.LATITUDE = float(line.strip().split('=')[1].strip())
-                elif 'longitude' in line.strip():
-                    Const.LONGITUDE = float(line.strip().split('=')[1].strip())
-                elif 'elevation' in line.strip():
-                    Const.ELEVATION = float(line.strip().split('=')[1].strip())
+                elif "latitude" in line.strip():
+                    Const.LATITUDE = float(line.strip().split("=")[1].strip())
+                elif "longitude" in line.strip():
+                    Const.LONGITUDE = float(line.strip().split("=")[1].strip())
+                elif "elevation" in line.strip():
+                    Const.ELEVATION = float(line.strip().split("=")[1].strip())
                 else:
-                    if ',' not in line.strip():
+                    if "," not in line.strip():
                         user_objs.append(line.strip())
                     else:
-                        user_objs.extend(line.strip().split(','))
+                        user_objs.extend(line.strip().split(","))
 
         user_objs = list(map(str.strip, user_objs))
 
@@ -174,9 +160,7 @@ def read_user_prefs():
 
         Logger.log("Creating slideshow directory...")
         os.makedirs(f"{Const.SLIDESHOW_DIR}/PySkySlideshow")
-        Logger.log(
-            f"Created slideshow directory in {Const.SLIDESHOW_DIR}!"
-        )
+        Logger.log(f"Created slideshow directory in {Const.SLIDESHOW_DIR}!")
 
     else:
         Logger.log("Slideshow directory found!")

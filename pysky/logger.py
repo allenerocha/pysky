@@ -12,12 +12,10 @@ class Logger:
             level=Const.VERBOSITY,
             format="%(asctime)s [%(levelname)s] %(message)s",
             handlers=[
-                logging.FileHandler(
-                    f"{Const.ROOT_DIR}/data/log"
-                    ),
-                logging.StreamHandler()
-                ],
-            )
+                logging.FileHandler(f"{Const.ROOT_DIR}/data/log"),
+                logging.StreamHandler(),
+            ],
+        )
 
         if lvl == 10:
             debug(msg)
@@ -29,4 +27,3 @@ class Logger:
             error(msg)
         elif lvl == 50:
             critical(msg)
-

@@ -20,17 +20,21 @@ class HTML_list:
                 out += "<ol>\n"
             for celestial_obj, propteries in item.items():
                 out += "<li>"
-                out += "<span style='font-weight: 400;'>" +\
-                    f"{celestial_obj}" +\
-                    self.delimiter +\
-                    "</span>"
+                out += (
+                    "<span style='font-weight: 400;'>"
+                    + f"{celestial_obj}"
+                    + self.delimiter
+                    + "</span>"
+                )
                 jndex = 0
                 for key, value in propteries.items():
-                    if ' (petameters)' in str(key).lower():
-                        key = str(key).lower().replace(' (petameters)', '').title()
-                        value = '{:,.2f}'.format(value) + ' Pm'
-                    out += "<span style='font-weight: 400;'>" +\
-                        f"{key.title()}: {str(value).title()}"
+                    if " (petameters)" in str(key).lower():
+                        key = str(key).lower().replace(" (petameters)", "").title()
+                        value = "{:,.2f}".format(value) + " Pm"
+                    out += (
+                        "<span style='font-weight: 400;'>"
+                        + f"{key.title()}: {str(value).title()}"
+                    )
                     if jndex != (len(propteries) - 1):
                         out += self.delimiter
                     out += "</span>"

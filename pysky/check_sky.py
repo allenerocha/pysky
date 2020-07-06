@@ -9,10 +9,7 @@ from .const import Const
 from .logger import Logger
 
 
-def is_object_visible(
-        celestial_obj,
-        secz_max=4.1
-) -> tuple:
+def is_object_visible(celestial_obj, secz_max=4.1) -> tuple:
     """
     :param celestial_obj: object to view (astropy.coordinates.SkyCoord())
     :param start_time:  starting range for the
@@ -26,26 +23,24 @@ def is_object_visible(
     """
     location = Observer(
         location=EarthLocation.from_geodetic(
-            Const.LATITUDE * u.deg,
-            Const.LONGITUDE * u.deg,
-            Const.ELEVATION * u.m
+            Const.LATITUDE * u.deg, Const.LONGITUDE * u.deg, Const.ELEVATION * u.m
         ),
-        name='location',
-        timezone="US/Central"
+        name="location",
+        timezone="US/Central",
     )
     start_time = Time(
-        f'{Const.START_YEAR}-' +
-        f'{Const.START_MONTH}-' +
-        f'{Const.START_DAY} ' +
-        f'{Const.START_TIME}',
-        format='iso'
+        f"{Const.START_YEAR}-"
+        + f"{Const.START_MONTH}-"
+        + f"{Const.START_DAY} "
+        + f"{Const.START_TIME}",
+        format="iso",
     )
     end_time = Time(
-        f'{Const.END_YEAR}-' +
-        f'{Const.END_MONTH}-' +
-        f'{Const.END_DAY} ' +
-        f'{Const.END_TIME}',
-        format='iso'
+        f"{Const.END_YEAR}-"
+        + f"{Const.END_MONTH}-"
+        + f"{Const.END_DAY} "
+        + f"{Const.END_TIME}",
+        format="iso",
     )
     Logger.log(f"Checking sec(z) for {celestial_obj.name}.")
     start_secz = location.altaz(start_time, celestial_obj).secz
@@ -54,20 +49,21 @@ def is_object_visible(
     end_altaz = location.altaz(end_time, celestial_obj)
 
     try:
-        if (start_secz < secz_max and start_secz > 0) or (end_secz < secz_max and end_secz > 0):
-            Logger.log(f"Found sec(z) = {start_secz},{end_secz} for {celestial_obj.name}.")
+        if (start_secz < secz_max and start_secz > 0) or (
+            end_secz < secz_max and end_secz > 0
+        ):
             Logger.log(
-                f"Zenith={start_altaz.zen} " +
-                f"Altitiude={start_altaz.alt}" +
-                f"Azimuth={start_altaz.az}"
+                f"Found sec(z) = {start_secz},{end_secz} for {celestial_obj.name}."
+            )
+            Logger.log(
+                f"Zenith={start_altaz.zen} "
+                + f"Altitiude={start_altaz.alt}"
+                + f"Azimuth={start_altaz.az}"
             )
             return (start_altaz.alt, start_altaz.az, end_altaz.alt, end_altaz.az)
     except ValueError as e:
-        Logger.log(
-            f"Could not find sec(z) for {celestial_obj.name}.",
-            40
-        )
+        Logger.log(f"Could not find sec(z) for {celestial_obj.name}.", 40)
         Logger.log(str(e), 40)
         Logger.log(start_secz, 40)
-        return '-', '-', '-', '-'
-    return '', '', '', ''
+        return "-", "-", "-", "-"
+    return "", "", "", ""

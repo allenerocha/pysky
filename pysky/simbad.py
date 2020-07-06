@@ -29,9 +29,7 @@ def get_brightness(celestial_obj: str) -> float:
         astroquery.simbad.Simbad.remove_votable_fields("coordinates")
 
         # Check result for "--"
-        if str(
-                astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0]
-        ) == "--":
+        if str(astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0]) == "--":
             celestial_obj = celestial_obj + "_A"
             BRIGHTNESS_FEILD = str(
                 astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0]
@@ -50,19 +48,19 @@ def get_brightness(celestial_obj: str) -> float:
     # Occurs when the object is not in SIMBADS's database
     except TypeError as type_err:
         Logger.log(
-            f"Error parsing the data for {celestial_obj}. " +
-            f"Simbad only contains info on stars.\n\n{str(type_err)}",
-            50
+            f"Error parsing the data for {celestial_obj}. "
+            + f"Simbad only contains info on stars.\n\n{str(type_err)}",
+            50,
         )
         return None
 
     # Occurs for multiple stars
     except ValueError as value_err:
         Logger.log(
-            f"Error converting brightness for {celestial_obj}. " +
-            "Simbad does not contain brightnesses for double or " +
-            f"multiple stars.\n\n{str(value_err)}",
-            50
+            f"Error converting brightness for {celestial_obj}. "
+            + "Simbad does not contain brightnesses for double or "
+            + f"multiple stars.\n\n{str(value_err)}",
+            50,
         )
         return None
 
@@ -75,7 +73,9 @@ def get_constellation(celestial_obj: str) -> str:
     """
     astroquery.simbad.Simbad.reset_votable_fields()
     Logger.log(f"Retrieving constellation for {celestial_obj}...")
-    const_abbrvs = json.loads(open(f"{Const.ROOT_DIR}/data/ConstellAbbrevs.json", "r").read())
+    const_abbrvs = json.loads(
+        open(f"{Const.ROOT_DIR}/data/ConstellAbbrevs.json", "r").read()
+    )
     try:
         astroquery.simbad.Simbad.remove_votable_fields("coordinates")
         constellation = str(
@@ -85,25 +85,28 @@ def get_constellation(celestial_obj: str) -> str:
         try:
             constellation = const_abbrvs[str(constellation).lower()]
         except KeyError as e:
-            Logger.log(f"{constellation} not found in constellation abbreviation dictionary", 50)
+            Logger.log(
+                f"{constellation} not found in constellation abbreviation dictionary",
+                50,
+            )
             Logger.log(str(e), 50)
         return constellation
 
     # Occurs when the object is not in SIMBAS's database
     except TypeError as type_err:
         Logger.log(
-            f"Error parsing the data for {celestial_obj}. " +
-            f"Simbad only contains info on stars.\n\n{str(type_err)}",
-            50
+            f"Error parsing the data for {celestial_obj}. "
+            + f"Simbad only contains info on stars.\n\n{str(type_err)}",
+            50,
         )
         sys.exit()
 
     # Occurs for multiple stars
     except ValueError as value_err:
         Logger.log(
-            f"Error converting constellation for {celestial_obj}." +
-            f"\n\n{str(value_err)}",
-            50
+            f"Error converting constellation for {celestial_obj}."
+            + f"\n\n{str(value_err)}",
+            50,
         )
         sys.exit()
 
@@ -118,23 +121,14 @@ def get_ra_dec(celestial_obj: str) -> list:
     """
     astroquery.simbad.Simbad.reset_votable_fields()
     astroquery.simbad.Simbad.remove_votable_fields("main_id")
-    Logger.log(
-        f"Retreiving right acension and declination for {celestial_obj}..."
-    )
-    ras = astroquery.simbad.Simbad.query_object(
-        f"{celestial_obj}"
-    )[0][0].split()
+    Logger.log(f"Retreiving right acension and declination for {celestial_obj}...")
+    ras = astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0].split()
     try:
         ra = [int(float(r)) for r in ras]
     except ValueError as value_err:
-        Logger.log(
-            f"{value_err}",
-            50
-        )
+        Logger.log(f"{value_err}", 50)
         exit()
-    decs = astroquery.simbad.Simbad.query_object(
-        f"{celestial_obj}"
-    )[0][1].split()
+    decs = astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][1].split()
     dec = [int(float(d)) for d in decs]
     ra_dec = [ra, dec]
     Logger.log(f"Retrieved ra and dec for {celestial_obj}!\n")
@@ -152,12 +146,8 @@ def get_distance(celestial_obj: str) -> float:
     astroquery.simbad.Simbad.add_votable_fields("parallax")
     astroquery.simbad.Simbad.remove_votable_fields("main_id")
     astroquery.simbad.Simbad.remove_votable_fields("coordinates")
-    Logger.log(
-        f"Retreiving distance for {celestial_obj}..."
-    )
-    parsec_dist = astroquery.simbad.Simbad.query_object(
-        celestial_obj
-    )[0][0]
+    Logger.log(f"Retreiving distance for {celestial_obj}...")
+    parsec_dist = astroquery.simbad.Simbad.query_object(celestial_obj)[0][0]
 
     if parsec_dist is None:
         return None
