@@ -1,162 +1,1322 @@
 {
-    "M31": {
-        "Brightness": 3.4,
-        "Constellation": "Andromeda",
-        "Common name": "Andromeda Galaxy",
-        "Distance": 22990000,
-        "NGC/IC number": "NGC 224",
-        "Type": "Spiral galaxy",
-        "Coordinates": {
-            "dec": [
-                41,
-                16,
-                9
-            ],
-            "ra": [
-                0,
-                42,
-                44.3
-            ]
-        }
-    },
-    "M41": {
-        "Brightness": 4.5,
-        "Constellation": "Canis Major",
-        "Common name": "-",
-        "Distance": 21800,
-        "NGC/IC number": "NGC 2287",
-        "Type": "Open cluster",
-        "Coordinates": {
-            "dec": [
-                -21,
-                45,
-                24
-            ],
-            "ra": [
-                6,
-                46,
-                1
-            ]
-        }
-    },
-    "M42": {
-        "Brightness": 4,
-        "Constellation": "Orion",
-        "Common name": "Orion Nebula",
-        "Distance": 12526,
-        "NGC/IC number": "NGC 1976",
-        "Type": "H II region nebula",
-        "Coordinates": {
-            "dec": [
-                -5,
-                23,
-                28
-            ],
-            "ra": [
-                5,
-                35,
-                17.3
-            ]
-        }
-    },
-    "M44": {
-        "Brightness": 3.7,
-        "Constellation": "Cancer",
-        "Common name": "Beehive Cluster",
-        "Distance": 5459,
-        "NGC/IC number": "NGC 2632",
-        "Type": "Open cluster",
-        "Coordinates": {
-            "dec": [
-                19,
-                40,
-                0
-            ],
-            "ra": [
-                8,
-                40,
-                24
-            ]
-        }
-    },
-    "M45": {
-        "Brightness": 1.6,
-        "Constellation": "Taurus",
-        "Common name": "Pleiades",
-        "Distance": 3690,
-        "NGC/IC number": "-",
-        "Type": "Open cluster",
-        "Coordinates": {
-            "dec": [
-                24,
-                7,
-                0
-            ],
-            "ra": [
-                3,
-                47,
-                24
-            ]
-        }
-    },
-    "M47": {
-        "Brightness": 4.2,
-        "Constellation": "Puppis",
-        "Common name": "-",
-        "Distance": 15100,
-        "NGC/IC number": "NGC 2422",
-        "Type": "Open cluster",
-        "Coordinates": {
-            "dec": [
-                -14,
-                29,
-                0
-            ],
-            "ra": [
-                7,
-                36,
-                35
-            ]
-        }
-    },
-    "M6": {
-        "Brightness": 4.2,
-        "Constellation": "Scorpius",
-        "Common name": "Butterfly Cluster",
-        "Distance": 15100,
-        "NGC/IC number": "NGC 6405",
-        "Type": "Open cluster",
-        "Coordinates": {
-            "dec": [
-                -32,
-                15,
-                12
-            ],
-            "ra": [
-                17,
-                40,
-                2
-            ]
-        }
-    },
-    "M7": {
-        "Brightness": 3.3,
-        "Constellation": "Scorpius",
-        "Common name": "Ptolemy Cluster",
-        "Distance": 9461,
-        "NGC/IC number": "NGC 6475",
-        "Type": "Open cluster",
-        "Coordinates": {
-            "dec": [
-                34,
-                47,
-                36
-            ],
-            "ra": [
-                17,
-                53,
-                51
-            ]
-        }
-    }
+	"M1": {
+		"NGC/IC number": "NGC 1952",
+		"Common name": "Crab Nebula",
+		"Type": "Supernova remnant",
+		"Distance": 46358.9,
+		"Constellation": "Taurus",
+		"Brightness": 8.4,
+		"Coordinates": {
+			"ra": [5, 34, 31],
+			"dec": [22, 0, 52]
+		}
+	},
+	"M2": {
+		"NGC/IC number": "NGC 7089",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 312213.0,
+		"Constellation": "Aquarius",
+		"Brightness": 6.3,
+		"Coordinates": {
+			"ra": [21, 33, 27],
+			"dec": [0, 49, 23]
+		}
+	},
+	"M3": {
+		"NGC/IC number": "NGC 5272",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 320727.89999999997,
+		"Constellation": "Canes Venatici",
+		"Brightness": 6.2,
+		"Coordinates": {
+			"ra": [13, 42, 11],
+			"dec": [28, 22, 38]
+		}
+	},
+	"M4": {
+		"NGC/IC number": "NGC 6121",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 68119.2,
+		"Constellation": "Scorpius",
+		"Brightness": 5.9,
+		"Coordinates": {
+			"ra": [16, 23, 35],
+			"dec": [26, 31, 32]
+		}
+	},
+	"M5": {
+		"NGC/IC number": "NGC 5904",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 231794.5,
+		"Constellation": "Serpens",
+		"Brightness": 6.7,
+		"Coordinates": {
+			"ra": [15, 18, 33],
+			"dec": [2, 4, 51]
+		}
+	},
+	"M6": {
+		"NGC/IC number": "NGC 6405",
+		"Common name": "Butterfly Cluster",
+		"Type": "Open cluster",
+		"Distance": 15137.6,
+		"Constellation": "Scorpius",
+		"Brightness": 4.2,
+		"Coordinates": {
+			"ra": [17, 40, 0],
+			"dec": [32, 13, 0]
+		}
+	},
+	"M7": {
+		"NGC/IC number": "NGC 6475",
+		"Common name": "Ptolemy Cluster",
+		"Type": "Open cluster",
+		"Distance": 6149.650000000001,
+		"Constellation": "Scorpius",
+		"Brightness": 3.3,
+		"Coordinates": {
+			"ra": [17, 53, 51],
+			"dec": [34, 47, 34]
+		}
+	},
+	"M8": {
+		"NGC/IC number": "NGC 6523",
+		"Common name": "Lagoon Nebula",
+		"Type": "Nebula with cluster",
+		"Distance": 38790.1,
+		"Constellation": "Sagittarius",
+		"Brightness": 6.0,
+		"Coordinates": {
+			"ra": [18, 3, 37],
+			"dec": [24, 23, 12]
+		}
+	},
+	"M9": {
+		"NGC/IC number": "NGC 6333",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 244093.80000000002,
+		"Constellation": "Ophiuchus",
+		"Brightness": 8.4,
+		"Coordinates": {
+			"ra": [17, 19, 11],
+			"dec": [18, 30, 58]
+		}
+	},
+	"M10": {
+		"NGC/IC number": "NGC 6254",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 135292.30000000002,
+		"Constellation": "Ophiuchus",
+		"Brightness": 6.4,
+		"Coordinates": {
+			"ra": [16, 57, 8],
+			"dec": [4, 5, 58]
+		}
+	},
+	"M11": {
+		"NGC/IC number": "NGC 6705",
+		"Common name": "Wild Duck Cluster",
+		"Type": "Open cluster",
+		"Distance": 58658.200000000004,
+		"Constellation": "Scutum",
+		"Brightness": 6.3,
+		"Coordinates": {
+			"ra": [18, 51, 0],
+			"dec": [6, 16, 0]
+		}
+	},
+	"M12": {
+		"NGC/IC number": "NGC 6218",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 148537.69999999998,
+		"Constellation": "Ophiuchus",
+		"Brightness": 7.7,
+		"Coordinates": {
+			"ra": [16, 47, 14],
+			"dec": [1, 56, 54]
+		}
+	},
+	"M13": {
+		"NGC/IC number": "NGC 6205",
+		"Common name": "Great Globular Cluster in Hercules",
+		"Type": "Globular cluster",
+		"Distance": 210034.19999999998,
+		"Constellation": "Hercules",
+		"Brightness": 5.8,
+		"Coordinates": {
+			"ra": [16, 41, 41],
+			"dec": [36, 27, 35]
+		}
+	},
+	"M14": {
+		"NGC/IC number": "NGC 6402",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 286668.3,
+		"Constellation": "Ophiuchus",
+		"Brightness": 8.3,
+		"Coordinates": {
+			"ra": [17, 37, 36],
+			"dec": [3, 14, 45]
+		}
+	},
+	"M15": {
+		"NGC/IC number": "NGC 7078",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 312213.0,
+		"Constellation": "Pegasus",
+		"Brightness": 6.2,
+		"Coordinates": {
+			"ra": [21, 29, 58],
+			"dec": [12, 10, 1]
+		}
+	},
+	"M16": {
+		"NGC/IC number": "NGC 6611",
+		"Common name": "Eagle Nebula",
+		"Type": "H II region nebula  with cluster",
+		"Distance": 66227.0,
+		"Constellation": "Serpens",
+		"Brightness": 6.0,
+		"Coordinates": {
+			"ra": [18, 18, 48],
+			"dec": [13, 49, 0]
+		}
+	},
+	"M17": {
+		"NGC/IC number": "NGC 6618",
+		"Common name": "Omega, Swan, Horseshoe, or Lobster Nebula",
+		"Type": "H II region nebula with cluster",
+		"Distance": 47305.0,
+		"Constellation": "Sagittarius",
+		"Brightness": 6.0,
+		"Coordinates": {
+			"ra": [18, 20, 26],
+			"dec": [16, 10, 36]
+		}
+	},
+	"M18": {
+		"NGC/IC number": "NGC 6613",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 46358.9,
+		"Constellation": "Sagittarius",
+		"Brightness": 7.5,
+		"Coordinates": {
+			"ra": [18, 19, 0],
+			"dec": [17, 8, 0]
+		}
+	},
+	"M19": {
+		"NGC/IC number": "NGC 6273",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 271530.7,
+		"Constellation": "Ophiuchus",
+		"Brightness": 7.5,
+		"Coordinates": {
+			"ra": [17, 2, 37],
+			"dec": [26, 16, 4]
+		}
+	},
+	"M20": {
+		"NGC/IC number": "NGC 6514",
+		"Common name": "Trifid Nebula",
+		"Type": "H II region nebula with cluster",
+		"Distance": 49197.200000000004,
+		"Constellation": "Sagittarius",
+		"Brightness": 6.3,
+		"Coordinates": {
+			"ra": [18, 2, 23],
+			"dec": [23, 1, 48]
+		}
+	},
+	"M21": {
+		"NGC/IC number": "NGC 6531",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 40209.25,
+		"Constellation": "Sagittarius",
+		"Brightness": 6.5,
+		"Coordinates": {
+			"ra": [18, 4, 0],
+			"dec": [22, 30, 0]
+		}
+	},
+	"M22": {
+		"NGC/IC number": "NGC 6656",
+		"Common name": "Sagittarius Cluster",
+		"Type": "Globular cluster",
+		"Distance": 90825.59999999999,
+		"Constellation": "Sagittarius",
+		"Brightness": 5.1,
+		"Coordinates": {
+			"ra": [18, 36, 23],
+			"dec": [23, 54, 17]
+		}
+	},
+	"M23": {
+		"NGC/IC number": "NGC 6494",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 20341.149999999998,
+		"Constellation": "Sagittarius",
+		"Brightness": 6.9,
+		"Coordinates": {
+			"ra": [17, 56, 0],
+			"dec": [19, 1, 0]
+		}
+	},
+	"M24": {
+		"NGC/IC number": "IC 4715",
+		"Common name": "Sagittarius Star Cloud",
+		"Type": "Milky Way star cloud",
+		"Distance": 94610.0,
+		"Constellation": "Sagittarius",
+		"Brightness": 4.6,
+		"Coordinates": {
+			"ra": [18, 17, 0],
+			"dec": [18, 29, 0]
+		}
+	},
+	"M25": {
+		"NGC/IC number": "IC 4725",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 18922.0,
+		"Constellation": "Sagittarius",
+		"Brightness": 4.6,
+		"Coordinates": {
+			"ra": [18, 31, 0],
+			"dec": [19, 15, 0]
+		}
+	},
+	"M26": {
+		"NGC/IC number": "NGC 6694",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 47305.0,
+		"Constellation": "Scutum",
+		"Brightness": 8.0,
+		"Coordinates": {
+			"ra": [18, 45, 0],
+			"dec": [9, 24, 0]
+		}
+	},
+	"M27": {
+		"NGC/IC number": "NGC 6853",
+		"Common name": "Dumbbell Nebula",
+		"Type": "Planetary nebula",
+		"Distance": 10861.228,
+		"Constellation": "Vulpecula",
+		"Brightness": 7.5,
+		"Coordinates": {
+			"ra": [19, 59, 36],
+			"dec": [22, 43, 16]
+		}
+	},
+	"M28": {
+		"NGC/IC number": "NGC 6626",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 169351.9,
+		"Constellation": "Sagittarius",
+		"Brightness": 7.7,
+		"Coordinates": {
+			"ra": [18, 24, 32],
+			"dec": [24, 52, 11]
+		}
+	},
+	"M29": {
+		"NGC/IC number": "NGC 6913",
+		"Common name": "Cooling Tower",
+		"Type": "Open cluster",
+		"Distance": 68119.2,
+		"Constellation": "Cygnus",
+		"Brightness": 7.1,
+		"Coordinates": {
+			"ra": [20, 23, 56],
+			"dec": [38, 31, 24]
+		}
+	},
+	"M30": {
+		"NGC/IC number": "NGC 7099",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 263015.8,
+		"Constellation": "Capricornus",
+		"Brightness": 7.7,
+		"Coordinates": {
+			"ra": [21, 40, 22],
+			"dec": [23, 10, 47]
+		}
+	},
+	"M31": {
+		"NGC/IC number": "NGC 224",
+		"Common name": "Andromeda Galaxy",
+		"Type": "Spiral galaxy",
+		"Distance": 22990230.0,
+		"Constellation": "Andromeda",
+		"Brightness": 3.4,
+		"Coordinates": {
+			"ra": [0, 42, 44],
+			"dec": [41, 16, 9]
+		}
+	},
+	"M32": {
+		"NGC/IC number": "NGC 221",
+		"Common name": "–",
+		"Type": "Dwarf elliptical galaxy",
+		"Distance": 22801010.0,
+		"Constellation": "Andromeda",
+		"Brightness": 8.1,
+		"Coordinates": {
+			"ra": [0, 42, 41],
+			"dec": [40, 51, 55]
+		}
+	},
+	"M33": {
+		"NGC/IC number": "NGC 598",
+		"Common name": "Triangulum Galaxy",
+		"Type": "Spiral galaxy",
+		"Distance": 22517180.0,
+		"Constellation": "Triangulum",
+		"Brightness": 5.7,
+		"Coordinates": {
+			"ra": [1, 33, 50],
+			"dec": [30, 39, 36]
+		}
+	},
+	"M34": {
+		"NGC/IC number": "NGC 1039",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 14191.5,
+		"Constellation": "Perseus",
+		"Brightness": 5.5,
+		"Coordinates": {
+			"ra": [2, 42, 0],
+			"dec": [42, 46, 0]
+		}
+	},
+	"M35": {
+		"NGC/IC number": "NGC 2168",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 26490.8,
+		"Constellation": "Gemini",
+		"Brightness": 5.3,
+		"Coordinates": {
+			"ra": [6, 9, 0],
+			"dec": [24, 21, 0]
+		}
+	},
+	"M36": {
+		"NGC/IC number": "NGC 1960",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 38790.1,
+		"Constellation": "Auriga",
+		"Brightness": 6.3,
+		"Coordinates": {
+			"ra": [5, 36, 12],
+			"dec": [34, 8, 4]
+		}
+	},
+	"M37": {
+		"NGC/IC number": "NGC 2099",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 42678.571,
+		"Constellation": "Auriga",
+		"Brightness": 6.2,
+		"Coordinates": {
+			"ra": [5, 52, 18],
+			"dec": [32, 33, 2]
+		}
+	},
+	"M38": {
+		"NGC/IC number": "NGC 1912",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 39736.200000000004,
+		"Constellation": "Auriga",
+		"Brightness": 7.4,
+		"Coordinates": {
+			"ra": [5, 28, 42],
+			"dec": [35, 51, 18]
+		}
+	},
+	"M39": {
+		"NGC/IC number": "NGC 7092",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 7799.6484,
+		"Constellation": "Cygnus",
+		"Brightness": 5.5,
+		"Coordinates": {
+			"ra": [21, 31, 42],
+			"dec": [48, 26, 0]
+		}
+	},
+	"M40": {
+		"NGC/IC number": "–",
+		"Common name": "Winnecke 4",
+		"Type": "Double star",
+		"Distance": 4825.11,
+		"Constellation": "Ursa Major",
+		"Brightness": 9.7,
+		"Coordinates": {
+			"ra": [12, 22, 12],
+			"dec": [58, 4, 59]
+		}
+	},
+	"M41": {
+		"NGC/IC number": "NGC 2287",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 21760.3,
+		"Constellation": "Canis Major",
+		"Brightness": 4.5,
+		"Coordinates": {
+			"ra": [6, 46, 0],
+			"dec": [20, 46, 0]
+		}
+	},
+	"M42": {
+		"NGC/IC number": "NGC 1976",
+		"Common name": "Orion Nebula",
+		"Type": "H II region nebula",
+		"Distance": 12526.364000000001,
+		"Constellation": "Orion",
+		"Brightness": 4.0,
+		"Coordinates": {
+			"ra": [5, 35, 17],
+			"dec": [5, 23, 28]
+		}
+	},
+	"M43": {
+		"NGC/IC number": "NGC 1982",
+		"Common name": "De Mairan's Nebula",
+		"Type": "H II region nebula (part of the Orion Nebula)",
+		"Distance": 15137.6,
+		"Constellation": "Orion",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [5, 35, 0],
+			"dec": [5, 16, 0]
+		}
+	},
+	"M44": {
+		"NGC/IC number": "NGC 2632",
+		"Common name": "Beehive Cluster",
+		"Type": "Open cluster",
+		"Distance": 5458.996999999999,
+		"Constellation": "Cancer",
+		"Brightness": 3.7,
+		"Coordinates": {
+			"ra": [8, 40, 0],
+			"dec": [19, 59, 0]
+		}
+	},
+	"M45": {
+		"NGC/IC number": "–",
+		"Common name": "Pleiades",
+		"Type": "Open cluster",
+		"Distance": 3689.79,
+		"Constellation": "Taurus",
+		"Brightness": 1.6,
+		"Coordinates": {
+			"ra": [3, 47, 24],
+			"dec": [24, 7, 0]
+		}
+	},
+	"M46": {
+		"NGC/IC number": "NGC 2437",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 51089.4,
+		"Constellation": "Puppis",
+		"Brightness": 6.1,
+		"Coordinates": {
+			"ra": [7, 41, 0],
+			"dec": [14, 49, 0]
+		}
+	},
+	"M47": {
+		"NGC/IC number": "NGC 2422",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 15137.6,
+		"Constellation": "Puppis",
+		"Brightness": 4.2,
+		"Coordinates": {
+			"ra": [7, 36, 0],
+			"dec": [14, 30, 0]
+		}
+	},
+	"M48": {
+		"NGC/IC number": "NGC 2548",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 14191.5,
+		"Constellation": "Hydra",
+		"Brightness": 5.5,
+		"Coordinates": {
+			"ra": [8, 13, 0],
+			"dec": [5, 45, 0]
+		}
+	},
+	"M49": {
+		"NGC/IC number": "NGC 4472",
+		"Common name": "–",
+		"Type": "Elliptical galaxy",
+		"Distance": 507109600.0,
+		"Constellation": "Virgo",
+		"Brightness": 9.4,
+		"Coordinates": {
+			"ra": [12, 29, 46],
+			"dec": [8, 0, 2]
+		}
+	},
+	"M50": {
+		"NGC/IC number": "NGC 2323",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 30275.2,
+		"Constellation": "Monoceros",
+		"Brightness": 5.9,
+		"Coordinates": {
+			"ra": [7, 3, 0],
+			"dec": [8, 20, 0]
+		}
+	},
+	"M51": {
+		"NGC/IC number": "NGC 5194, NGC 5195",
+		"Common name": "Whirlpool Galaxy",
+		"Type": "Spiral galaxy",
+		"Distance": 179759000.0,
+		"Constellation": "Canes Venatici",
+		"Brightness": 8.4,
+		"Coordinates": {
+			"ra": [13, 29, 52],
+			"dec": [47, 11, 43]
+		}
+	},
+	"M52": {
+		"NGC/IC number": "NGC 7654",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 47305.0,
+		"Constellation": "Cassiopeia",
+		"Brightness": 5.0,
+		"Coordinates": {
+			"ra": [23, 24, 0],
+			"dec": [61, 35, 0]
+		}
+	},
+	"M53": {
+		"NGC/IC number": "NGC 5024",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 548738.0,
+		"Constellation": "Coma Berenices",
+		"Brightness": 8.3,
+		"Coordinates": {
+			"ra": [13, 12, 55],
+			"dec": [18, 10, 5]
+		}
+	},
+	"M54": {
+		"NGC/IC number": "NGC 6715",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 826891.4,
+		"Constellation": "Sagittarius",
+		"Brightness": 8.4,
+		"Coordinates": {
+			"ra": [18, 55, 3],
+			"dec": [30, 28, 47]
+		}
+	},
+	"M55": {
+		"NGC/IC number": "NGC 6809",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 166513.6,
+		"Constellation": "Sagittarius",
+		"Brightness": 7.4,
+		"Coordinates": {
+			"ra": [19, 39, 59],
+			"dec": [30, 57, 53]
+		}
+	},
+	"M56": {
+		"NGC/IC number": "NGC 6779",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 311266.89999999997,
+		"Constellation": "Lyra",
+		"Brightness": 8.3,
+		"Coordinates": {
+			"ra": [19, 16, 35],
+			"dec": [30, 11, 0]
+		}
+	},
+	"M57": {
+		"NGC/IC number": "NGC 6720",
+		"Common name": "Ring Nebula",
+		"Type": "Planetary nebula",
+		"Distance": 15137.6,
+		"Constellation": "Lyra",
+		"Brightness": 8.8,
+		"Coordinates": {
+			"ra": [18, 53, 35],
+			"dec": [33, 1, 45]
+		}
+	},
+	"M58": {
+		"NGC/IC number": "NGC 4579",
+		"Common name": "–",
+		"Type": "Barred Spiral galaxy",
+		"Distance": 596043000.0,
+		"Constellation": "Virgo",
+		"Brightness": 10.5,
+		"Coordinates": {
+			"ra": [12, 37, 43],
+			"dec": [11, 49, 5]
+		}
+	},
+	"M59": {
+		"NGC/IC number": "NGC 4621",
+		"Common name": "–",
+		"Type": "Elliptical galaxy",
+		"Distance": 520355000.0,
+		"Constellation": "Virgo",
+		"Brightness": 10.6,
+		"Coordinates": {
+			"ra": [12, 42, 2],
+			"dec": [11, 38, 49]
+		}
+	},
+	"M60": {
+		"NGC/IC number": "NGC 4649",
+		"Common name": "–",
+		"Type": "Elliptical galaxy",
+		"Distance": 482511000.0,
+		"Constellation": "Virgo",
+		"Brightness": 9.8,
+		"Coordinates": {
+			"ra": [12, 43, 39],
+			"dec": [11, 33, 9]
+		}
+	},
+	"M61": {
+		"NGC/IC number": "NGC 4303",
+		"Common name": "–",
+		"Type": "Spiral galaxy",
+		"Distance": 474942200.0,
+		"Constellation": "Virgo",
+		"Brightness": 10.2,
+		"Coordinates": {
+			"ra": [12, 21, 54],
+			"dec": [4, 28, 25]
+		}
+	},
+	"M62": {
+		"NGC/IC number": "NGC 6266",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 210034.19999999998,
+		"Constellation": "Ophiuchus",
+		"Brightness": 7.4,
+		"Coordinates": {
+			"ra": [17, 1, 12],
+			"dec": [30, 6, 44]
+		}
+	},
+	"M63": {
+		"NGC/IC number": "NGC 5055",
+		"Common name": "Sunflower Galaxy",
+		"Type": "Spiral galaxy",
+		"Distance": 350057000.0,
+		"Constellation": "Canes Venatici",
+		"Brightness": 9.3,
+		"Coordinates": {
+			"ra": [13, 15, 49],
+			"dec": [42, 1, 45]
+		}
+	},
+	"M64": {
+		"NGC/IC number": "NGC 4826",
+		"Common name": "Black Eye Galaxy",
+		"Type": "Spiral galaxy",
+		"Distance": 208142000.0,
+		"Constellation": "Coma Berenices",
+		"Brightness": 9.4,
+		"Coordinates": {
+			"ra": [12, 56, 43],
+			"dec": [21, 40, 58]
+		}
+	},
+	"M65": {
+		"NGC/IC number": "NGC 3623",
+		"Common name": "Leo Triplet",
+		"Type": "Barred Spiral galaxy",
+		"Distance": 387901000.0,
+		"Constellation": "Leo",
+		"Brightness": 10.3,
+		"Coordinates": {
+			"ra": [11, 18, 55],
+			"dec": [13, 5, 32]
+		}
+	},
+	"M66": {
+		"NGC/IC number": "NGC 3627",
+		"Common name": "Leo Triplet",
+		"Type": "Barred Spiral galaxy",
+		"Distance": 293291000.0,
+		"Constellation": "Leo",
+		"Brightness": 8.9,
+		"Coordinates": {
+			"ra": [11, 20, 15],
+			"dec": [12, 59, 30]
+		}
+	},
+	"M67": {
+		"NGC/IC number": "NGC 2682",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 24693.21,
+		"Constellation": "Cancer",
+		"Brightness": 6.1,
+		"Coordinates": {
+			"ra": [8, 51, 0],
+			"dec": [11, 49, 0]
+		}
+	},
+	"M68": {
+		"NGC/IC number": "NGC 4590",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 317889.60000000003,
+		"Constellation": "Hydra",
+		"Brightness": 9.7,
+		"Coordinates": {
+			"ra": [12, 39, 27],
+			"dec": [26, 44, 38]
+		}
+	},
+	"M69": {
+		"NGC/IC number": "NGC 6637",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 280991.7,
+		"Constellation": "Sagittarius",
+		"Brightness": 8.3,
+		"Coordinates": {
+			"ra": [18, 31, 23],
+			"dec": [32, 20, 53]
+		}
+	},
+	"M70": {
+		"NGC/IC number": "NGC 6681",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 278153.39999999997,
+		"Constellation": "Sagittarius",
+		"Brightness": 9.1,
+		"Coordinates": {
+			"ra": [18, 43, 12],
+			"dec": [32, 17, 31]
+		}
+	},
+	"M71": {
+		"NGC/IC number": "NGC 6838",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 122993.0,
+		"Constellation": "Sagitta",
+		"Brightness": 6.1,
+		"Coordinates": {
+			"ra": [19, 53, 46],
+			"dec": [18, 46, 45]
+		}
+	},
+	"M72": {
+		"NGC/IC number": "NGC 6981",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 505217.39999999997,
+		"Constellation": "Aquarius",
+		"Brightness": 9.4,
+		"Coordinates": {
+			"ra": [20, 53, 27],
+			"dec": [12, 32, 14]
+		}
+	},
+	"M73": {
+		"NGC/IC number": "NGC 6994",
+		"Common name": "–",
+		"Type": "Asterism",
+		"Distance": 23652.5,
+		"Constellation": "Aquarius",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [20, 58, 54],
+			"dec": [12, 38, 0]
+		}
+	},
+	"M74": {
+		"NGC/IC number": "NGC 628",
+		"Common name": "Phantom Galaxy[91]",
+		"Type": "Spiral galaxy",
+		"Distance": 227064000.0,
+		"Constellation": "Pisces",
+		"Brightness": 10.0,
+		"Coordinates": {
+			"ra": [1, 36, 41],
+			"dec": [15, 47, 1]
+		}
+	},
+	"M75": {
+		"NGC/IC number": "NGC 6864",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 638617.5,
+		"Constellation": "Sagittarius",
+		"Brightness": 9.2,
+		"Coordinates": {
+			"ra": [20, 6, 4],
+			"dec": [21, 55, 16]
+		}
+	},
+	"M76": {
+		"NGC/IC number": "NGC 650, NGC 651",
+		"Common name": "Little Dumbbell Nebula",
+		"Type": "Planetary nebula",
+		"Distance": 23652.5,
+		"Constellation": "Perseus",
+		"Brightness": 10.1,
+		"Coordinates": {
+			"ra": [1, 42, 0],
+			"dec": [51, 34, 31]
+		}
+	},
+	"M77": {
+		"NGC/IC number": "NGC 1068",
+		"Common name": "Cetus A",
+		"Type": "Spiral galaxy",
+		"Distance": 444667000.0,
+		"Constellation": "Cetus",
+		"Brightness": 9.6,
+		"Coordinates": {
+			"ra": [2, 42, 40],
+			"dec": [0, 0, 48]
+		}
+	},
+	"M78": {
+		"NGC/IC number": "NGC 2068",
+		"Common name": "–",
+		"Type": "Diffuse nebula",
+		"Distance": 15137.6,
+		"Constellation": "Orion",
+		"Brightness": 8.3,
+		"Coordinates": {
+			"ra": [5, 46, 46],
+			"dec": [0, 0, 50]
+		}
+	},
+	"M79": {
+		"NGC/IC number": "NGC 1904",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 387901.0,
+		"Constellation": "Lepus",
+		"Brightness": 8.6,
+		"Coordinates": {
+			"ra": [5, 24, 10],
+			"dec": [24, 31, 27]
+		}
+	},
+	"M80": {
+		"NGC/IC number": "NGC 6093",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 308428.60000000003,
+		"Constellation": "Scorpius",
+		"Brightness": 7.9,
+		"Coordinates": {
+			"ra": [16, 17, 2],
+			"dec": [22, 58, 33]
+		}
+	},
+	"M81": {
+		"NGC/IC number": "NGC 3031",
+		"Common name": "Bode's Galaxy",
+		"Type": "Spiral galaxy",
+		"Distance": 107855400.0,
+		"Constellation": "Ursa Major",
+		"Brightness": 6.9,
+		"Coordinates": {
+			"ra": [9, 55, 33],
+			"dec": [69, 3, 55]
+		}
+	},
+	"M82": {
+		"NGC/IC number": "NGC 3034",
+		"Common name": "Cigar Galaxy",
+		"Type": "Starburst galaxy",
+		"Distance": 101232700.0,
+		"Constellation": "Ursa Major",
+		"Brightness": 8.4,
+		"Coordinates": {
+			"ra": [9, 55, 52],
+			"dec": [69, 40, 47]
+		}
+	},
+	"M83": {
+		"NGC/IC number": "NGC 5236",
+		"Common name": "Southern Pinwheel Galaxy",
+		"Type": "Barred Spiral galaxy",
+		"Distance": 139076700.0,
+		"Constellation": "Hydra",
+		"Brightness": 7.5,
+		"Coordinates": {
+			"ra": [13, 37, 0],
+			"dec": [29, 51, 57]
+		}
+	},
+	"M84": {
+		"NGC/IC number": "NGC 4374",
+		"Common name": "–",
+		"Type": "Lenticular galaxy",
+		"Distance": 539277000.0,
+		"Constellation": "Virgo",
+		"Brightness": 10.1,
+		"Coordinates": {
+			"ra": [12, 25, 3],
+			"dec": [12, 53, 13]
+		}
+	},
+	"M85": {
+		"NGC/IC number": "NGC 4382",
+		"Common name": "–",
+		"Type": "Lenticular galaxy",
+		"Distance": 529816000.0,
+		"Constellation": "Coma Berenices",
+		"Brightness": 10.0,
+		"Coordinates": {
+			"ra": [12, 25, 24],
+			"dec": [18, 11, 28]
+		}
+	},
+	"M86": {
+		"NGC/IC number": "NGC 4406",
+		"Common name": "–",
+		"Type": "Lenticular galaxy",
+		"Distance": 463589000.0,
+		"Constellation": "Virgo",
+		"Brightness": 9.8,
+		"Coordinates": {
+			"ra": [12, 26, 11],
+			"dec": [12, 56, 46]
+		}
+	},
+	"M87": {
+		"NGC/IC number": "NGC 4486",
+		"Common name": "Virgo A",
+		"Type": "Elliptical galaxy",
+		"Distance": 490742070.0,
+		"Constellation": "Virgo",
+		"Brightness": 9.6,
+		"Coordinates": {
+			"ra": [12, 30, 49],
+			"dec": [12, 23, 28]
+		}
+	},
+	"M88": {
+		"NGC/IC number": "NGC 4501",
+		"Common name": "–",
+		"Type": "Spiral galaxy",
+		"Distance": 368979000.0,
+		"Constellation": "Coma Berenices",
+		"Brightness": 10.4,
+		"Coordinates": {
+			"ra": [12, 31, 59],
+			"dec": [14, 25, 14]
+		}
+	},
+	"M89": {
+		"NGC/IC number": "NGC 4552",
+		"Common name": "–",
+		"Type": "Elliptical galaxy",
+		"Distance": 444667000.0,
+		"Constellation": "Virgo",
+		"Brightness": 10.7,
+		"Coordinates": {
+			"ra": [12, 35, 39],
+			"dec": [12, 33, 23]
+		}
+	},
+	"M90": {
+		"NGC/IC number": "NGC 4569",
+		"Common name": "–",
+		"Type": "Spiral galaxy",
+		"Distance": 528869900.0,
+		"Constellation": "Virgo",
+		"Brightness": 10.3,
+		"Coordinates": {
+			"ra": [12, 36, 49],
+			"dec": [13, 9, 46]
+		}
+	},
+	"M91": {
+		"NGC/IC number": "NGC 4548",
+		"Common name": "–",
+		"Type": "Barred Spiral galaxy",
+		"Distance": 444667000.0,
+		"Constellation": "Coma Berenices",
+		"Brightness": 11.0,
+		"Coordinates": {
+			"ra": [12, 35, 26],
+			"dec": [14, 29, 47]
+		}
+	},
+	"M92": {
+		"NGC/IC number": "NGC 6341",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 252608.69999999998,
+		"Constellation": "Hercules",
+		"Brightness": 6.3,
+		"Coordinates": {
+			"ra": [17, 17, 7],
+			"dec": [43, 8, 9]
+		}
+	},
+	"M93": {
+		"NGC/IC number": "NGC 2447",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 34059.6,
+		"Constellation": "Puppis",
+		"Brightness": 6.0,
+		"Coordinates": {
+			"ra": [7, 44, 0],
+			"dec": [23, 52, 0]
+		}
+	},
+	"M94": {
+		"NGC/IC number": "NGC 4736",
+		"Common name": "Croc's Eye or Cat's Eye",
+		"Type": "Spiral galaxy",
+		"Distance": 139076700.0,
+		"Constellation": "Canes Venatici",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [12, 50, 53],
+			"dec": [41, 7, 14]
+		}
+	},
+	"M95": {
+		"NGC/IC number": "NGC 3351",
+		"Common name": "–",
+		"Type": "Barred Spiral galaxy",
+		"Distance": 295183200.0,
+		"Constellation": "Leo",
+		"Brightness": 11.4,
+		"Coordinates": {
+			"ra": [10, 43, 57],
+			"dec": [11, 42, 14]
+		}
+	},
+	"M96": {
+		"NGC/IC number": "NGC 3368",
+		"Common name": "–",
+		"Type": "Spiral galaxy",
+		"Distance": 264908000.0,
+		"Constellation": "Leo",
+		"Brightness": 10.1,
+		"Coordinates": {
+			"ra": [10, 46, 45],
+			"dec": [11, 49, 12]
+		}
+	},
+	"M97": {
+		"NGC/IC number": "NGC 3587",
+		"Common name": "Owl Nebula",
+		"Type": "Planetary nebula",
+		"Distance": 19205.829999999998,
+		"Constellation": "Ursa Major",
+		"Brightness": 9.9,
+		"Coordinates": {
+			"ra": [11, 14, 47],
+			"dec": [55, 1, 8]
+		}
+	},
+	"M98": {
+		"NGC/IC number": "NGC 4192",
+		"Common name": "–",
+		"Type": "Spiral galaxy",
+		"Distance": 420068400.0,
+		"Constellation": "Coma Berenices",
+		"Brightness": 11.0,
+		"Coordinates": {
+			"ra": [12, 13, 48],
+			"dec": [14, 54, 1]
+		}
+	},
+	"M99": {
+		"NGC/IC number": "NGC 4254",
+		"Common name": "–",
+		"Type": "Spiral galaxy",
+		"Distance": 422906700.0,
+		"Constellation": "Coma Berenices",
+		"Brightness": 10.4,
+		"Coordinates": {
+			"ra": [12, 18, 49],
+			"dec": [14, 24, 59]
+		}
+	},
+	"M100": {
+		"NGC/IC number": "NGC 4321",
+		"Common name": "–",
+		"Type": "Spiral galaxy",
+		"Distance": 520355000.0,
+		"Constellation": "Coma Berenices",
+		"Brightness": 10.1,
+		"Coordinates": {
+			"ra": [12, 22, 54],
+			"dec": [15, 49, 21]
+		}
+	},
+	"M101": {
+		"NGC/IC number": "NGC 5457",
+		"Common name": "Pinwheel Galaxy",
+		"Type": "Spiral galaxy",
+		"Distance": 180705100.0,
+		"Constellation": "Ursa Major",
+		"Brightness": 7.9,
+		"Coordinates": {
+			"ra": [14, 3, 12],
+			"dec": [54, 20, 57]
+		}
+	},
+	"M102": {
+		"NGC/IC number": "NGC 5866",
+		"Common name": "Spindle Galaxy",
+		"Type": "Lenticular galaxy",
+		"Distance": 473050000.0,
+		"Constellation": "Draco",
+		"Brightness": 10.7,
+		"Coordinates": {
+			"ra": [15, 6, 29],
+			"dec": [55, 45, 48]
+		}
+	},
+	"M103": {
+		"NGC/IC number": "NGC 581",
+		"Common name": "–",
+		"Type": "Open cluster",
+		"Distance": 94610.0,
+		"Constellation": "Cassiopeia",
+		"Brightness": 7.4,
+		"Coordinates": {
+			"ra": [1, 33, 0],
+			"dec": [60, 42, 0]
+		}
+	},
+	"M104": {
+		"NGC/IC number": "NGC 4594",
+		"Common name": "Sombrero Galaxy",
+		"Type": "Spiral galaxy",
+		"Distance": 271530700.0,
+		"Constellation": "Virgo",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [12, 39, 59],
+			"dec": [11, 37, 23]
+		}
+	},
+	"M105": {
+		"NGC/IC number": "NGC 3379",
+		"Common name": "–",
+		"Type": "Elliptical galaxy",
+		"Distance": 287614400.0,
+		"Constellation": "Leo",
+		"Brightness": 10.2,
+		"Coordinates": {
+			"ra": [10, 47, 49],
+			"dec": [12, 34, 54]
+		}
+	},
+	"M106": {
+		"NGC/IC number": "NGC 4258",
+		"Common name": "–",
+		"Type": "Spiral galaxy",
+		"Distance": 210034200.0,
+		"Constellation": "Canes Venatici",
+		"Brightness": 9.1,
+		"Coordinates": {
+			"ra": [12, 18, 57],
+			"dec": [47, 18, 14]
+		}
+	},
+	"M107": {
+		"NGC/IC number": "NGC 6171",
+		"Common name": "–",
+		"Type": "Globular cluster",
+		"Distance": 197734.9,
+		"Constellation": "Ophiuchus",
+		"Brightness": 8.9,
+		"Coordinates": {
+			"ra": [16, 32, 31],
+			"dec": [13, 3, 13]
+		}
+	},
+	"M108": {
+		"NGC/IC number": "NGC 3556",
+		"Common name": "–",
+		"Type": "Barred Spiral galaxy",
+		"Distance": 435206000.0,
+		"Constellation": "Ursa Major",
+		"Brightness": 10.7,
+		"Coordinates": {
+			"ra": [11, 11, 31],
+			"dec": [55, 40, 27]
+		}
+	},
+	"M109": {
+		"NGC/IC number": "NGC 3992",
+		"Common name": "–",
+		"Type": "Barred Spiral galaxy",
+		"Distance": 562929500.0,
+		"Constellation": "Ursa Major",
+		"Brightness": 10.6,
+		"Coordinates": {
+			"ra": [11, 57, 36],
+			"dec": [53, 22, 28]
+		}
+	},
+	"M110": {
+		"NGC/IC number": "NGC 205",
+		"Common name": "–",
+		"Type": "Dwarf elliptical galaxy",
+		"Distance": 24598600.0,
+		"Constellation": "Andromeda",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [0, 40, 22],
+			"dec": [41, 41, 7]
+		}
+	}
 }

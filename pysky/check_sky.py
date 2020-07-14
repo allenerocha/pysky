@@ -49,21 +49,37 @@ def is_object_visible(celestial_obj, secz_max=4.1) -> tuple:
     end_altaz = location.altaz(end_time, celestial_obj)
 
     try:
-        if (start_secz < secz_max and start_secz > 0) or (
-            end_secz < secz_max and end_secz > 0
-        ):
+        if 0 < start_secz < secz_max:
             Logger.log(
-                f"Found sec(z) = {start_secz},{end_secz} for {celestial_obj.name}."
+                f"Found starting sec(z) = {start_secz} for {celestial_obj.name}."
             )
             Logger.log(
                 f"Zenith={start_altaz.zen} "
                 + f"Altitiude={start_altaz.alt}"
                 + f"Azimuth={start_altaz.az}"
             )
-            return (start_altaz.alt, start_altaz.az, end_altaz.alt, end_altaz.az)
+            # return (start_altaz.alt, start_altaz.az, end_altaz.alt, end_altaz.az)
+            start_alt = start_altaz.alt
+            start_az = start_altaz.az
+        else:
+            start_alt = "-"
+            start_az = "-"
+        if 0 < end_secz < secz_max:
+            Logger.log(f"Found ending sec(z) = {end_secz} for {celestial_obj.name}.")
+            Logger.log(
+                f"Zenith={start_altaz.zen} "
+                + f"Altitiude={start_altaz.alt}"
+                + f"Azimuth={start_altaz.az}"
+            )
+            end_alt = end_altaz.alt
+            end_az = end_altaz.az
+        else:
+            end_alt = "-"
+            end_az = "-"
+        return (start_alt, start_az, end_alt, end_az)
     except ValueError as e:
         Logger.log(f"Could not find sec(z) for {celestial_obj.name}.", 40)
         Logger.log(str(e), 40)
         Logger.log(start_secz, 40)
         return "-", "-", "-", "-"
-    return "", "", "", ""
+    return "-", "-", "-", "-"

@@ -8,7 +8,8 @@ import astroplan
 import astropy
 import astropy.units as u
 import numpy
-from astroplan import FixedTarget, OldEarthOrientationDataWarning, download_IERS_A
+from astroplan import (FixedTarget, OldEarthOrientationDataWarning,
+                       download_IERS_A)
 from astropy.coordinates import Angle, SkyCoord
 from tqdm import tqdm
 
@@ -92,19 +93,33 @@ def invoke():
             )
         except KeyError:
             continue
-        if "" not in (start_altitude, start_azimuth):
+        if len(set([start_altitude, start_azimuth, end_altitude, end_azimuth])) != 1:
             Logger.log(f"Sucessfully gathered data for {star}!\n")
             visible = {str(star): dict()}
-            visible[star]["Start Alt."] = round(
-                float(start_altitude.to_string(decimal=True))
-            )
-            visible[star]["Start Az."] = round(
-                float(start_azimuth.to_string(decimal=True))
-            )
-            visible[star]["End Alt."] = round(
-                float(end_altitude.to_string(decimal=True))
-            )
-            visible[star]["End Az."] = round(float(end_azimuth.to_string(decimal=True)))
+            if start_altitude != "-":
+                visible[star]["Start Alt."] = round(
+                    float(start_altitude.to_string(decimal=True))
+                )
+            else:
+                visible[star]["Start Alt."] = "-"
+            if start_azimuth != "-":
+                visible[star]["Start Az."] = round(
+                    float(start_azimuth.to_string(decimal=True))
+                )
+            else:
+                visible[star]["Start Az."] = "-"
+            if end_altitude != "-":
+                visible[star]["End Alt."] = round(
+                    float(end_altitude.to_string(decimal=True))
+                )
+            else:
+                visible[star]["End Alt."] = "-"
+            if end_azimuth != "-":
+                visible[star]["End Az."] = round(
+                    float(end_azimuth.to_string(decimal=True))
+                )
+            else:
+                visible[star]["End Az."] = "-"
             visible_objs.update(visible)
 
     # Dump cache file
@@ -150,72 +165,129 @@ def invoke():
     visible_messier = dict()
     visible = dict()
     for m_obj in MESSIER_OBJECTS.keys():
-        Logger.log("Gathering zen, altitude, and " + f"azimuth for {m_obj}...")
-        start_altitude, start_azimuth, end_altitude, end_azimuth = get_visible(
-            m_obj,
-            MESSIER_OBJECTS[m_obj]["Coordinates"]["ra"],
-            MESSIER_OBJECTS[m_obj]["Coordinates"]["dec"],
-            3.0,
-        )
-        if "" not in (start_altitude, start_azimuth):
-            Logger.log(f"Sucessfully gathered data for {m_obj}!\n")
-            visible[str(m_obj)] = dict()
-            visible[str(m_obj)]["Type"] = MESSIER_OBJECTS[m_obj]["Type"]
-            visible[str(m_obj)]["Start Alt. (°)"] = round(
-                float(start_altitude.to_string(decimal=True))
+        if (
+            not isinstance(MESSIER_OBJECTS[str(m_obj)]["Brightness"], str)
+            and MESSIER_OBJECTS[str(m_obj)]["Brightness"] <= 4.5
+        ):
+            Logger.log("Gathering zen, altitude, and " + f"azimuth for {m_obj}...")
+            start_altitude, start_azimuth, end_altitude, end_azimuth = get_visible(
+                m_obj,
+                MESSIER_OBJECTS[m_obj]["Coordinates"]["ra"],
+                MESSIER_OBJECTS[m_obj]["Coordinates"]["dec"],
+                4.0,
             )
-            visible[str(m_obj)]["Start Az. (°)"] = round(
-                float(start_azimuth.to_string(decimal=True))
+            if m_obj == "M31":
+                print(
+                    f"{start_altitude}, {start_azimuth}, {end_altitude}, {end_azimuth}"
+                )
+            if (
+                len(set([start_altitude, start_azimuth, end_altitude, end_azimuth]))
+                != 1
+            ):
+                Logger.log(f"Sucessfully gathered data for {m_obj}!\n")
+                visible[str(m_obj)] = dict()
+                visible[str(m_obj)]["Type"] = MESSIER_OBJECTS[m_obj]["Type"]
+                try:
+                    visible[str(m_obj)]["Start Alt. (°)"] = round(
+                        float(start_altitude.to_string(decimal=True))
+                    )
+                except AttributeError:
+                    visible[str(m_obj)]["Start Alt. (°)"] = start_altitude
+                try:
+                    visible[str(m_obj)]["Start Az. (°)"] = round(
+                        float(start_azimuth.to_string(decimal=True))
+                    )
+                except AttributeError:
+                    visible[str(m_obj)]["Start Az. (°)"] = start_azimuth
+                try:
+                    visible[str(m_obj)]["End Alt. (°)"] = round(
+                        float(end_altitude.to_string(decimal=True))
+                    )
+                except AttributeError:
+                    visible[str(m_obj)]["End Alt. (°)"] = end_altitude
+                try:
+                    visible[str(m_obj)]["End Az. (°)"] = round(
+                        float(end_azimuth.to_string(decimal=True))
+                    )
+                except AttributeError:
+                    visible[str(m_obj)]["End Az. (°)"] = end_azimuth
+                visible[str(m_obj)]["Constellation"] = MESSIER_OBJECTS[m_obj][
+                    "Constellation"
+                ]
+                visible[str(m_obj)]["Brigntness"] = MESSIER_OBJECTS[m_obj]["Brightness"]
+                visible[str(m_obj)]["Distance (Pm)"] = int(
+                    (float("%.2g" % MESSIER_OBJECTS[m_obj]["Distance"]))
+                )
+                visible_messier.update(visible)
+            else:
+                Logger.log(f"{m_obj} is not visible.", 30)
+        else:
+            Logger.log(
+                f"Ignoring {m_obj} since it is below the magnitude threshold of 4.5",
+                30,
             )
-            visible[str(m_obj)]["End Alt. (°)"] = round(
-                float(end_altitude.to_string(decimal=True))
-            )
-            visible[str(m_obj)]["End Az. (°)"] = round(
-                float(end_azimuth.to_string(decimal=True))
-            )
-            visible[str(m_obj)]["Constellation"] = MESSIER_OBJECTS[m_obj][
-                "Constellation"
-            ]
-            visible[str(m_obj)]["Brigntness"] = MESSIER_OBJECTS[m_obj]["Brightness"]
-            visible[str(m_obj)]["Distance (Pm)"] = float(
-                "%.2g" % MESSIER_OBJECTS[m_obj]["Distance"]
-            )
-            visible_messier.update(visible)
-
     visible_caldwell = dict()
     visible = dict()
     for c_obj in CALDWELL_OBJECTS.keys():
-        Logger.log("Gathering zen, altitude, and " + f"azimuth for {c_obj}...")
-        start_altitude, start_azimuth, end_altitude, end_azimuth = get_visible(
-            c_obj,
-            CALDWELL_OBJECTS[c_obj]["Coordinates"]["ra"],
-            CALDWELL_OBJECTS[c_obj]["Coordinates"]["dec"],
-            3.0,
-        )
-        if "" not in (start_altitude, start_azimuth):
-            Logger.log(f"Sucessfully gathered data for {c_obj}!\n")
-            visible[str(c_obj)] = dict()
-            visible[str(c_obj)]["Type"] = CALDWELL_OBJECTS[c_obj]["Type"]
-            visible[str(c_obj)]["Start Alt. (°)"] = round(
-                float(start_altitude.to_string(decimal=True))
+        if (
+            not isinstance(CALDWELL_OBJECTS[str(c_obj)]["Brightness"], str)
+            and CALDWELL_OBJECTS[str(c_obj)]["Brightness"] <= 4.5
+        ):
+            Logger.log("Gathering zen, altitude, and " + f"azimuth for {c_obj}...")
+            start_altitude, start_azimuth, end_altitude, end_azimuth = get_visible(
+                c_obj,
+                CALDWELL_OBJECTS[c_obj]["Coordinates"]["ra"],
+                CALDWELL_OBJECTS[c_obj]["Coordinates"]["dec"],
+                4.0,
             )
-            visible[str(c_obj)]["Start Az. (°)"] = round(
-                float(start_azimuth.to_string(decimal=True))
+            if (
+                len(set([start_altitude, start_azimuth, end_altitude, end_azimuth]))
+                != 1
+            ):
+                Logger.log(f"Sucessfully gathered data for {c_obj}!\n")
+                visible[str(c_obj)] = dict()
+                visible[str(c_obj)]["Type"] = CALDWELL_OBJECTS[c_obj]["Type"]
+                try:
+                    visible[str(c_obj)]["Start Alt. (°)"] = round(
+                        float(start_altitude.to_string(decimal=True))
+                    )
+                except AttributeError:
+                    visible[str(c_obj)]["Start Alt. (°)"] = start_altitude
+                try:
+                    visible[str(c_obj)]["Start Az. (°)"] = round(
+                        float(start_azimuth.to_string(decimal=True))
+                    )
+                except AttributeError:
+                    visible[str(c_obj)]["Start Az. (°)"] = start_azimuth
+                try:
+                    visible[str(c_obj)]["End Alt. (°)"] = round(
+                        float(end_altitude.to_string(decimal=True))
+                    )
+                except AttributeError:
+                    visible[str(c_obj)]["End Alt. (°)"] = end_altitude
+                try:
+                    visible[str(c_obj)]["End Az. (°)"] = round(
+                        float(end_azimuth.to_string(decimal=True))
+                    )
+                except AttributeError:
+                    visible[str(c_obj)]["End Az. (°)"] = end_azimuth
+                visible[str(c_obj)]["Constellation"] = CALDWELL_OBJECTS[c_obj][
+                    "Constellation"
+                ]
+                visible[str(c_obj)]["Brigntness"] = CALDWELL_OBJECTS[c_obj][
+                    "Brightness"
+                ]
+                visible[str(c_obj)]["Distance (Pm)"] = int(
+                    float("%.2g" % CALDWELL_OBJECTS[c_obj]["Distance"])
+                )
+                visible_caldwell.update(visible)
+            else:
+                Logger.log(f"{m_obj} is not visible.", 30)
+        else:
+            Logger.log(
+                f"Ignoring {c_obj} since it is below the magnitude threshold of 4.5",
+                30,
             )
-            visible[str(c_obj)]["End Alt. (°)"] = round(
-                float(end_altitude.to_string(decimal=True))
-            )
-            visible[str(c_obj)]["End Az. (°)"] = round(
-                float(end_azimuth.to_string(decimal=True))
-            )
-            visible[str(c_obj)]["Constellation"] = CALDWELL_OBJECTS[c_obj][
-                "Constellation"
-            ]
-            visible[str(c_obj)]["Brigntness"] = CALDWELL_OBJECTS[c_obj]["Brightness"]
-            visible[str(c_obj)]["Distance (Pm)"] = float(
-                "%.2g" % CALDWELL_OBJECTS[c_obj]["Distance"]
-            )
-            visible_caldwell.update(visible)
 
     set_img_txt(visible_messier)
     set_img_txt(visible_caldwell)
@@ -253,7 +325,9 @@ def invoke():
         except KeyError:
             v_obj[star]["Brightness"] = "-"
         try:
-            v_obj[star]["Distance (Pm)"] = float("%.2g" % cache_file[star]["Distance"])
+            v_obj[star]["Distance (Pm)"] = int(
+                float("%.2g" % cache_file[star]["Distance"])
+            )
         except KeyError:
             v_obj[star]["Distance (Pm)"] = "-"
     for key, value in v_obj.items():

@@ -9,7 +9,8 @@ import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
 
-from .catalog_parse import check_caldwell, check_messier, parse_caldwell, parse_messier
+from .catalog_parse import (check_caldwell, check_messier, parse_caldwell,
+                            parse_messier)
 from .const import Const
 from .logger import Logger
 
@@ -27,6 +28,7 @@ def overlay_text(celestial_obj: str) -> None:
     overlay_txt = list()
 
     if check_messier(celestial_obj):
+        Logger.log(f"Overlaying text for {celestial_obj}")
         m_catalog = parse_messier(Const.ROOT_DIR)
         static_data_path = f"{Const.ROOT_DIR}/data/static_data/"
         img = PIL.Image.open(f"{static_data_path}{celestial_obj.replace(' ', '')}.jpg")
@@ -42,7 +44,7 @@ def overlay_text(celestial_obj: str) -> None:
         overlay_txt.append("Brightness: " + f"{m_catalog[celestial_obj]['Brightness']}")
         overlay_txt.append(
             "Distance (petameters): "
-            + f"{m_catalog[celestial_obj]['Distance (petameters)']} Pm "
+            + f"{m_catalog[celestial_obj]['Distance']} Pm "
         )
         overlay_txt.append("1 Pm = 1 000 000 000 000 000 meters")
         img = add_text(img, overlay_txt)
@@ -51,26 +53,35 @@ def overlay_text(celestial_obj: str) -> None:
             + f"{celestial_obj.replace(' ', '')}.png",
             format="PNG",
         )
+        Logger.log(f"Overlayed text for {celestial_obj}")
 
     elif check_caldwell(celestial_obj):
+        Logger.log(f"Overlaying text for {celestial_obj}")
         c_catalogue = parse_caldwell(Const.ROOT_DIR)
+        Logger.log(f"Opening image for {celestial_obj}")
         static_data_path = f"{Const.ROOT_DIR}/data/static_data/"
         img = PIL.Image.open(f"{static_data_path}{celestial_obj.replace(' ', '')}.jpg")
+        Logger.log(f"Adding common name for {celestial_obj}")
         if c_catalogue[celestial_obj]["Common name"] != "":
             overlay_txt.append(
                 "Common Name: " + f"{c_catalogue[celestial_obj]['Common name']}"
             )
+        Logger.log(f"Adding catalgue name for {celestial_obj}")
         overlay_txt.append(f"Catalogue Name: {celestial_obj}")
+        Logger.log(f"Adding type for {celestial_obj}")
         overlay_txt.append("Type: " + f"{c_catalogue[celestial_obj]['Type']}")
+        Logger.log(f"Adding constellation for {celestial_obj}")
         overlay_txt.append(
             "Constellation: " + f"{c_catalogue[celestial_obj]['Constellation']}"
         )
+        Logger.log(f"Adding brightness for {celestial_obj}")
         overlay_txt.append(
             "Brightness: " + f"{c_catalogue[celestial_obj]['Brightness']}"
         )
+        Logger.log(f"Adding distance for {celestial_obj}")
         overlay_txt.append(
             "Distance (petameters): "
-            + f"{c_catalogue[celestial_obj]['Distance (petameters)']} Pm "
+            + f"{c_catalogue[celestial_obj]['Distance']} Pm "
         )
         overlay_txt.append("1 Pm = 1 000 000 000 000 000 meters")
         img = add_text(img, overlay_txt)
@@ -79,6 +90,7 @@ def overlay_text(celestial_obj: str) -> None:
             + f"{celestial_obj.replace(' ', '')}.png",
             format="PNG",
         )
+        Logger.log(f"Overlaying text for {celestial_obj}")
 
     else:
         decoded_img = base64.b64decode(

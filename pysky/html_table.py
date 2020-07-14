@@ -63,7 +63,7 @@ class HTML_table:
         with open(
             f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{filename}.html", "w"
         ) as html_out:
-            html_out.write("<table>\n")
+            html_out.write('<table border="1">\n')
             html_out.write("<caption>")
             html_out.write(
                 f"{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}"
@@ -71,8 +71,10 @@ class HTML_table:
                 + "/"
                 + f"{Const.END_YEAR}-{Const.END_MONTH}-{Const.END_DAY}"
                 + f"T{Const.END_TIME}Z"
-                + f" From "
-                + f"Latitude: {Const.LATITUDE}° Longitude: {Const.LONGITUDE}° Elevation: {Const.ELEVATION} km"
+                + " From "
+                + f"Latitude: {Const.LATITUDE}° "
+                + f"Longitude: {Const.LONGITUDE}° "
+                + f"Elevation: {Const.ELEVATION} km"
             )
             html_out.write("</caption>\n")
             html_out.write("<thead>\n")
