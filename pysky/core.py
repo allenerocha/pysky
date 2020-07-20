@@ -454,16 +454,21 @@ def get_visible(object_name: str, ra, dec, secz_max=3.0) -> tuple:
 
 def gen_moon_data():
     Logger.log("Retreiving data for tonight's moon...")
-    today = datetime.now().strftime("%Y-%m-%d")
     illumination, phase = query()
     Logger.log("Data for tonight's moon:")
     Logger.log(f"Illumination: {illumination}\tPhase: {phase}")
     Logger.log(f"Writing data to `{Const.SLIDESHOW_DIR}/PySkySlideshow/`...")
     write_out(
         celestial_objs=[
-            {"Moon": {"Date": str(today), "Illumination": illumination, "Phase": phase}}
+            {
+                "Moon": {
+                    "Date": f"{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}",
+                    "Illumination": illumination,
+                    "Phase": phase,
+                }
+            }
         ],
-        filename=f"moon_{str(today)}",
+        filename=f"moon_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}"
     )
     Logger.log("Wrote file!")
 

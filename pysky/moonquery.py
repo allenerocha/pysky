@@ -1,9 +1,12 @@
 """Contains functions related to the moon."""
 
-import requests
-import bs4
-import re
 import json
+import re
+
+import bs4
+import requests
+
+from .const import Const
 
 
 def query() -> tuple:
@@ -11,7 +14,10 @@ def query() -> tuple:
     Get the illumination and phase of the moon for today.
     :return: illumination and phase
     """
-    ENDPOINT = "https://www.moongiant.com/phase/today/"
+    ENDPOINT = (
+        "https://www.moongiant.com/phase/"
+        + f"{Const.START_MONTH}/{Const.START_DAY}/{Const.START_YEAR}"
+    )
     tags = re.compile(r"<\\*/*[A-Za-z]*>|\\n")
     response = requests.get(ENDPOINT).text
     soup = bs4.BeautifulSoup(response, features="html.parser")
