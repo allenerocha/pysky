@@ -80,7 +80,6 @@ def invoke():
                 star,
                 cache_file[star]["Coordinates"]["ra"],
                 cache_file[star]["Coordinates"]["dec"],
-                3.0,
             )
         except KeyError:
             continue
@@ -138,7 +137,6 @@ def invoke():
                 m_obj,
                 MESSIER_OBJECTS[m_obj]["Coordinates"]["ra"],
                 MESSIER_OBJECTS[m_obj]["Coordinates"]["dec"],
-                4.0,
             )
             if (
                 len(set([start_altitude, start_azimuth, end_altitude, end_azimuth]))
@@ -198,7 +196,6 @@ def invoke():
                 c_obj,
                 CALDWELL_OBJECTS[c_obj]["Coordinates"]["ra"],
                 CALDWELL_OBJECTS[c_obj]["Coordinates"]["dec"],
-                4.0,
             )
             if (
                 len(set([start_altitude, start_azimuth, end_altitude, end_azimuth]))
@@ -372,7 +369,7 @@ def set_img_txt(celestial_objs: list) -> None:
         executor.map(overlay_text, celestial_objs)
 
 
-def get_visible(object_name: str, ra, dec, secz_max=3.0) -> tuple:
+def get_visible(object_name: str, ra, dec) -> tuple:
     """
     Check to see if the given object is
     visible at a location in a certain time.
@@ -393,7 +390,7 @@ def get_visible(object_name: str, ra, dec, secz_max=3.0) -> tuple:
         # celestial_obj = FixedTarget.from_name(object_name)
         celestial_obj = FixedTarget(coord=celestial_obj_coord, name=object_name)
         start_altitude, start_azimuth, end_altitude, end_azimuth = is_object_visible(
-            celestial_obj=celestial_obj, secz_max=secz_max
+            celestial_obj=celestial_obj, secz_max=Const.SECZ_MAX
         )
         return (start_altitude, start_azimuth, end_altitude, end_azimuth)
     except astropy.coordinates.name_resolve.NameResolveError as e:

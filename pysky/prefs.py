@@ -140,8 +140,10 @@ def read_user_prefs():
                     Const.LONGITUDE = float(line.strip().split("=")[1].strip())
                 elif "elevation" in line.strip().lower():
                     Const.ELEVATION = float(line.strip().split("=")[1].strip())
-                elif "v=" in line.strip().lower():
+                elif "v=" in line.strip().replace(" ", "").lower():
                     Const.MIN_V = float(line.strip().split("=")[1].strip())
+                elif "secz_max=" in line.strip().replace(" ", "").lower():
+                    Const.SECZ_MAX = float(line.strip().split("=")[1].strip())
                 else:
                     if "," not in line.strip():
                         user_objs.append(line.strip())

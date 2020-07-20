@@ -20,3 +20,4 @@ class Const(object):
     LONGITUDE = 0.0
     ELEVATION = 0.0
     MIN_V = 4.5
+    SECZ_MAX = 4.5

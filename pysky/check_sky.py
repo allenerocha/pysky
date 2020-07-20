@@ -9,7 +9,7 @@ from .const import Const
 from .logger import Logger
 
 
-def is_object_visible(celestial_obj, secz_max=4.1) -> tuple:
+def is_object_visible(celestial_obj, secz_max) -> tuple:
     """
     :param celestial_obj: object to view (astropy.coordinates.SkyCoord())
     :param start_time:  starting range for the
@@ -58,7 +58,6 @@ def is_object_visible(celestial_obj, secz_max=4.1) -> tuple:
                 + f"Altitiude={start_altaz.alt}"
                 + f"Azimuth={start_altaz.az}"
             )
-            # return (start_altaz.alt, start_altaz.az, end_altaz.alt, end_altaz.az)
             start_alt = start_altaz.alt
             start_az = start_altaz.az
         else:
