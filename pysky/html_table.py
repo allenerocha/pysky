@@ -80,7 +80,7 @@ class HTML_table:
             html_out.write("<thead>\n")
             html_out.write("<tr>")
             for title in self.header:
-                html_out.write(f"<td>{str(title).title()}</td>\n")
+                html_out.write(f'<td style="padding:5px">{str(title).title()}</td>\n')
             html_out.write("</tr>\n")
             html_out.write("</thead>\n")
 
@@ -89,7 +89,7 @@ class HTML_table:
                 html_out.write("<tr>\n")
                 for index, element in enumerate(row):
                     # if index < (len(row) - 1):
-                    html_out.write(f"<td>{str(element)}</td>\n")
+                    html_out.write(f'<td style="padding:5px">{str(element)}</td>\n')
                 html_out.write("</tr>\n")
             html_out.write("</tbody>\n")
             html_out.write("</table>\n")
