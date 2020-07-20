@@ -95,7 +95,7 @@ def get_ephemeries_info(body: str, cache_file: dict) -> dict:
     """
     Logger.log(f"Retreiving coordinates for {body}...")
     ra, dec = get_info(body)
-    cache_file[f"{body}"] = {}
+    # cache_file[f"{body}"] = {}
     cache_file[f"{body}"]["Type"] = "planet"
     cache_file[f"{body}"]["Created"] = time.strftime("%Y-%d-%m %H:%M", time.gmtime())
     Logger.log(f"Coordinates for {body} retreived.")
