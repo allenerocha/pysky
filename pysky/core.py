@@ -50,39 +50,30 @@ def invoke():
 
     EPHEMERIES_BODIES = list(EPHEMERIES.keys())
 
-    visible_objs = dict()
-    visible = dict()
-    # for star in STARS:
-    #    Logger.log(
-    #        "Gathering zen, altitude, and " +
-    #        f"azimuth for {star}..."
-    #    )
-    #    try:
-    #        zen, altitude, azimuth = get_visible(
-    #            star,
-    #
-    #            3.0
-    #        )
-    #    except KeyError:
-    #        continue
-    #    if '' not in (zen, altitude, azimuth):
-    #        Logger.log(f"Sucessfully gathered data for {star}!\n")
-    #        visible = {str(star): dict()}
-    #        visible[star]['Alt.'] = altitude.to_string(decimal=True)
-    #        visible[star]['Az.'] = azimuth.to_string(decimal=True)
-    #        visible_objs.update(visible)
-    # STARS = list(visible_objs.keys())
-    # Calls the skyview api and simbad
     # api and returns the the list of stars
     invoke_skyview(STARS)
     # Open cache file
     cache_file = json.loads(open(f"{Const.ROOT_DIR}/data/cache", "r").read())
     for star in STARS:
         cache_file = set_simbad_values(star, cache_file)
+    temp_cache = {**cache_file, **EPHEMERIES}
+    # Dump cache file
+    with open(f"{Const.ROOT_DIR}/data/cache", "w") as json_out:
+        json.dump(temp_cache, json_out, indent=4, sort_keys=True)
+    cache_file = json.loads(open(f"{Const.ROOT_DIR}/data/cache", "r").read())
+
+    set_img_txt(STARS)
+    # Iterate through the ephemeries to add information
+    for body in tqdm(EPHEMERIES_BODIES):
+        cache_file = get_ephemeries_info(body, cache_file)
+
+    # Dump cache file
+    with open(f"{Const.ROOT_DIR}/data/cache", "w") as json_out:
+        json.dump(cache_file, json_out, indent=4, sort_keys=True)
 
     visible_objs = dict()
     visible = dict()
-    for star in STARS:
+    for star in cache_file:
         Logger.log("Gathering zen, altitude, and " + f"azimuth for {star}...")
         try:
             start_altitude, start_azimuth, end_altitude, end_azimuth = get_visible(
@@ -127,37 +118,10 @@ def invoke():
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
     cache_file = json.loads(open(f"{Const.ROOT_DIR}/data/cache", "r").read())
 
-    set_img_txt(STARS)
     # Iterate through the ephemeries to add information
     for body in tqdm(EPHEMERIES_BODIES):
         cache_file = get_ephemeries_info(body, cache_file)
 
-    visible = dict()
-    """
-    for eph in cache_file:
-        if eph in EPHEMERIES_BODIES:
-            Logger.log(
-                "Gathering zen, altitude, and " +
-                f"azimuth for {eph}..."
-            )
-            try:
-                start_altitude, start_azimuth, end_altitude, end_azimuth = get_visible(
-                    eph,
-                    cache_file[eph]['Coordinates']['ra'],
-                    cache_file[eph]['Coordinates']['dec'],
-                    3.0
-                )
-            except KeyError:
-                continue
-            if '' not in (start_altitude, start_azimuth):
-                Logger.log(f"Sucessfully gathered data for {eph}!\n")
-                visible = {str(eph): dict()}
-                visible[eph]['Start Alt.'] = start_altitude.to_string(decimal=True)
-                visible[eph]['Start Az.'] = start_azimuth.to_string(decimal=True)
-                visible[eph]['End Alt.'] = end_altitude.to_string(decimal=True)
-                visible[eph]['End Az.'] = end_azimuth.to_string(decimal=True)
-                visible_objs.update(visible)
-    """
     # Dump cache file
     with open(f"{Const.ROOT_DIR}/data/cache", "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
@@ -176,10 +140,6 @@ def invoke():
                 MESSIER_OBJECTS[m_obj]["Coordinates"]["dec"],
                 4.0,
             )
-            if m_obj == "M31":
-                print(
-                    f"{start_altitude}, {start_azimuth}, {end_altitude}, {end_azimuth}"
-                )
             if (
                 len(set([start_altitude, start_azimuth, end_altitude, end_azimuth]))
                 != 1
@@ -282,7 +242,7 @@ def invoke():
                 )
                 visible_caldwell.update(visible)
             else:
-                Logger.log(f"{m_obj} is not visible.", 30)
+                Logger.log(f"{c_obj} is not visible.", 30)
         else:
             Logger.log(
                 f"Ignoring {c_obj} since it is below the magnitude threshold of 4.5",
@@ -330,6 +290,7 @@ def invoke():
             )
         except KeyError:
             v_obj[star]["Distance (Pm)"] = "-"
+
     for key, value in v_obj.items():
         s_list.append({str(key).title(): value})
 
@@ -428,8 +389,9 @@ def get_visible(object_name: str, ra, dec, secz_max=3.0) -> tuple:
             dec = dec[0] + (dec[1] / 60) + (dec[2] / 3600)
         elif isinstance(ra, numpy.float64) and isinstance(dec, numpy.float64):
             pass
-        # print(f"{object_name} ra:{ra} - type:{type(ra)} dec:{dec} - type:{type(dec)}")
-        celestial_obj = FixedTarget.from_name(object_name)
+        celestial_obj_coord = SkyCoord(ra=ra * u.deg, dec=dec * u.deg)
+        # celestial_obj = FixedTarget.from_name(object_name)
+        celestial_obj = FixedTarget(coord=celestial_obj_coord, name=object_name)
         start_altitude, start_azimuth, end_altitude, end_azimuth = is_object_visible(
             celestial_obj=celestial_obj, secz_max=secz_max
         )
@@ -468,7 +430,7 @@ def gen_moon_data():
                 }
             }
         ],
-        filename=f"moon_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}"
+        filename=f"moon_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}",
     )
     Logger.log("Wrote file!")
 
