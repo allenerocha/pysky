@@ -131,7 +131,7 @@ def invoke():
     for m_obj in MESSIER_OBJECTS.keys():
         if (
             not isinstance(MESSIER_OBJECTS[str(m_obj)]["Brightness"], str)
-            and MESSIER_OBJECTS[str(m_obj)]["Brightness"] <= 4.5
+            and MESSIER_OBJECTS[str(m_obj)]["Brightness"] <= Const.MIN_V
         ):
             Logger.log("Gathering zen, altitude, and " + f"azimuth for {m_obj}...")
             start_altitude, start_azimuth, end_altitude, end_azimuth = get_visible(
@@ -183,7 +183,7 @@ def invoke():
                 Logger.log(f"{m_obj} is not visible.", 30)
         else:
             Logger.log(
-                f"Ignoring {m_obj} since it is below the magnitude threshold of 4.5",
+                f"Ignoring {m_obj} since it is below the magnitude threshold of {Const.MIN_V}",
                 30,
             )
     visible_caldwell = dict()
@@ -191,7 +191,7 @@ def invoke():
     for c_obj in CALDWELL_OBJECTS.keys():
         if (
             not isinstance(CALDWELL_OBJECTS[str(c_obj)]["Brightness"], str)
-            and CALDWELL_OBJECTS[str(c_obj)]["Brightness"] <= 4.5
+            and CALDWELL_OBJECTS[str(c_obj)]["Brightness"] <= Const.MIN_V
         ):
             Logger.log("Gathering zen, altitude, and " + f"azimuth for {c_obj}...")
             start_altitude, start_azimuth, end_altitude, end_azimuth = get_visible(
@@ -245,12 +245,12 @@ def invoke():
                 Logger.log(f"{c_obj} is not visible.", 30)
         else:
             Logger.log(
-                f"Ignoring {c_obj} since it is below the magnitude threshold of 4.5",
+                f"Ignoring {c_obj} since it is below the magnitude threshold of {Const.MIN_V}",
                 30,
             )
 
-    set_img_txt(visible_messier)
-    set_img_txt(visible_caldwell)
+    # set_img_txt(visible_messier)
+    # set_img_txt(visible_caldwell)
 
     s_list = list()
     v_obj = dict()

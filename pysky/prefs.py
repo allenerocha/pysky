@@ -132,14 +132,16 @@ def read_user_prefs():
         user_save_loc = str()
         for line in u_prefs_file.readlines():
             if len(line.strip()) > 0 and line.strip()[0] != "#":
-                if "slideshow_dir" in line.strip():
+                if "slideshow_dir" in line.strip().lower():
                     user_save_loc = line.strip().split("=")[1].strip()
-                elif "latitude" in line.strip():
+                elif "latitude" in line.strip().lower():
                     Const.LATITUDE = float(line.strip().split("=")[1].strip())
-                elif "longitude" in line.strip():
+                elif "longitude" in line.strip().lower():
                     Const.LONGITUDE = float(line.strip().split("=")[1].strip())
-                elif "elevation" in line.strip():
+                elif "elevation" in line.strip().lower():
                     Const.ELEVATION = float(line.strip().split("=")[1].strip())
+                elif "v=" in line.strip().lower():
+                    Const.MIN_V = float(line.strip().split("=")[1].strip())
                 else:
                     if "," not in line.strip():
                         user_objs.append(line.strip())

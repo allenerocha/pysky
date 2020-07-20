@@ -19,3 +19,4 @@ class Const(object):
     LATITUDE = 0.0
     LONGITUDE = 0.0
     ELEVATION = 0.0
+    MIN_V = 4.5
