@@ -120,7 +120,7 @@
 		"Type": "Nebula",
 		"Distance": 635524699.0999999,
 		"Constellation": "Cassiopeia",
-		"Brightness": "-",
+		"Brightness": 10.0,
 		"Coordinates": {
 			"ra": [23, 20, 48],
 			"dec": [61, 12, 6]
@@ -142,7 +142,7 @@
 		"Caldwell number": "C13",
 		"Common name": "Owl Cluster E.T. Cluster",
 		"Type": "Open Cluster",
-		"Distance": "-",
+		"Distance": 74948,
 		"Constellation": "Cassiopeia",
 		"Brightness": 6.4,
 		"Coordinates": {
@@ -363,7 +363,7 @@
 		"Type": "Nebula",
 		"Distance": 143216833.6,
 		"Constellation": "Auriga",
-		"Brightness": "-",
+		"Brightness": 6.0,
 		"Coordinates": {
 			"ra": [5, 17, 0],
 			"dec": [34, 23, 0]
@@ -387,7 +387,7 @@
 		"Type": "Supernova Remnant",
 		"Distance": 223776302.5,
 		"Constellation": "Cygnus",
-		"Brightness": "-",
+		"Brightness": 7.0,
 		"Coordinates": {
 			"ra": [20, 56, 19],
 			"dec": [31, 44, 0]
@@ -399,7 +399,7 @@
 		"Type": "Supernova Remnant",
 		"Distance": 223776302.5,
 		"Constellation": "Cygnus",
-		"Brightness": "-",
+		"Brightness": 7.0,
 		"Coordinates": {
 			"ra": [20, 45, 38],
 			"dec": [30, 42, 30]
@@ -536,7 +536,7 @@
 		"Type": "Nebula",
 		"Distance": 223776302.5,
 		"Constellation": "Monoceros",
-		"Brightness": "-",
+		"Brightness": 9.0,
 		"Coordinates": {
 			"ra": [6, 39, 9],
 			"dec": [8, 44, 9]
