@@ -9,17 +9,13 @@ from .const import Const
 from .logger import Logger
 
 
-def is_object_visible(celestial_obj, secz_max) -> tuple:
+def is_object_visible(celestial_obj: object, secz_max: float) -> tuple:
     """
-    :param celestial_obj: object to view (astropy.coordinates.SkyCoord())
-    :param start_time:  starting range for the
-                        viewing time (astropy.time.Time())
-    :param end_time: ending range for the viewing time (astropy.time.Time())
-    :param secz_max:
-    :param location: location of viewing site
-                     (astropy.coordinates.EarthLocation())
-    :return: tuple if the object is up or not during
-             the time range given (string, alt, az || '', '', '')
+    Check if the object is visible in the set start and end times.
+
+    :param celestial_obj: object to view (FixedTarget())
+    :param secz_max: Maximum viewing angle.
+    :return: starting altitude, azimuth and ending altitude, azimuth.
     """
     location = Observer(
         location=EarthLocation.from_geodetic(
