@@ -381,8 +381,9 @@ def get_visible(object_name: str, ra, dec) -> tuple:
     """
 
     try:
+        print(ra, dec)
         if isinstance(ra, list) and isinstance(dec, list):
-            ra = ((ra[0] / 24) + (ra[1] / 60) + (ra[2] / 3600)) * 360
+            ra = ((ra[0] + (ra[1] / 60) + (ra[2] / 3600)) / 24) * 360
             dec = dec[0] + (dec[1] / 60) + (dec[2] / 3600)
         elif isinstance(ra, numpy.float64) and isinstance(dec, numpy.float64):
             pass
