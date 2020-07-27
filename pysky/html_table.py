@@ -74,13 +74,15 @@ class HTML_table:
                 + " From "
                 + f"Latitude: {Const.LATITUDE}° "
                 + f"Longitude: {Const.LONGITUDE}° "
-                + f"Elevation: {Const.ELEVATION} km"
+                + f"Elevation: {Const.ELEVATION} km "
+                + f"Min V: {Const.MIN_V}"
+                + f"sec(z) max: {Const.SECZ_MAX}"
             )
             html_out.write("</caption>\n")
             html_out.write("<thead>\n")
             html_out.write("<tr>")
             for title in self.header:
-                html_out.write(f'<td style="padding:5px">{str(title).title()}</td>\n')
+                html_out.write(f'<th style="padding:5px">{str(title).title()}</th>\n')
             html_out.write("</tr>\n")
             html_out.write("</thead>\n")
 
