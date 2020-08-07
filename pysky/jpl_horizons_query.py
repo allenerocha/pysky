@@ -69,39 +69,38 @@ def ephemeries_query(celestial_obj: str) -> tuple:
         return (None, celestial_obj)
 
     eph = obj.ephemerides()[
-        "datetime_str", "RA", "DEC", "V", "delta", "illumination", "constellation"
+        "datetime_str", "AZ", "EL", "V", "delta", "illumination", "constellation"
     ]
     const_abbrvs = json.loads(
         open(f"{Const.ROOT_DIR}/data/ConstellAbbrevs.json", "r").read()
     )
     time_ra_dec = dict()
     brightness_sum = 0.0
-    if len(eph["RA"]) == len(eph["DEC"]):
-        time_ra_dec[celestial_obj] = dict()
-        for index in range(len(eph["RA"])):
-            row_time = eph["datetime_str"][index]
-            row_ra = eph["RA"][index]
-            row_dec = eph["DEC"][index]
-            row_mag = eph["V"][index]
-            brightness_sum += float(row_mag)
-            row_delta = eph["delta"][index]
-            row_constellation = const_abbrvs[str(eph["constellation"][index]).lower()]
-            row_illumination = eph["illumination"][index]
-            time_ra_dec[celestial_obj]["Constellation"] = row_constellation
-            time_ra_dec[celestial_obj][row_time] = {
-                "ra": row_ra,
-                "dec": row_dec,
-                "Brightness": row_mag,
-                "Delta": row_delta * 0.000149597870691,
-                "Illumination": row_illumination,
-            }
+    time_ra_dec[celestial_obj] = dict()
+    for index in range(len(eph["datetime_str"])):
+        row_time = eph["datetime_str"][index]
+        row_az = eph["AZ"][index]
+        row_alt = eph["EL"][index]
+        row_mag = eph["V"][index]
+        brightness_sum += float(row_mag)
+        row_delta = eph["delta"][index]
+        row_constellation = const_abbrvs[str(eph["constellation"][index]).lower()]
+        row_illumination = eph["illumination"][index]
+        time_ra_dec[celestial_obj]["Constellation"] = row_constellation
+        time_ra_dec[celestial_obj][row_time] = {
+            "az": row_az,
+            "alt": row_alt,
+            "Brightness": row_mag,
+            "Delta": row_delta * 0.000149597870691,
+            "Illumination": row_illumination,
+        }
 
-        time_ra_dec[celestial_obj]["Brightness"] = round(
-            brightness_sum / len(eph["RA"]), 2
-        )
-        with open(
-            f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{celestial_obj}-{startdate}-{starttime}-{enddate}-{endtime}-data.json",
-            "w",
-        ) as json_out:
-            json.dump(time_ra_dec[celestial_obj], json_out, indent=4)
+    time_ra_dec[celestial_obj]["Brightness"] = round(
+        brightness_sum / len(eph["datetime_str"]), 2
+    )
+    with open(
+        f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{celestial_obj}-{startdate}-{starttime}-{enddate}-{endtime}-data.json",
+        "w",
+    ) as json_out:
+        json.dump(time_ra_dec[celestial_obj], json_out, indent=4)
     return (time_ra_dec, None)
