@@ -30,9 +30,11 @@ def get_brightness(celestial_obj: str) -> float:
 
         # Check result for "--"
         if str(astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0]) == "--":
-            celestial_obj = celestial_obj + "_A"
+            Logger.log(f"Could not find brightness for {celestial_obj}!", 30)
+            celestial_obj_aux = celestial_obj + "_A"
+            Logger.log(f"Attempting to find brightness for {celestial_obj_aux}!", 30)
             BRIGHTNESS_FEILD = str(
-                astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0]
+                astroquery.simbad.Simbad.query_object(celestial_obj_aux)[0][0]
             )
             brightness = float(BRIGHTNESS_FEILD)
 
@@ -52,7 +54,49 @@ def get_brightness(celestial_obj: str) -> float:
             + f"Simbad only contains info on stars.\n\n{str(type_err)}",
             50,
         )
-        return None
+        
+        try:
+            
+            Logger.log(f"Could not find brightness for {celestial_obj_aux}!", 30)
+            Logger.log(
+                f"Attempting to find brightness for {celestial_obj} using it's IUE!",
+                30,
+            )
+            Logger.log("Resetting votable fields")
+            astroquery.simbad.Simbad.reset_votable_fields()
+            astroquery.simbad.Simbad.add_votable_fields("iue")
+            astroquery.simbad.Simbad.remove_votable_fields("main_id")
+            astroquery.simbad.Simbad.remove_votable_fields("coordinates")
+            NEW_OBJECT_FEILD = (
+                str(astroquery.simbad.Simbad.query_object(celestial_obj)[0][0])
+                .replace("b", "")
+                .replace("'", "")
+            )
+            
+            
+            astroquery.simbad.Simbad.reset_votable_fields()
+            # Add brightness column
+            astroquery.simbad.Simbad.add_votable_fields("flux(V)")
+
+            # Remove the other columns
+            astroquery.simbad.Simbad.remove_votable_fields("main_id")
+            astroquery.simbad.Simbad.remove_votable_fields("coordinates")
+            
+            BRIGHTNESS_FEILD = str(
+                astroquery.simbad.Simbad.query_object(NEW_OBJECT_FEILD)[0][0]
+            )
+            
+            brightness = float(BRIGHTNESS_FEILD)
+            
+            return brightness
+    
+        except TypeError as type_err:
+            Logger.log(
+                f"Error parsing the data for {celestial_obj}. "
+                + f"Simbad only contains info on stars.\n\n{str(type_err)}",
+                50,
+            )
+            return None
 
     # Occurs for multiple stars
     except ValueError as value_err:
@@ -62,7 +106,10 @@ def get_brightness(celestial_obj: str) -> float:
             + f"multiple stars.\n\n{str(value_err)}",
             50,
         )
+        
         return None
+
+
 
 
 def get_constellation(celestial_obj: str) -> str:
