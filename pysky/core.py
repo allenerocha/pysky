@@ -83,7 +83,12 @@ def invoke():
             )
         except KeyError:
             continue
-        if len(set([start_altitude, start_azimuth, end_altitude, end_azimuth])) != 1:
+        if (
+            start_altitude != "-"
+            and start_azimuth != "-"
+            and end_altitude != "-"
+            and end_azimuth != "-"
+        ):
             Logger.log(f"Sucessfully gathered data for {star}!\n")
             visible = {str(star): dict()}
             if start_altitude != "-":
@@ -139,8 +144,10 @@ def invoke():
                 MESSIER_OBJECTS[m_obj]["Coordinates"]["dec"],
             )
             if (
-                len(set([start_altitude, start_azimuth, end_altitude, end_azimuth]))
-                != 1
+                start_altitude != "-"
+                and start_azimuth != "-"
+                and end_altitude != "-"
+                and end_azimuth != "-"
             ):
                 Logger.log(f"Sucessfully gathered data for {m_obj}!\n")
                 visible[str(m_obj)] = dict()
@@ -198,8 +205,10 @@ def invoke():
                 CALDWELL_OBJECTS[c_obj]["Coordinates"]["dec"],
             )
             if (
-                len(set([start_altitude, start_azimuth, end_altitude, end_azimuth]))
-                != 1
+                start_altitude != "-"
+                and start_azimuth != "-"
+                and end_altitude != "-"
+                and end_azimuth != "-"
             ):
                 Logger.log(f"Sucessfully gathered data for {c_obj}!\n")
                 visible[str(c_obj)] = dict()
@@ -251,7 +260,9 @@ def invoke():
 
     s_list = list()
     v_obj = dict()
+    to_prune = list()
     for star, data in cache_file.items():
+        num_of_dashes = 0
         v_obj[star] = {}
         try:
             v_obj[star]["Type"] = cache_file[star]["Type"].title()
@@ -260,19 +271,26 @@ def invoke():
         try:
             v_obj[star]["Start Alt. (°)"] = visible_objs[star]["Start Alt."]
         except KeyError:
+            num_of_dashes += 1
             v_obj[star]["Alt. (°)"] = "-"
         try:
             v_obj[star]["Start Az. (°)"] = visible_objs[star]["Start Az."]
         except KeyError:
+            num_of_dashes += 1
             v_obj[star]["Start Az. (°)"] = "-"
         try:
             v_obj[star]["End Alt. (°)"] = visible_objs[star]["End Alt."]
         except KeyError:
+            num_of_dashes += 1
             v_obj[star]["End. (°)"] = "-"
         try:
             v_obj[star]["End Az. (°)"] = visible_objs[star]["End Az."]
         except KeyError:
+            num_of_dashes += 1
             v_obj[star]["End Az. (°)"] = "-"
+        if num_of_dashes == 4:
+            to_prune.append(star)
+            continue
         try:
             v_obj[star]["Constellation"] = cache_file[star]["Constellation"]
         except KeyError:
@@ -287,6 +305,9 @@ def invoke():
             )
         except KeyError:
             v_obj[star]["Distance (Pm)"] = "-"
+
+    for f in to_prune:
+        v_obj.pop(f, None)
 
     for key, value in v_obj.items():
         s_list.append({str(key).title(): value})
