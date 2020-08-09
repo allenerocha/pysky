@@ -1,5 +1,6 @@
 """Module to query JPL Horizons database."""
 import json
+from statistics import median
 
 from astroquery.jplhorizons import Horizons
 
@@ -77,6 +78,8 @@ def ephemeries_query(celestial_obj: str) -> tuple:
     time_ra_dec = dict()
     brightness_sum = 0.0
     time_ra_dec[celestial_obj] = dict()
+    illumination_list = list()
+    distance_list = list()
     for index in range(len(eph["datetime_str"])):
         row_time = eph["datetime_str"][index]
         row_az = eph["AZ"][index]
@@ -84,20 +87,22 @@ def ephemeries_query(celestial_obj: str) -> tuple:
         row_mag = eph["V"][index]
         brightness_sum += float(row_mag)
         row_delta = eph["delta"][index]
+        distance_list.append(row_delta)
         row_constellation = const_abbrvs[str(eph["constellation"][index]).lower()]
         row_illumination = eph["illumination"][index]
+        illumination_list.append(row_illumination)
         time_ra_dec[celestial_obj]["Constellation"] = row_constellation
         time_ra_dec[celestial_obj][row_time] = {
             "az": row_az,
             "alt": row_alt,
             "Brightness": row_mag,
-            "Delta": row_delta * 0.000149597870691,
+            "Distance": row_delta * 0.000149597870691,
             "Illumination": row_illumination,
         }
 
-    time_ra_dec[celestial_obj]["Brightness"] = round(
-        brightness_sum / len(eph["datetime_str"]), 2
-    )
+    time_ra_dec[celestial_obj]["Brightness"] = round(median(illumination_list), 2)
+    time_ra_dec[celestial_obj]["Distance"] = round(median(distance_list), 2)
+
     with open(
         f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{celestial_obj}-{startdate}-{starttime}-{enddate}-{endtime}-data.json",
         "w",
