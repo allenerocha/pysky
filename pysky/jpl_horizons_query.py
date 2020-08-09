@@ -50,7 +50,7 @@ def ephemeries_query(celestial_obj: str) -> tuple:
             epochs={
                 "start": f"{startdate} {starttime}",
                 "stop": f"{enddate} {endtime}",
-                "step": "1m",
+                "step": "15m",
             },
             id_type="id",
         )
