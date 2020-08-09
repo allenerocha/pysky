@@ -75,7 +75,7 @@ class HTML_table:
                 + f"Latitude: {Const.LATITUDE}° "
                 + f"Longitude: {Const.LONGITUDE}° "
                 + f"Elevation: {Const.ELEVATION} km "
-                + f"Min V: {Const.MIN_V}"
+                + f"Min V: {Const.MIN_V} "
                 + f"sec(z) max: {Const.SECZ_MAX}"
             )
             html_out.write("</caption>\n")
