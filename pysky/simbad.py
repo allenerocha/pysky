@@ -1,18 +1,41 @@
-"""This module retrieves basic data from simbad based
-on which itentifier is passed via the command line"""
+"""This module retrieves basic data from simbad based on which itentifier is passed via the command line"""
 import json
+import re
 import sys
 
 import astroquery.simbad
+import requests
+from bs4 import BeautifulSoup
 
 from .const import Const
 from .logger import Logger
 
 
+def get_classification(celestial_obj: str) -> str:
+    """
+    Scrape the simbad website to get the object's classification.
+
+    :param celestial_obj: name celestial object to retreieve the brightness of.
+    :return: the brightness of the passed celestial object.
+    """
+    Logger.log(f"Retrieving classification for {celestial_obj}...")
+    regex = re.compile(r"\s*\r?\n")
+    endpoint = f"http://simbad.u-strasbg.fr/simbad/sim-basic?Ident={celestial_obj}&submit=SIMBAD+search"
+    webdata = requests.get(endpoint).text
+    soup = BeautifulSoup(webdata, "html.parser")
+    classification = soup.find("td", attrs={"id": "basic_data"}).find("font").text
+    if classification is not None:
+        Logger.log(f"Found classification for {celestial_obj}!")
+        classification = re.sub(regex, "", classification)
+        return classification.split("--")[-1].strip()
+    Logger.log(f"Could not find classification for {celestial_obj}!", 30)
+    return None
+
+
 def get_brightness(celestial_obj: str) -> float:
     """
-    This function makes a request to the
-    simbad website to retrieve a brightness.
+    Make a request to the simbad website to retrieve a brightness.
+
     :param celestial_obj: name celestial object to retreieve the brightness of.
     :return: the brightness of the passed celestial object.
     """
@@ -54,9 +77,9 @@ def get_brightness(celestial_obj: str) -> float:
             + f"Simbad only contains info on stars.\n\n{str(type_err)}",
             50,
         )
-        
+
         try:
-            
+
             Logger.log(f"Could not find brightness for {celestial_obj_aux}!", 30)
             Logger.log(
                 f"Attempting to find brightness for {celestial_obj} using it's IUE!",
@@ -72,8 +95,7 @@ def get_brightness(celestial_obj: str) -> float:
                 .replace("b", "")
                 .replace("'", "")
             )
-            
-            
+
             astroquery.simbad.Simbad.reset_votable_fields()
             # Add brightness column
             astroquery.simbad.Simbad.add_votable_fields("flux(V)")
@@ -81,15 +103,15 @@ def get_brightness(celestial_obj: str) -> float:
             # Remove the other columns
             astroquery.simbad.Simbad.remove_votable_fields("main_id")
             astroquery.simbad.Simbad.remove_votable_fields("coordinates")
-            
+
             BRIGHTNESS_FEILD = str(
                 astroquery.simbad.Simbad.query_object(NEW_OBJECT_FEILD)[0][0]
             )
-            
+
             brightness = float(BRIGHTNESS_FEILD)
-            
+
             return brightness
-    
+
         except TypeError as type_err:
             Logger.log(
                 f"Error parsing the data for {celestial_obj}. "
@@ -106,10 +128,8 @@ def get_brightness(celestial_obj: str) -> float:
             + f"multiple stars.\n\n{str(value_err)}",
             50,
         )
-        
+
         return None
-
-
 
 
 def get_constellation(celestial_obj: str) -> str:
@@ -200,3 +220,7 @@ def get_distance(celestial_obj: str) -> float:
         return None
 
     return int(float(parsec_dist) * 30.86)
+
+
+if __name__ == "__main__":
+    get_classification("polaris")
