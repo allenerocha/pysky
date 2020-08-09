@@ -24,7 +24,8 @@ from .logger import Logger
 from .moonquery import query
 from .output import to_html_list, to_html_table
 from .prefs import check_integrity, read_user_prefs
-from .simbad import get_brightness, get_constellation, get_distance, get_ra_dec
+from .simbad import (get_brightness, get_classification, get_constellation,
+                     get_distance, get_ra_dec)
 from .skyview import get_skyview_img
 
 download_IERS_A()
@@ -336,6 +337,8 @@ def set_simbad_values(celestial_obj: str, cache_file: dict) -> dict:
     :param cache_file: Opened cache file to apply changes to.
     :return: Cache file with added simbad values.
     """
+    cache_file[celestial_obj]["Type"] = get_classification(celestial_obj)
+
     cache_file[celestial_obj]["Brightness"] = get_brightness(celestial_obj)
 
     cache_file[celestial_obj]["Constellation"] = get_constellation(celestial_obj)
