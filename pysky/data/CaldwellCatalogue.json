@@ -1,0 +1,1269 @@
+{
+	"NGC 188": {
+		"Caldwell number": "C1",
+		"Type": "Open Cluster",
+		"Distance": 429650500.79999995,
+		"Constellation": "Cepheus",
+		"Brightness": 8.1,
+		"Coordinates": {
+			"ra": [0, 48, 26],
+			"dec": [85, 15, 0]
+		}
+	},
+	"NGC 40": {
+		"Caldwell number": "C2",
+		"Common name": "Bow-Tie Nebula",
+		"Type": "Planetary Nebula",
+		"Distance": 313286823.5,
+		"Constellation": "Cepheus",
+		"Brightness": 11.0,
+		"Coordinates": {
+			"ra": [0, 13, 1],
+			"dec": [72, 31, 19]
+		}
+	},
+	"NGC 4236": {
+		"Caldwell number": "C3",
+		"Type": "Barred Spiral Galaxy",
+		"Distance": 66227000.0,
+		"Constellation": "Draco",
+		"Brightness": 9.7,
+		"Coordinates": {
+			"ra": [12, 16, 42],
+			"dec": [69, 27, 45]
+		}
+	},
+	"NGC 7023": {
+		"Caldwell number": "C4",
+		"Common name": "Iris Nebula",
+		"Type": "Open Cluster and Nebula",
+		"Distance": 125314729.39999999,
+		"Constellation": "Cepheus",
+		"Brightness": 7.0,
+		"Coordinates": {
+			"ra": [21, 1, 36],
+			"dec": [68, 9, 48]
+		}
+	},
+	"IC 342": {
+		"Caldwell number": "C5",
+		"Common name": "Hidden Galaxy",
+		"Type": "Spiral Galaxy",
+		"Distance": 94610000.0,
+		"Constellation": "Camelopardalis",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [3, 46, 48],
+			"dec": [68, 5, 45]
+		}
+	},
+	"NGC 6543": {
+		"Caldwell number": "C6",
+		"Common name": "Cat's Eye Nebula",
+		"Type": "Planetary Nebula",
+		"Distance": 268531563.0,
+		"Constellation": "Draco",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [17, 58, 33],
+			"dec": [66, 37, 58]
+		}
+	},
+	"NGC 2403": {
+		"Caldwell number": "C7",
+		"Type": "Spiral Galaxy",
+		"Distance": 132454000.0,
+		"Constellation": "Camelopardalis",
+		"Brightness": 8.4,
+		"Coordinates": {
+			"ra": [7, 36, 51],
+			"dec": [65, 36, 9]
+		}
+	},
+	"NGC 559": {
+		"Caldwell number": "C8",
+		"Type": "Open Cluster",
+		"Distance": 331188927.70000005,
+		"Constellation": "Cassiopeia",
+		"Brightness": 9.5,
+		"Coordinates": {
+			"ra": [1, 29, 31],
+			"dec": [63, 18, 0]
+		}
+	},
+	"Sh2-155": {
+		"Caldwell number": "C9",
+		"Common name": "Cave Nebula",
+		"Type": "Nebula",
+		"Distance": 250629458.79999998,
+		"Constellation": "Cepheus",
+		"Brightness": 7.7,
+		"Coordinates": {
+			"ra": [22, 57, 6],
+			"dec": [62, 38, 0]
+		}
+	},
+	"NGC 663": {
+		"Caldwell number": "C10",
+		"Type": "Open Cluster",
+		"Distance": 644475751.1999999,
+		"Constellation": "Cassiopeia",
+		"Brightness": 7.1,
+		"Coordinates": {
+			"ra": [1, 46, 9],
+			"dec": [61, 14, 0]
+		}
+	},
+	"NGC 7635": {
+		"Caldwell number": "C11",
+		"Common name": "Bubble Nebula",
+		"Type": "Nebula",
+		"Distance": 635524699.0999999,
+		"Constellation": "Cassiopeia",
+		"Brightness": 10.0,
+		"Coordinates": {
+			"ra": [23, 20, 48],
+			"dec": [61, 12, 6]
+		}
+	},
+	"NGC 6946": {
+		"Caldwell number": "C12",
+		"Common name": "Fireworks Galaxy",
+		"Type": "Spiral Galaxy",
+		"Distance": 170298000.0,
+		"Constellation": "Cepheus",
+		"Brightness": 8.9,
+		"Coordinates": {
+			"ra": [20, 34, 52],
+			"dec": [60, 9, 13]
+		}
+	},
+	"NGC 457": {
+		"Caldwell number": "C13",
+		"Common name": "Owl Cluster E.T. Cluster",
+		"Type": "Open Cluster",
+		"Distance": 74948,
+		"Constellation": "Cassiopeia",
+		"Brightness": 6.4,
+		"Coordinates": {
+			"ra": [1, 19, 35],
+			"dec": [58, 17, 0]
+		}
+	},
+	"NGC 869": {
+		"Caldwell number": "C14",
+		"Common name": "Double Cluster h & χ Persei",
+		"Type": "Open Cluster",
+		"Distance": 653426803.3000001,
+		"Constellation": "Perseus",
+		"Brightness": 4.0,
+		"Coordinates": {
+			"ra": [2, 19, 0],
+			"dec": [57, 7, 0]
+		}
+	},
+	"NGC 884": {
+		"Caldwell number": "C14",
+		"Common name": "Double Cluster h & χ Persei",
+		"Type": "Open Cluster",
+		"Distance": 653426803.3000001,
+		"Constellation": "Perseus",
+		"Brightness": 4.0,
+		"Coordinates": {
+			"ra": [2, 22, 23],
+			"dec": [57, 7, 0]
+		}
+	},
+	"NGC 6826": {
+		"Caldwell number": "C15",
+		"Common name": "Blinking Planetary",
+		"Type": "Planetary Nebula",
+		"Distance": 196923146.20000002,
+		"Constellation": "Cygnus",
+		"Brightness": 10.0,
+		"Coordinates": {
+			"ra": [19, 44, 48],
+			"dec": [50, 31, 30]
+		}
+	},
+	"NGC 7243": {
+		"Caldwell number": "C16",
+		"Type": "Open Cluster",
+		"Distance": 223776302.5,
+		"Constellation": "Lacerta",
+		"Brightness": 6.4,
+		"Coordinates": {
+			"ra": [22, 15, 8],
+			"dec": [49, 53, 0]
+		}
+	},
+	"NGC 147": {
+		"Caldwell number": "C17",
+		"Type": "Dwarf Spheroidal Galaxy",
+		"Distance": 21760300.0,
+		"Constellation": "Cassiopeia",
+		"Brightness": 9.3,
+		"Coordinates": {
+			"ra": [0, 33, 12],
+			"dec": [48, 30, 31]
+		}
+	},
+	"NGC 185": {
+		"Caldwell number": "C18",
+		"Type": "Dwarf Spheroidal Galaxy",
+		"Distance": 21760300.0,
+		"Constellation": "Cassiopeia",
+		"Brightness": 9.2,
+		"Coordinates": {
+			"ra": [0, 38, 57],
+			"dec": [48, 20, 14]
+		}
+	},
+	"IC 5146": {
+		"Caldwell number": "C19",
+		"Common name": "Cocoon Nebula",
+		"Type": "Open Cluster and Nebula",
+		"Distance": 295384719.3,
+		"Constellation": "Cygnus",
+		"Brightness": 7.2,
+		"Coordinates": {
+			"ra": [21, 53, 24],
+			"dec": [47, 16, 0]
+		}
+	},
+	"NGC 7000": {
+		"Caldwell number": "C20",
+		"Common name": "North America Nebula",
+		"Type": "Nebula",
+		"Distance": 161118937.79999998,
+		"Constellation": "Cygnus",
+		"Brightness": 4.0,
+		"Coordinates": {
+			"ra": [20, 58, 47],
+			"dec": [44, 19, 0]
+		}
+	},
+	"NGC 4449": {
+		"Caldwell number": "C21",
+		"Type": "Irregular galaxy",
+		"Distance": 94610000.0,
+		"Constellation": "Canes Venatici",
+		"Brightness": 9.4,
+		"Coordinates": {
+			"ra": [12, 28, 11],
+			"dec": [44, 5, 36]
+		}
+	},
+	"NGC 7662": {
+		"Caldwell number": "C22",
+		"Common name": "Blue Snowball",
+		"Type": "Planetary Nebula",
+		"Distance": 286433667.2,
+		"Constellation": "Andromeda",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [23, 25, 53],
+			"dec": [42, 32, 6]
+		}
+	},
+	"NGC 891": {
+		"Caldwell number": "C23",
+		"Common name": "Silver Sliver Galaxy",
+		"Type": "Spiral Galaxy",
+		"Distance": 293291000.0,
+		"Constellation": "Andromeda",
+		"Brightness": 10.0,
+		"Coordinates": {
+			"ra": [2, 22, 32],
+			"dec": [42, 20, 53]
+		}
+	},
+	"NGC 1275": {
+		"Caldwell number": "C24",
+		"Common name": "Perseus A",
+		"Type": "Supergiant Elliptical Galaxy",
+		"Distance": 2176030000.0,
+		"Constellation": "Perseus",
+		"Brightness": 11.6,
+		"Coordinates": {
+			"ra": [3, 19, 48],
+			"dec": [41, 30, 42]
+		}
+	},
+	"NGC 2419": {
+		"Caldwell number": "C25",
+		"Type": "Globular Cluster",
+		"Distance": 24615393275.0,
+		"Constellation": "Lynx",
+		"Brightness": 10.4,
+		"Coordinates": {
+			"ra": [7, 38, 8],
+			"dec": [38, 52, 54]
+		}
+	},
+	"NGC 4244": {
+		"Caldwell number": "C26",
+		"Type": "Spiral Galaxy",
+		"Distance": 94610000.0,
+		"Constellation": "Canes Venatici",
+		"Brightness": 10.2,
+		"Coordinates": {
+			"ra": [12, 17, 29],
+			"dec": [37, 48, 25]
+		}
+	},
+	"NGC 6888": {
+		"Caldwell number": "C27",
+		"Common name": "Crescent Nebula",
+		"Type": "Nebula",
+		"Distance": 420699448.70000005,
+		"Constellation": "Cygnus",
+		"Brightness": 7.4,
+		"Coordinates": {
+			"ra": [20, 12, 7],
+			"dec": [38, 21, 0]
+		}
+	},
+	"NGC 752": {
+		"Caldwell number": "C28",
+		"Type": "Open Cluster",
+		"Distance": 107412625.19999999,
+		"Constellation": "Andromeda",
+		"Brightness": 5.7,
+		"Coordinates": {
+			"ra": [1, 57, 41],
+			"dec": [37, 47, 0]
+		}
+	},
+	"NGC 5005": {
+		"Caldwell number": "C29",
+		"Type": "Spiral Galaxy",
+		"Distance": 652809000.0,
+		"Constellation": "Canes Venatici",
+		"Brightness": 9.8,
+		"Coordinates": {
+			"ra": [13, 10, 56],
+			"dec": [37, 3, 32]
+		}
+	},
+	"NGC 7331": {
+		"Caldwell number": "C30",
+		"Type": "Spiral Galaxy",
+		"Distance": 444667000.0,
+		"Constellation": "Pegasus",
+		"Brightness": 9.5,
+		"Coordinates": {
+			"ra": [22, 37, 4],
+			"dec": [34, 24, 57]
+		}
+	},
+	"IC 405": {
+		"Caldwell number": "C31",
+		"Common name": "Flaming Star Nebula",
+		"Type": "Nebula",
+		"Distance": 143216833.6,
+		"Constellation": "Auriga",
+		"Brightness": 6.0,
+		"Coordinates": {
+			"ra": [5, 17, 0],
+			"dec": [34, 23, 0]
+		}
+	},
+	"NGC 4631": {
+		"Caldwell number": "C32",
+		"Common name": "Whale Galaxy",
+		"Type": "Barred Spiral Galaxy",
+		"Distance": 208142000.0,
+		"Constellation": "Canes Venatici",
+		"Brightness": 9.3,
+		"Coordinates": {
+			"ra": [12, 42, 8],
+			"dec": [32, 32, 29]
+		}
+	},
+	"NGC 6992": {
+		"Caldwell number": "C33",
+		"Common name": "East Veil Nebula",
+		"Type": "Supernova Remnant",
+		"Distance": 223776302.5,
+		"Constellation": "Cygnus",
+		"Brightness": 7.0,
+		"Coordinates": {
+			"ra": [20, 56, 19],
+			"dec": [31, 44, 0]
+		}
+	},
+	"NGC 6960": {
+		"Caldwell number": "C34",
+		"Common name": "West Veil Nebula",
+		"Type": "Supernova Remnant",
+		"Distance": 223776302.5,
+		"Constellation": "Cygnus",
+		"Brightness": 7.0,
+		"Coordinates": {
+			"ra": [20, 45, 38],
+			"dec": [30, 42, 30]
+		}
+	},
+	"NGC 4889": {
+		"Caldwell number": "C35",
+		"Common name": "Coma B",
+		"Type": "Supergiant Elliptical Galaxy",
+		"Distance": 2838300000.0,
+		"Constellation": "Coma Berenices",
+		"Brightness": 11.4,
+		"Coordinates": {
+			"ra": [13, 0, 8],
+			"dec": [27, 58, 37]
+		}
+	},
+	"NGC 4559": {
+		"Caldwell number": "C36",
+		"Type": "Spiral Galaxy",
+		"Distance": 302752000.0,
+		"Constellation": "Coma Berenices",
+		"Brightness": 9.9,
+		"Coordinates": {
+			"ra": [12, 35, 57],
+			"dec": [27, 57, 35]
+		}
+	},
+	"NGC 6885": {
+		"Caldwell number": "C37",
+		"Type": "Open Cluster",
+		"Distance": 174545515.95000002,
+		"Constellation": "Vulpecula",
+		"Brightness": 6.0,
+		"Coordinates": {
+			"ra": [20, 12, 1],
+			"dec": [26, 28, 0]
+		}
+	},
+	"NGC 4565": {
+		"Caldwell number": "C38",
+		"Common name": "Needle Galaxy",
+		"Type": "Spiral Galaxy",
+		"Distance": 302752000.0,
+		"Constellation": "Coma Berenices",
+		"Brightness": 9.6,
+		"Coordinates": {
+			"ra": [12, 36, 20],
+			"dec": [25, 59, 14]
+		}
+	},
+	"NGC 2392": {
+		"Caldwell number": "C39",
+		"Common name": "Eskimo Nebula/Clown Face Nebula",
+		"Type": "Planetary Nebula",
+		"Distance": 358042084.0,
+		"Constellation": "Gemini",
+		"Brightness": 10.0,
+		"Coordinates": {
+			"ra": [7, 29, 10],
+			"dec": [20, 54, 42]
+		}
+	},
+	"NGC 3626": {
+		"Caldwell number": "C40",
+		"Type": "Spiral Galaxy",
+		"Distance": 813646000.0,
+		"Constellation": "Leo",
+		"Brightness": 10.9,
+		"Coordinates": {
+			"ra": [11, 20, 3],
+			"dec": [18, 21, 24]
+		}
+	},
+	"Mel 25": {
+		"Caldwell number": "C41",
+		"Common name": "Hyades",
+		"Type": "Open Cluster",
+		"Distance": 13516088.670999998,
+		"Constellation": "Taurus",
+		"Brightness": 0.5,
+		"Coordinates": {
+			"ra": [4, 26, 54],
+			"dec": [15, 52, 0]
+		}
+	},
+	"NGC 7006": {
+		"Caldwell number": "C42",
+		"Type": "Globular Cluster",
+		"Distance": 12083920335.0,
+		"Constellation": "Delphinus",
+		"Brightness": 10.6,
+		"Coordinates": {
+			"ra": [21, 1, 29],
+			"dec": [16, 11, 16]
+		}
+	},
+	"NGC 7814": {
+		"Caldwell number": "C43",
+		"Type": "Spiral Galaxy",
+		"Distance": 463589000.0,
+		"Constellation": "Pegasus",
+		"Brightness": 10.5,
+		"Coordinates": {
+			"ra": [0, 3, 14],
+			"dec": [16, 8, 42]
+		}
+	},
+	"NGC 7479": {
+		"Caldwell number": "C44",
+		"Type": "Barred Spiral Galaxy",
+		"Distance": 1002866000.0,
+		"Constellation": "Pegasus",
+		"Brightness": 11.0,
+		"Coordinates": {
+			"ra": [23, 4, 56],
+			"dec": [12, 19, 22]
+		}
+	},
+	"NGC 5248": {
+		"Caldwell number": "C45",
+		"Type": "Spiral Galaxy",
+		"Distance": 700114000.0,
+		"Constellation": "Boötes",
+		"Brightness": 10.2,
+		"Coordinates": {
+			"ra": [13, 37, 32],
+			"dec": [8, 53, 6]
+		}
+	},
+	"NGC 2261": {
+		"Caldwell number": "C46",
+		"Common name": "Hubble's Variable Nebula ",
+		"Type": "Nebula",
+		"Distance": 223776302.5,
+		"Constellation": "Monoceros",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [6, 39, 9],
+			"dec": [8, 44, 9]
+		}
+	},
+	"NGC 6934": {
+		"Caldwell number": "C47",
+		"Type": "Globular Cluster",
+		"Distance": 5102099697.0,
+		"Constellation": "Delphinus",
+		"Brightness": 8.9,
+		"Coordinates": {
+			"ra": [20, 34, 11],
+			"dec": [7, 24, 16]
+		}
+	},
+	"NGC 2775": {
+		"Caldwell number": "C48",
+		"Type": "Spiral Galaxy",
+		"Distance": 520355000.0,
+		"Constellation": "Cancer",
+		"Brightness": 10.3,
+		"Coordinates": {
+			"ra": [9, 10, 20],
+			"dec": [7, 2, 16]
+		}
+	},
+	"NGC 2237": {
+		"Caldwell number": "C49",
+		"Common name": "Rosette Nebula",
+		"Type": "Nebula",
+		"Distance": 438601552.90000004,
+		"Constellation": "Monoceros",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [6, 30, 36],
+			"dec": [4, 58, 50]
+		}
+	},
+	"NGC 2244": {
+		"Caldwell number": "C50",
+		"Common name": "Satellite Cluster",
+		"Type": "Open Cluster",
+		"Distance": 438601552.90000004,
+		"Constellation": "Monoceros",
+		"Brightness": 4.8,
+		"Coordinates": {
+			"ra": [6, 31, 55],
+			"dec": [4, 56, 0]
+		}
+	},
+	"IC 1613": {
+		"Caldwell number": "C51",
+		"Type": "Irregular galaxy",
+		"Distance": 21760300.0,
+		"Constellation": "Cetus",
+		"Brightness": 9.3,
+		"Coordinates": {
+			"ra": [1, 4, 54],
+			"dec": [2, 8, 0]
+		}
+	},
+	"NGC 4697": {
+		"Caldwell number": "C52",
+		"Type": "Elliptical galaxy",
+		"Distance": 719036000.0,
+		"Constellation": "Virgo",
+		"Brightness": 9.3,
+		"Coordinates": {
+			"ra": [12, 48, 35],
+			"dec": [-5, 48, 2]
+		}
+	},
+	"NGC 3115": {
+		"Caldwell number": "C53",
+		"Common name": "Spindle Galaxy",
+		"Type": "Lenticular Galaxy",
+		"Distance": 208142000.0,
+		"Constellation": "Sextans",
+		"Brightness": 9.2,
+		"Coordinates": {
+			"ra": [10, 5, 13],
+			"dec": [-7, 43, 6]
+		}
+	},
+	"NGC 2506": {
+		"Caldwell number": "C54",
+		"Type": "Open Cluster",
+		"Distance": 895105210.0,
+		"Constellation": "Monoceros",
+		"Brightness": 7.6,
+		"Coordinates": {
+			"ra": [8, 0, 1],
+			"dec": [-10, 46, 0]
+		}
+	},
+	"NGC 7009": {
+		"Caldwell number": "C55",
+		"Common name": "Saturn Nebula",
+		"Type": "Planetary Nebula",
+		"Distance": 125314729.39999999,
+		"Constellation": "Aquarius",
+		"Brightness": 8.0,
+		"Coordinates": {
+			"ra": [21, 4, 10],
+			"dec": [-11, 21, 48]
+		}
+	},
+	"NGC 246": {
+		"Caldwell number": "C56",
+		"Common name": "Skull Nebula",
+		"Type": "Planetary Nebula",
+		"Distance": 143216833.6,
+		"Constellation": "Cetus",
+		"Brightness": 8.0,
+		"Coordinates": {
+			"ra": [0, 47, 3],
+			"dec": [-11, 52, 18]
+		}
+	},
+	"NGC 6822": {
+		"Caldwell number": "C57",
+		"Common name": "Barnard's Galaxy ",
+		"Type": "Barred irregular galaxy",
+		"Distance": 21760300.0,
+		"Constellation": "Sagittarius",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [19, 44, 56],
+			"dec": [-14, 47, 51]
+		}
+	},
+	"NGC 2360": {
+		"Caldwell number": "C58",
+		"Common name": "Caroline's Cluster ",
+		"Type": "Open Cluster",
+		"Distance": 331188927.70000005,
+		"Constellation": "Canis Major",
+		"Brightness": 7.2,
+		"Coordinates": {
+			"ra": [7, 17, 43],
+			"dec": [-15, 38, 0]
+		}
+	},
+	"NGC 3242": {
+		"Caldwell number": "C59",
+		"Common name": "Ghost of Jupiter",
+		"Type": "Planetary Nebula",
+		"Distance": 125314729.39999999,
+		"Constellation": "Hydra",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [10, 24, 46],
+			"dec": [-18, 38, 32]
+		}
+	},
+	"NGC 4038": {
+		"Caldwell number": "C60",
+		"Common name": "Antennae Galaxies",
+		"Type": "Interacting galaxy",
+		"Distance": 785263000.0,
+		"Constellation": "Corvus",
+		"Brightness": 10.7,
+		"Coordinates": {
+			"ra": [12, 1, 53],
+			"dec": [-18, 52, 3]
+		}
+	},
+	"NGC 4039": {
+		"Caldwell number": "C61",
+		"Common name": "Antennae Galaxies",
+		"Type": "Interacting galaxy",
+		"Distance": 785263000.0,
+		"Constellation": "Corvus",
+		"Brightness": 13.0,
+		"Coordinates": {
+			"ra": [12, 1, 53],
+			"dec": [-18, 53, 6]
+		}
+	},
+	"NGC 247": {
+		"Caldwell number": "C62",
+		"Type": "Spiral Galaxy",
+		"Distance": 64334800.0,
+		"Constellation": "Cetus",
+		"Brightness": 8.9,
+		"Coordinates": {
+			"ra": [0, 47, 8],
+			"dec": [-20, 45, 37]
+		}
+	},
+	"NGC 7293": {
+		"Caldwell number": "C63",
+		"Common name": "Helix Nebula",
+		"Type": "Planetary Nebula",
+		"Distance": 46724491.962,
+		"Constellation": "Aquarius",
+		"Brightness": 7.3,
+		"Coordinates": {
+			"ra": [22, 29, 38],
+			"dec": [-20, 50, 13]
+		}
+	},
+	"NGC 2362": {
+		"Caldwell number": "C64",
+		"Common name": "Tau Canis Majoris Cluster",
+		"Type": "Open Cluster and Nebula",
+		"Distance": 456503657.09999996,
+		"Constellation": "Canis Major",
+		"Brightness": 4.1,
+		"Coordinates": {
+			"ra": [7, 18, 41],
+			"dec": [-24, 57, 0]
+		}
+	},
+	"NGC 253": {
+		"Caldwell number": "C65",
+		"Common name": "Sculptor Galaxy",
+		"Type": "Spiral Galaxy",
+		"Distance": 92717800.0,
+		"Constellation": "Sculptor",
+		"Brightness": 7.1,
+		"Coordinates": {
+			"ra": [0, 47, 33],
+			"dec": [-25, 17, 19]
+		}
+	},
+	"NGC 5694": {
+		"Caldwell number": "C66",
+		"Type": "Globular Cluster",
+		"Distance": 10114688873.0,
+		"Constellation": "Hydra",
+		"Brightness": 10.2,
+		"Coordinates": {
+			"ra": [14, 39, 36],
+			"dec": [-26, 32, 18]
+		}
+	},
+	"NGC 1097": {
+		"Caldwell number": "C67",
+		"Type": "Barred Spiral Galaxy",
+		"Distance": 444667000.0,
+		"Constellation": "Fornax",
+		"Brightness": 9.3,
+		"Coordinates": {
+			"ra": [2, 46, 19],
+			"dec": [-30, 16, 29]
+		}
+	},
+	"NGC 6729": {
+		"Caldwell number": "C68",
+		"Common name": "R CrA Nebula",
+		"Type": "Nebula",
+		"Distance": 37952460.904,
+		"Constellation": "Corona Australis",
+		"Brightness": "-",
+		"Coordinates": {
+			"ra": [19, 1, 46],
+			"dec": [-36, 57, 40]
+		}
+	},
+	"NGC 6302": {
+		"Caldwell number": "C69",
+		"Common name": "Bug Nebula",
+		"Type": "Planetary Nebula",
+		"Distance": 465454709.20000005,
+		"Constellation": "Scorpius",
+		"Brightness": 13.0,
+		"Coordinates": {
+			"ra": [17, 13, 44],
+			"dec": [-37, 6, 10]
+		}
+	},
+	"NGC 300": {
+		"Caldwell number": "C70",
+		"Type": "Spiral Galaxy",
+		"Distance": 36897900.0,
+		"Constellation": "Sculptor",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [0, 54, 53],
+			"dec": [-37, 41, 3]
+		}
+	},
+	"NGC 2477": {
+		"Caldwell number": "C71",
+		"Type": "Open Cluster",
+		"Distance": 331188927.70000005,
+		"Constellation": "Puppis",
+		"Brightness": 5.8,
+		"Coordinates": {
+			"ra": [7, 52, 10],
+			"dec": [-38, 31, 0]
+		}
+	},
+	"NGC 55": {
+		"Caldwell number": "C72",
+		"Type": "Barred Spiral Galaxy",
+		"Distance": 39736200.0,
+		"Constellation": "Sculptor",
+		"Brightness": 8.0,
+		"Coordinates": {
+			"ra": [0, 14, 53],
+			"dec": [-39, 11, 47]
+		}
+	},
+	"NGC 1851": {
+		"Caldwell number": "C73",
+		"Type": "Globular Cluster",
+		"Distance": 3526714527.3999996,
+		"Constellation": "Columba",
+		"Brightness": 7.3,
+		"Coordinates": {
+			"ra": [5, 14, 6],
+			"dec": [-40, 2, 47]
+		}
+	},
+	"NGC 3132": {
+		"Caldwell number": "C74",
+		"Common name": "Eight Burst Nebula",
+		"Type": "Planetary Nebula",
+		"Distance": 179021042.0,
+		"Constellation": "Vela",
+		"Brightness": 8.0,
+		"Coordinates": {
+			"ra": [10, 7, 1],
+			"dec": [-40, 26, 11]
+		}
+	},
+	"NGC 6124": {
+		"Caldwell number": "C75",
+		"Type": "Open Cluster",
+		"Distance": 134265781.5,
+		"Constellation": "Scorpius",
+		"Brightness": 5.8,
+		"Coordinates": {
+			"ra": [16, 25, 20],
+			"dec": [-40, 39, 0]
+		}
+	},
+	"NGC 6231": {
+		"Caldwell number": "C76",
+		"Type": "Open Cluster and Nebula",
+		"Distance": 537063126.0,
+		"Constellation": "Scorpius",
+		"Brightness": 2.6,
+		"Coordinates": {
+			"ra": [16, 54, 8],
+			"dec": [-41, 49, 36]
+		}
+	},
+	"NGC 5128": {
+		"Caldwell number": "C77",
+		"Common name": "Centaurus A",
+		"Type": "Elliptical or Lenticular Galaxy",
+		"Distance": 151376000.0,
+		"Constellation": "Centaurus",
+		"Brightness": 7.0,
+		"Coordinates": {
+			"ra": [13, 25, 27],
+			"dec": [-43, 1, 8]
+		}
+	},
+	"NGC 6541": {
+		"Caldwell number": "C78",
+		"Type": "Globular Cluster",
+		"Distance": 1996084618.3000002,
+		"Constellation": "Corona Australis",
+		"Brightness": 6.6,
+		"Coordinates": {
+			"ra": [18, 8, 2],
+			"dec": [-43, 42, 53]
+		}
+	},
+	"NGC 3201": {
+		"Caldwell number": "C79",
+		"Type": "Globular Cluster",
+		"Distance": 1521678857.0,
+		"Constellation": "Vela",
+		"Brightness": 6.8,
+		"Coordinates": {
+			"ra": [10, 17, 36],
+			"dec": [-46, 24, 44]
+		}
+	},
+	"NGC 5139": {
+		"Caldwell number": "C80",
+		"Common name": "Omega Centauri",
+		"Type": "Globular Cluster",
+		"Distance": 1548532013.3000002,
+		"Constellation": "Centaurus",
+		"Brightness": 3.7,
+		"Coordinates": {
+			"ra": [13, 26, 47],
+			"dec": [-47, 28, 46]
+		}
+	},
+	"NGC 6352": {
+		"Caldwell number": "C81",
+		"Type": "Globular Cluster",
+		"Distance": 1664895690.6000001,
+		"Constellation": "Ara",
+		"Brightness": 8.2,
+		"Coordinates": {
+			"ra": [17, 25, 29],
+			"dec": [-48, 25, 19]
+		}
+	},
+	"NGC 6193": {
+		"Caldwell number": "C82",
+		"Type": "Open Cluster",
+		"Distance": 384895240.29999995,
+		"Constellation": "Ara",
+		"Brightness": 5.2,
+		"Coordinates": {
+			"ra": [16, 41, 20],
+			"dec": [-48, 45, 0]
+		}
+	},
+	"NGC 4945": {
+		"Caldwell number": "C83",
+		"Type": "Barred Spiral Galaxy",
+		"Distance": 160837000.0,
+		"Constellation": "Centaurus",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [13, 5, 27],
+			"dec": [-49, 28, 4]
+		}
+	},
+	"NGC 5286": {
+		"Caldwell number": "C84",
+		"Type": "Globular Cluster",
+		"Distance": 3222378756.0,
+		"Constellation": "Centaurus",
+		"Brightness": 7.6,
+		"Coordinates": {
+			"ra": [13, 46, 26],
+			"dec": [-51, 22, 27]
+		}
+	},
+	"IC 2391": {
+		"Caldwell number": "C85",
+		"Common name": "Omicron Velorum Cluster",
+		"Type": "Open Cluster",
+		"Distance": 44755260.5,
+		"Constellation": "Vela",
+		"Brightness": 2.5,
+		"Coordinates": {
+			"ra": [8, 40, 32],
+			"dec": [-53, 2, 0]
+		}
+	},
+	"NGC 6397": {
+		"Caldwell number": "C86",
+		"Type": "Globular Cluster",
+		"Distance": 671328907.5,
+		"Constellation": "Ara",
+		"Brightness": 5.7,
+		"Coordinates": {
+			"ra": [17, 40, 42],
+			"dec": [-53, 40, 27]
+		}
+	},
+	"NGC 1261": {
+		"Caldwell number": "C87",
+		"Type": "Globular Cluster",
+		"Distance": 4967833915.5,
+		"Constellation": "Horologium",
+		"Brightness": 8.4,
+		"Coordinates": {
+			"ra": [3, 12, 16],
+			"dec": [-55, 12, 58]
+		}
+	},
+	"NGC 5823": {
+		"Caldwell number": "C88",
+		"Type": "Open Cluster",
+		"Distance": 304335771.4,
+		"Constellation": "Circinus",
+		"Brightness": 7.9,
+		"Coordinates": {
+			"ra": [15, 5, 31],
+			"dec": [-55, 35, 0]
+		}
+	},
+	"NGC 6087": {
+		"Caldwell number": "C89",
+		"Common name": "S Normae Cluster",
+		"Type": "Open Cluster",
+		"Distance": 295384719.3,
+		"Constellation": "Norma",
+		"Brightness": 5.4,
+		"Coordinates": {
+			"ra": [16, 18, 50],
+			"dec": [-57, 56, 0]
+		}
+	},
+	"NGC 2867": {
+		"Caldwell number": "C90",
+		"Type": "Planetary Nebula",
+		"Distance": 492307865.5,
+		"Constellation": "Carina",
+		"Brightness": 10.0,
+		"Coordinates": {
+			"ra": [9, 21, 25],
+			"dec": [-58, 18, 40]
+		}
+	},
+	"NGC 3532": {
+		"Caldwell number": "C91",
+		"Common name": "Wishing Well Cluster",
+		"Type": "Open Cluster",
+		"Distance": 143216833.6,
+		"Constellation": "Carina",
+		"Brightness": 3.0,
+		"Coordinates": {
+			"ra": [11, 5, 39],
+			"dec": [-58, 45, 0]
+		}
+	},
+	"NGC 3372": {
+		"Caldwell number": "C92",
+		"Common name": "Eta Carinae Nebula",
+		"Type": "Nebula",
+		"Distance": 671328907.5,
+		"Constellation": "Carina",
+		"Brightness": 3.0,
+		"Coordinates": {
+			"ra": [10, 44, 19],
+			"dec": [-59, 53, 21]
+		}
+	},
+	"NGC 6752": {
+		"Caldwell number": "C93",
+		"Common name": "Great Peacock Globular",
+		"Type": "Globular Cluster",
+		"Distance": 1163636773.0,
+		"Constellation": "Pavo",
+		"Brightness": 5.4,
+		"Coordinates": {
+			"ra": [19, 10, 52],
+			"dec": [-59, 59, 4]
+		}
+	},
+	"NGC 4755": {
+		"Caldwell number": "C94",
+		"Common name": "Jewel Box",
+		"Type": "Open Cluster",
+		"Distance": 438601552.90000004,
+		"Constellation": "Crux",
+		"Brightness": 4.2,
+		"Coordinates": {
+			"ra": [12, 53, 39],
+			"dec": [-60, 21, 0]
+		}
+	},
+	"NGC 6025": {
+		"Caldwell number": "C95",
+		"Type": "Open Cluster",
+		"Distance": 223776302.5,
+		"Constellation": "Triangulum Australe",
+		"Brightness": 5.1,
+		"Coordinates": {
+			"ra": [16, 3, 17],
+			"dec": [-60, 25, 0]
+		}
+	},
+	"NGC 2516": {
+		"Caldwell number": "C96",
+		"Common name": "Southern Beehive Cluster",
+		"Type": "Open Cluster",
+		"Distance": 116363677.30000001,
+		"Constellation": "Carina",
+		"Brightness": 3.8,
+		"Coordinates": {
+			"ra": [7, 58, 4],
+			"dec": [-60, 45, 0]
+		}
+	},
+	"NGC 3766": {
+		"Caldwell number": "C97",
+		"Common name": "Pearl Cluster",
+		"Type": "Open Cluster",
+		"Distance": 519161021.79999995,
+		"Constellation": "Centaurus",
+		"Brightness": 5.3,
+		"Coordinates": {
+			"ra": [11, 36, 18],
+			"dec": [-61, 36, 0]
+		}
+	},
+	"NGC 4609": {
+		"Caldwell number": "C98",
+		"Type": "Open Cluster",
+		"Distance": 375944188.20000005,
+		"Constellation": "Crux",
+		"Brightness": 6.9,
+		"Coordinates": {
+			"ra": [12, 42, 18],
+			"dec": [-62, 59, 0]
+		}
+	},
+	"Coalsack Nebula": {
+		"Caldwell number": "C99",
+		"Common name": "Coalsack Nebula",
+		"Type": "Dark Nebula",
+		"Distance": 54601417.81,
+		"Constellation": "Crux",
+		"Brightness": "-",
+		"Coordinates": {
+			"ra": [12, 31, 19],
+			"dec": [-63, 44, 0]
+		}
+	},
+	"IC 2944": {
+		"Caldwell number": "C100",
+		"Common name": "Lambda Centauri Nebula",
+		"Type": "Open Cluster and Nebula",
+		"Distance": 537063126.0,
+		"Constellation": "Centaurus",
+		"Brightness": 4.5,
+		"Coordinates": {
+			"ra": [11, 38, 20],
+			"dec": [-63, 22, 22]
+		}
+	},
+	"NGC 6744": {
+		"Caldwell number": "C101",
+		"Type": "Spiral Galaxy",
+		"Distance": 321674000.0,
+		"Constellation": "Pavo",
+		"Brightness": 9.0,
+		"Coordinates": {
+			"ra": [19, 9, 46],
+			"dec": [-63, 51, 27]
+		}
+	},
+	"IC 2602": {
+		"Caldwell number": "C102",
+		"Common name": "Theta Car Cluster",
+		"Type": "Open Cluster",
+		"Distance": 44039176.332,
+		"Constellation": "Carina",
+		"Brightness": 1.9,
+		"Coordinates": {
+			"ra": [10, 42, 58],
+			"dec": [-64, 24, 0]
+		}
+	},
+	"NGC 2070": {
+		"Caldwell number": "C103",
+		"Common name": "Tarantula Nebula",
+		"Type": "Open Cluster and Nebula",
+		"Distance": 15216788570.0,
+		"Constellation": "Dorado",
+		"Brightness": 8.2,
+		"Coordinates": {
+			"ra": [5, 38, 42],
+			"dec": [-69, 6, 0]
+		}
+	},
+	"NGC 362": {
+		"Caldwell number": "C104",
+		"Type": "Globular Cluster",
+		"Distance": 2479441431.7,
+		"Constellation": "Tucana",
+		"Brightness": 6.6,
+		"Coordinates": {
+			"ra": [1, 3, 14],
+			"dec": [-70, 50, 55]
+		}
+	},
+	"NGC 4833": {
+		"Caldwell number": "C105",
+		"Type": "Globular Cluster",
+		"Distance": 1754406211.6000001,
+		"Constellation": "Musca",
+		"Brightness": 7.4,
+		"Coordinates": {
+			"ra": [12, 59, 33],
+			"dec": [-70, 52, 35]
+		}
+	},
+	"NGC 104": {
+		"Caldwell number": "C106",
+		"Common name": "47 Tucanae",
+		"Type": "Globular Cluster",
+		"Distance": 1315804658.6999998,
+		"Constellation": "Tucana",
+		"Brightness": 4.0,
+		"Coordinates": {
+			"ra": [0, 24, 5],
+			"dec": [-72, 4, 53]
+		}
+	},
+	"NGC 6101": {
+		"Caldwell number": "C107",
+		"Type": "Globular Cluster",
+		"Distance": 4466574997.9,
+		"Constellation": "Apus",
+		"Brightness": 9.3,
+		"Coordinates": {
+			"ra": [16, 25, 48],
+			"dec": [-72, 12, 7]
+		}
+	},
+	"NGC 4372": {
+		"Caldwell number": "C108",
+		"Type": "Globular Cluster",
+		"Distance": 1691748846.8999999,
+		"Constellation": "Musca",
+		"Brightness": 7.8,
+		"Coordinates": {
+			"ra": [12, 25, 45],
+			"dec": [-72, 39, 32]
+		}
+	},
+	"NGC 3195": {
+		"Caldwell number": "C109",
+		"Type": "Planetary Nebula",
+		"Distance": 483356813.40000004,
+		"Constellation": "Chamaeleon",
+		"Brightness": 11.6,
+		"Coordinates": {
+			"ra": [10, 9, 20],
+			"dec": [-80, 51, 30]
+		}
+	}
+}

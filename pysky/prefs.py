@@ -40,11 +40,11 @@ def check_integrity():
 
     Logger.log(
         f"Searching in `{Const.ROOT_DIR}/data/` "
-        + "for `VisibleCaldwellCatalogue.json`..."
+        + "for `CaldwellCatalogue.json`..."
     )
-    if not os.path.isfile(f"{Const.ROOT_DIR}/data/VisibleCaldwellCatalogue.json"):
+    if not os.path.isfile(f"{Const.ROOT_DIR}/data/CaldwellCatalogue.json"):
         Logger.log(
-            "VisibleCaldwellCatalogue.json not found in the directory "
+            "CaldwellCatalogue.json not found in the directory "
             + f"`{Const.ROOT_DIR}/data/`!",
             40,
         )
@@ -54,15 +54,15 @@ def check_integrity():
             40,
         )
     else:
-        Logger.log("VisibleCaldwellCatalogue.json was found!\n")
+        Logger.log("CaldwellCatalogue.json was found!\n")
 
     Logger.log(
         f"Searching in `{Const.ROOT_DIR}/data/` "
-        + "for `VisibleMessierCatalog.json`..."
+        + "for `MessierCatalogue.json`..."
     )
-    if not os.path.isfile(f"{Const.ROOT_DIR}/data/VisibleMessierCatalog.json"):
+    if not os.path.isfile(f"{Const.ROOT_DIR}/data/MessierCatalogue.json"):
         Logger.log(
-            "VisibleMessierCatalog.json not found in the directory "
+            "MessierCatalogue.json not found in the directory "
             + f"`{Const.ROOT_DIR}/data/`!",
             40,
         )
@@ -72,7 +72,7 @@ def check_integrity():
             40,
         )
     else:
-        Logger.log("VisibleMessierCatalog.json was found!\n")
+        Logger.log("MessierCatalogue.json was found!\n")
 
 
 def clean_cache():
