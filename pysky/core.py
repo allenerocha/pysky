@@ -35,7 +35,7 @@ def invoke():
     """
     Call all other relevant functions.
     """
-    download_IERS_A()
+    #    download_IERS_A()
 
     cli_parse()
 
@@ -410,6 +410,8 @@ def get_visible(object_name: str, ra, dec) -> tuple:
         if isinstance(ra, list) and isinstance(dec, list):
             ra = ((ra[0] + (ra[1] / 60) + (ra[2] / 3600)) / 24) * 360
             dec = dec[0] + (dec[1] / 60) + (dec[2] / 3600)
+        elif isinstance(ra, float) and isinstance(dec, float):
+            pass
         elif isinstance(ra, numpy.float64) and isinstance(dec, numpy.float64):
             pass
         celestial_obj_coord = SkyCoord(ra=ra * u.deg, dec=dec * u.deg)

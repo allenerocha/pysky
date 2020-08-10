@@ -70,7 +70,15 @@ def ephemeries_query(celestial_obj: str) -> tuple:
         return (None, celestial_obj)
 
     eph = obj.ephemerides()[
-        "datetime_str", "AZ", "EL", "V", "delta", "illumination", "constellation"
+        "datetime_str",
+        "RA",
+        "DEC",
+        "AZ",
+        "EL",
+        "V",
+        "delta",
+        "illumination",
+        "constellation",
     ]
     const_abbrvs = json.loads(
         open(f"{Const.ROOT_DIR}/data/ConstellAbbrevs.json", "r").read()
@@ -81,6 +89,11 @@ def ephemeries_query(celestial_obj: str) -> tuple:
     illumination_list = list()
     distance_list = list()
     for index in range(len(eph["datetime_str"])):
+        if index == 0:
+            ra = eph["RA"][index]
+            dec = eph["DEC"][index]
+            time_ra_dec[celestial_obj]["Coordinates"] = {"ra": ra, "dec": dec}
+            print(time_ra_dec[celestial_obj])
         row_time = eph["datetime_str"][index]
         row_az = eph["AZ"][index]
         row_alt = eph["EL"][index]
