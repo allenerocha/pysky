@@ -10,12 +10,12 @@ def parse_messier(root_dir: str) -> dict:
     This function parses VisibleMessierCatalog.json and returns the
     json object as dictionary
     :param root_dir: Root directory of this application
-    :return: A Python dictionary of the VisibleMessierCatalog.json
+    :return: A Python dictionary of the MessierCatalogue.json
     """
     if not isinstance(root_dir, str):
         root_dir = Path(os.path.dirname(os.path.realpath((__file__))))
     messier_file = json.loads(
-        open(f"{root_dir}/data/VisibleMessierCatalog.json", "r").read()
+        open(f"{root_dir}/data/MessierCatalogue.json", "r").read()
     )
     return messier_file
 
@@ -35,15 +35,15 @@ def check_messier(celestial_obj):
 
 def parse_caldwell(root_dir: str) -> dict:
     """
-    This function parses VisibleCaldwellCatalogue.json and returns the
+    This function parses CaldwellCatalogue.json and returns the
     json object as dictionary
     :param root_dir: Root directory of this application
-    :return: A Python dictionary of the VisibleCaldwellCatalogue.json
+    :return: A Python dictionary of the CaldwellCatalogue.json
     """
     if not isinstance(root_dir, str):
         root_dir = Path(os.path.dirname(os.path.realpath((__file__))))
     caldwell_file = json.loads(
-        open(f"{root_dir}/data/VisibleCaldwellCatalogue.json", "r").read()
+        open(f"{root_dir}/data/CaldwellCatalogue.json", "r").read()
     )
     return caldwell_file
 
