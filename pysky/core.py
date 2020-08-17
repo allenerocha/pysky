@@ -28,8 +28,6 @@ from .simbad import (get_brightness, get_classification, get_constellation,
                      get_distance, get_ra_dec)
 from .skyview import get_skyview_img
 
-download_IERS_A()
-
 
 def invoke():
     """
@@ -301,9 +299,7 @@ def invoke():
         except KeyError:
             v_obj[star]["Brightness"] = "-"
         try:
-            v_obj[star]["Distance (Pm)"] = int(
-                float("%.2g" % cache_file[star]["Distance"])
-            )
+            v_obj[star]["Distance (Pm)"] = cache_file[star]["Distance"]
         except KeyError:
             v_obj[star]["Distance (Pm)"] = "-"
 
