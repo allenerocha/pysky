@@ -27,6 +27,8 @@ def get_classification(celestial_obj: str) -> str:
     if classification is not None:
         Logger.log(f"Found classification for {celestial_obj}!")
         classification = re.sub(regex, "", classification)
+        regex = re.compile(r"\(.*\)")
+        classification = re.sub(regex, "", classification)
         return classification.split("--")[-1].strip()
     Logger.log(f"Could not find classification for {celestial_obj}!", 30)
     return None
