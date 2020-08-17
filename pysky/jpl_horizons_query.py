@@ -84,37 +84,35 @@ def ephemeries_query(celestial_obj: str) -> tuple:
         open(f"{Const.ROOT_DIR}/data/ConstellAbbrevs.json", "r").read()
     )
     time_ra_dec = dict()
-    brightness_sum = 0.0
     time_ra_dec[celestial_obj] = dict()
-    illumination_list = list()
+    mag_list = list()
     distance_list = list()
     for index in range(len(eph["datetime_str"])):
         if index == 0:
             ra = eph["RA"][index]
             dec = eph["DEC"][index]
             time_ra_dec[celestial_obj]["Coordinates"] = {"ra": ra, "dec": dec}
-            print(time_ra_dec[celestial_obj])
         row_time = eph["datetime_str"][index]
         row_az = eph["AZ"][index]
         row_alt = eph["EL"][index]
         row_mag = eph["V"][index]
-        brightness_sum += float(row_mag)
-        row_delta = eph["delta"][index]
+        mag_list.append(row_mag)
+        row_delta = float(eph["delta"][index])
+        row_delta = row_delta * 0.000149597870691
         distance_list.append(row_delta)
         row_constellation = const_abbrvs[str(eph["constellation"][index]).lower()]
         row_illumination = eph["illumination"][index]
-        illumination_list.append(row_illumination)
         time_ra_dec[celestial_obj]["Constellation"] = row_constellation
         time_ra_dec[celestial_obj][row_time] = {
             "az": row_az,
             "alt": row_alt,
             "Brightness": row_mag,
-            "Distance": row_delta * 0.000149597870691,
+            "Distance": row_delta,
             "Illumination": row_illumination,
         }
 
-    time_ra_dec[celestial_obj]["Brightness"] = round(median(illumination_list), 2)
-    time_ra_dec[celestial_obj]["Distance"] = round(median(distance_list), 2)
+    time_ra_dec[celestial_obj]["Brightness"] = round(median(mag_list), 1)
+    time_ra_dec[celestial_obj]["Distance"] = round(median(distance_list), 8)
 
     with open(
         f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{celestial_obj}-{startdate}-{starttime}-{enddate}-{endtime}-data.json",
