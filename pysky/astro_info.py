@@ -62,7 +62,7 @@ def get_info(celestial_obj: str):
         # retrives the inforamtion of the body
         Logger.log(f"Retreiving coordinates for {celestial_obj}")
         t1 = time.time()
-        with astropy.coordinates.solar_system_ephemeris.set("builtin"):
+        with astropy.coordinates.solar_system_ephemeris.set("jpl"):
             body_coordinates = astropy.coordinates.get_body(
                 f"{celestial_obj}",
                 astropy.time.Time(
