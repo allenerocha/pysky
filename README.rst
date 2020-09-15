@@ -1,15 +1,18 @@
 PySky
 =====
 
-.. image:: https://img.shields.io/travis/allenerocha/pysky
+.. image:: https://travis-ci.org/allenerocha/pysky.svg?branch=master
     :alt: Travis (.org)
+    :target: https://travis-ci.org/allenerocha/pysky
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :alt: Code style: black https://github.com/psf/black
+    :alt: Code style: black
+    :target: https://github.com/psf/black
 .. image:: https://codecov.io/gh/allenerocha/pysky/branch/master/graph/badge.svg
     :alt: Codecov
     :target: https://codecov.io/gh/allenerocha/pysky
 .. image:: https://img.shields.io/badge/license-AGPLv3-green
      :alt: License:AGPLv3
+    :target: https://www.gnu.org/licenses/agpl-3.0.en.html
 
 Download & Installation
 =======================
