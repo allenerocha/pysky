@@ -5,8 +5,9 @@ PySky
     :alt: Travis (.org)
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :alt: Code style: black https://github.com/psf/black
-.. image:: https://img.shields.io/codecov/c/github/allenerocha/pysky
+.. image:: https://codecov.io/gh/allenerocha/pysky/branch/master/graph/badge.svg
     :alt: Codecov
+    :target: https://codecov.io/gh/allenerocha/pysky
 .. image:: https://img.shields.io/badge/license-AGPLv3-green
      :alt: License:AGPLv3
 

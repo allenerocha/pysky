@@ -131,8 +131,8 @@ def one_hour_mode(sdate: str, stime: str):
             + timedelta(days=1)
         )
         Const.END_YEAR = str(edate).split("-")[0]
-        Const.END_DAY = str(edate).split("-")[1]
-        Const.END_MONTH = str(edate).split("-")[2]
+        Const.END_DAY = str(edate).split("-")[2]
+        Const.END_MONTH = str(edate).split("-")[1]
         Const.END_TIME = etime
     else:
         etime = f"{int(stime.split(':')[0]) + 1}:{stime.split(':')[1]}"
