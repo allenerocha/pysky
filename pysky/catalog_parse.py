@@ -1,5 +1,4 @@
-"""This module parses the VisibleMessierCatalog.json and
-VisibleCadwellCatalog.json and return them as dictionaries"""
+"""This module parses the MessierCatalog.json and CaldwellCatalog.json and return them as dictionaries"""
 import json
 import os
 from pathlib import Path
@@ -7,16 +6,15 @@ from pathlib import Path
 
 def parse_messier(root_dir: str) -> dict:
     """
-    This function parses VisibleMessierCatalog.json and returns the
-    json object as dictionary
+    This function parses VisibleMessierCatalog.json and returns the json object as dictionary
+
     :param root_dir: Root directory of this application
     :return: A Python dictionary of the MessierCatalogue.json
     """
     if not isinstance(root_dir, str):
-        root_dir = Path(os.path.dirname(os.path.realpath((__file__))))
-    messier_file = json.loads(
-        open(f"{root_dir}/data/MessierCatalogue.json", "r").read()
-    )
+        root_dir = Path(os.path.dirname(os.path.realpath(__file__)))
+    messier_path = Path(root_dir, "data", "MessierCatalogue.json")
+    messier_file = json.loads(open(messier_path, "r").read())
     return messier_file
 
 
@@ -26,7 +24,7 @@ def check_messier(celestial_obj):
     :param celestial_obj: Object to check in the messier catalog.
     :return: The object if it exists
     """
-    messier_catalog = parse_messier(None)
+    messier_catalog = parse_messier()
     for key, _ in messier_catalog.items():
         if key == celestial_obj:
             return messier_catalog[key]["Brightness"]
@@ -42,9 +40,8 @@ def parse_caldwell(root_dir: str) -> dict:
     """
     if not isinstance(root_dir, str):
         root_dir = Path(os.path.dirname(os.path.realpath((__file__))))
-    caldwell_file = json.loads(
-        open(f"{root_dir}/data/CaldwellCatalogue.json", "r").read()
-    )
+    caldwell_path = Path(root_dir, "data", "CaldwellCatalogue.json")
+    caldwell_file = json.loads(open(caldwell_path, "r").read())
     return caldwell_file
 
 

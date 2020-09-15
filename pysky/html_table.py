@@ -1,5 +1,6 @@
 """HTML class that contains functions to transform inputs to an HTML compliant format."""
-from typing import Dict, List
+from pathlib import Path
+from typing import List
 
 from .const import Const
 
@@ -11,7 +12,7 @@ class HTML_table:
 
         Calling sequence:
             html_table = HTML_table()
-        :param delimiter: Delimiter to seperate the items.
+        :param delimiter: Delimiter to separate the items.
         """
         self.delimiter = delimiter
         self.header = ["Name"]
@@ -23,7 +24,7 @@ class HTML_table:
 
         Calling sequence:
             html_table.add_header(['Type', 'Alt.', 'Az.'])
-        :param titles: List of titles to add to the header line.
+        :param star: Dict of titles to add to the header line.
         """
         for _, attribute in star.items():
             for title in attribute.keys():
@@ -61,7 +62,7 @@ class HTML_table:
                 + f"{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}"
             )
         with open(
-            f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{filename}.html", "w"
+            Path(Const.SLIDESHOW_DIR, "PySkySlideshow", f"{filename}.html"), "w"
         ) as html_out:
             html_out.write('<table border="1">\n')
             html_out.write("<caption>")

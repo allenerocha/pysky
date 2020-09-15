@@ -1,5 +1,6 @@
 """Module to output the list of visible objects to various formats."""
-from datetime import datetime
+
+from pathlib import Path
 
 from .const import Const
 from .html_list import HTML_list
@@ -9,7 +10,7 @@ from .html_table import HTML_table
 def to_html_list(items: list, filename: str) -> None:
     html_list = HTML_list(items, delimiter=",")
     with open(
-        f"{Const.SLIDESHOW_DIR}" f"/PySkySlideshow/{filename}.html", "w"
+        Path(Const.SLIDESHOW_DIR, "PySkySlideShow", f"{filename}.html"), "w"
     ) as out_file:
         out_file.write(html_list.__str__())
 

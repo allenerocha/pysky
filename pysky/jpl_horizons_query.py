@@ -1,6 +1,7 @@
 """Module to query JPL Horizons database."""
 import json
 from statistics import median
+from pathlib import Path
 
 from astroquery.jplhorizons import Horizons
 
@@ -8,32 +9,34 @@ from .const import Const
 from .logger import Logger
 
 
-def ephemeries_query(celestial_obj: str) -> tuple:
+def ephemeris_query(celestial_obj: str) -> tuple:
     """
     Query the table of the celestial object in a time range.
 
     :param celestial_obj:
     :return:
-    :useage: object_query('venus', '2020-01-01', '18:00', '2020-01-02', '1:00')
+    :usage: object_query('venus', '2020-01-01', '18:00', '2020-01-02', '1:00')
     """
-    jplcodes = json.loads(open(f"{Const.ROOT_DIR}/data/jplcodes.json", "r").read())
+    jplcodes = json.loads(
+        open(Path(Const.ROOT_DIR, "data", "jplcodes.json"), "r").read()
+    )
     try:
         obj_code = jplcodes[celestial_obj.lower()]
     except KeyError:
         Logger.log("Key not found in pre-defined JPL code dictionary.", 40)
         Logger.log(f"Removing {celestial_obj} from queue.", 40)
-        return (None, celestial_obj)
+        return None, celestial_obj
     except ValueError as e:
         Logger.log("Encountered an value error.", 40)
         Logger.log(f"{str(e)}", 50)
         Logger.log(f"Removing {celestial_obj} from queue.", 40)
-        return (None, celestial_obj)
+        return None, celestial_obj
 
     except Exception as e:
         Logger.log("Encountered an unknown error.", 40)
         Logger.log(f"{str(e)}", 50)
         Logger.log(f"Removing {celestial_obj} from queue.", 40)
-        return (None, celestial_obj)
+        return None, celestial_obj
     try:
         location = {
             "lon": Const.LONGITUDE,
@@ -57,17 +60,17 @@ def ephemeries_query(celestial_obj: str) -> tuple:
     except KeyError:
         Logger.log("Error with key raised by JPL Horizons.", 40)
         Logger.log(f"Removing {celestial_obj} from queue.")
-        return (None, celestial_obj)
+        return None, celestial_obj
     except ValueError as e:
         Logger.log("Encountered an value error.", 40)
         Logger.log(f"{str(e)}", 50)
         Logger.log(f"Removing {celestial_obj} from queue.", 40)
-        return (None, celestial_obj)
+        return None, celestial_obj
     except Exception as e:
         Logger.log("Unknown error raised by JPL Horizons.", 40)
         Logger.log(f"{str(e)}", 40)
         Logger.log(f"Removing {celestial_obj} from queue.", 40)
-        return (None, celestial_obj)
+        return None, celestial_obj
 
     eph = obj.ephemerides()[
         "datetime_str",
@@ -81,7 +84,7 @@ def ephemeries_query(celestial_obj: str) -> tuple:
         "constellation",
     ]
     const_abbrvs = json.loads(
-        open(f"{Const.ROOT_DIR}/data/ConstellAbbrevs.json", "r").read()
+        open(Path(Const.ROOT_DIR, "data", "ConstellAbbrevs.json"), "r").read()
     )
     time_ra_dec = dict()
     time_ra_dec[celestial_obj] = dict()
@@ -115,8 +118,12 @@ def ephemeries_query(celestial_obj: str) -> tuple:
     time_ra_dec[celestial_obj]["Distance"] = round(median(distance_list), 8)
 
     with open(
-        f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{celestial_obj}-{startdate}-{starttime}-{enddate}-{endtime}-data.json",
+        Path(
+            Const.SLIDESHOW_DIR,
+            "PySkySlideshow",
+            f"{celestial_obj}-{startdate}-{starttime.replace(':', '')}-{enddate}-{endtime.replace(':', '')}-data.json",
+        ),
         "w",
     ) as json_out:
         json.dump(time_ra_dec[celestial_obj], json_out, indent=4)
-    return (time_ra_dec, None)
+    return time_ra_dec, None

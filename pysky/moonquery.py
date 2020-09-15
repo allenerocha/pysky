@@ -15,8 +15,8 @@ def query() -> tuple:
     :return: illumination and phase
     """
     ENDPOINT = (
-        "https://www.moongiant.com/phase/"
-        + f"{Const.START_MONTH}/{Const.START_DAY}/{Const.START_YEAR}"
+            "https://www.moongiant.com/phase/"
+            + f"{Const.START_MONTH}/{Const.START_DAY}/{Const.START_YEAR}"
     )
     tags = re.compile(r"<\\*/*[A-Za-z]*>|\\n")
     response = requests.get(ENDPOINT).text

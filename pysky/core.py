@@ -1,31 +1,32 @@
 """Main module that calls all relevant modules."""
 import json
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime
 from pathlib import Path
 
-import astroplan
 import astropy
 import astropy.units as u
-import numpy
-from astroplan import (FixedTarget, OldEarthOrientationDataWarning,
-                       download_IERS_A)
+from astroplan import FixedTarget
 from astropy.coordinates import Angle, SkyCoord
 from tqdm import tqdm
 
 from .argument_parser import cli_parse
-from .astro_info import get_ephemeries_info
+from .astro_info import get_ephemeris_info
 from .catalog_parse import parse_caldwell, parse_messier
 from .check_sky import is_object_visible
 from .const import Const
 from .image_manipulation import overlay_text
-from .jpl_horizons_query import ephemeries_query
+from .jpl_horizons_query import ephemeris_query
 from .logger import Logger
 from .moonquery import query
 from .output import to_html_list, to_html_table
 from .prefs import check_integrity, read_user_prefs
-from .simbad import (get_brightness, get_classification, get_constellation,
-                     get_distance, get_ra_dec)
+from .simbad import (
+    get_brightness,
+    get_classification,
+    get_constellation,
+    get_distance,
+    get_ra_dec,
+)
 from .skyview import get_skyview_img
 
 
@@ -33,11 +34,10 @@ def invoke():
     """
     Call all other relevant functions.
     """
-    #    download_IERS_A()
-
-    cli_parse()
 
     check_integrity()
+
+    cli_parse()
 
     CALDWELL_OBJECTS = parse_caldwell(Const.ROOT_DIR)
     MESSIER_OBJECTS = parse_messier(Const.ROOT_DIR)
@@ -45,33 +45,33 @@ def invoke():
 
     gen_moon_data()
 
-    STARS, EPHEMERIES = query_jpl_horizons(USER_OBJECTS)
+    STARS, EPHEMERIS = query_jpl_horizons(USER_OBJECTS)
 
-    EPHEMERIES_BODIES = list(EPHEMERIES.keys())
+    EPHEMERIS_BODIES = list(EPHEMERIS.keys())
 
     # api and returns the the list of stars
     invoke_skyview(STARS)
     # Open cache file
-    cache_file = json.loads(open(f"{Const.ROOT_DIR}/data/cache", "r").read())
+    cache_path = Path(Const.ROOT_DIR, "data", "cache")
+    cache_file = json.loads(open(cache_path, "r").read())
     for star in STARS:
         cache_file = set_simbad_values(star, cache_file)
-    temp_cache = {**cache_file, **EPHEMERIES}
+    temp_cache = {**cache_file, **EPHEMERIS}
     # Dump cache file
-    with open(f"{Const.ROOT_DIR}/data/cache", "w") as json_out:
+    with open(cache_path, "w") as json_out:
         json.dump(temp_cache, json_out, indent=4, sort_keys=True)
-    cache_file = json.loads(open(f"{Const.ROOT_DIR}/data/cache", "r").read())
+    cache_file = json.loads(open(cache_path, "r").read())
 
     set_img_txt(STARS)
-    # Iterate through the ephemeries to add information
-    for body in tqdm(EPHEMERIES_BODIES):
-        cache_file = get_ephemeries_info(body, cache_file)
+    # Iterate through the ephemeris to add information
+    for body in tqdm(EPHEMERIS_BODIES):
+        cache_file = get_ephemeris_info(body, cache_file)
 
     # Dump cache file
-    with open(f"{Const.ROOT_DIR}/data/cache", "w") as json_out:
+    with open(cache_path, "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
 
     visible_objs = dict()
-    visible = dict()
     for star in cache_file:
         Logger.log("Gathering zen, altitude, and " + f"azimuth for {star}...")
         try:
@@ -88,7 +88,7 @@ def invoke():
             and end_altitude != "-"
             and end_azimuth != "-"
         ):
-            Logger.log(f"Sucessfully gathered data for {star}!\n")
+            Logger.log(f"Successfully gathered data for {star}!\n")
             visible = {str(star): dict()}
             if start_altitude != "-":
                 visible[star]["Start Alt."] = round(
@@ -117,16 +117,16 @@ def invoke():
             visible_objs.update(visible)
 
     # Dump cache file
-    with open(f"{Const.ROOT_DIR}/data/cache", "w") as json_out:
+    with open(cache_path, "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
-    cache_file = json.loads(open(f"{Const.ROOT_DIR}/data/cache", "r").read())
+    cache_file = json.loads(open(cache_path, "r").read())
 
-    # Iterate through the ephemeries to add information
-    for body in tqdm(EPHEMERIES_BODIES):
-        cache_file = get_ephemeries_info(body, cache_file)
+    # Iterate through the ephemeris to add information
+    for body in tqdm(EPHEMERIS_BODIES):
+        cache_file = get_ephemeris_info(body, cache_file)
 
     # Dump cache file
-    with open(f"{Const.ROOT_DIR}/data/cache", "w") as json_out:
+    with open(cache_path, "w") as json_out:
         json.dump(cache_file, json_out, indent=4, sort_keys=True)
 
     visible_messier = dict()
@@ -148,7 +148,7 @@ def invoke():
                 and end_altitude != "-"
                 and end_azimuth != "-"
             ):
-                Logger.log(f"Sucessfully gathered data for {m_obj}!\n")
+                Logger.log(f"Successfully gathered data for {m_obj}!\n")
                 visible[str(m_obj)] = dict()
                 visible[str(m_obj)]["Type"] = MESSIER_OBJECTS[m_obj]["Type"]
                 try:
@@ -178,7 +178,7 @@ def invoke():
                 visible[str(m_obj)]["Constellation"] = MESSIER_OBJECTS[m_obj][
                     "Constellation"
                 ]
-                visible[str(m_obj)]["Brigntness"] = MESSIER_OBJECTS[m_obj]["Brightness"]
+                visible[str(m_obj)]["Brightness"] = MESSIER_OBJECTS[m_obj]["Brightness"]
                 visible[str(m_obj)]["Distance (Pm)"] = int(
                     (float("%.2g" % MESSIER_OBJECTS[m_obj]["Distance"]))
                 )
@@ -209,7 +209,7 @@ def invoke():
                 and end_altitude != "-"
                 and end_azimuth != "-"
             ):
-                Logger.log(f"Sucessfully gathered data for {c_obj}!\n")
+                Logger.log(f"Successfully gathered data for {c_obj}!\n")
                 visible[str(c_obj)] = dict()
                 visible[str(c_obj)]["Type"] = CALDWELL_OBJECTS[c_obj]["Type"]
                 try:
@@ -239,7 +239,7 @@ def invoke():
                 visible[str(c_obj)]["Constellation"] = CALDWELL_OBJECTS[c_obj][
                     "Constellation"
                 ]
-                visible[str(c_obj)]["Brigntness"] = CALDWELL_OBJECTS[c_obj][
+                visible[str(c_obj)]["Brightness"] = CALDWELL_OBJECTS[c_obj][
                     "Brightness"
                 ]
                 visible[str(c_obj)]["Distance (Pm)"] = int(
@@ -346,14 +346,14 @@ def set_simbad_values(celestial_obj: str, cache_file: dict) -> dict:
     return cache_file
 
 
-def query_jpl_horizons(ephemeries_objs: list) -> tuple:
+def query_jpl_horizons(ephemeris_objs: list) -> tuple:
     """
-    Run ephemeries_query in as many threads as specified.
+    Run ephemeris_query in as many threads as specified.
 
-    :param ephemeries_objs: List of objects to retrieve data for.
+    :param ephemeris_objs: List of objects to retrieve data for.
     """
     with ThreadPoolExecutor(max_workers=Const.THREADS) as executor:
-        results = executor.map(ephemeries_query, ephemeries_objs)
+        results = executor.map(ephemeris_query, ephemeris_objs)
 
     unknown_objs = list()
     known_objs = list()
@@ -363,17 +363,17 @@ def query_jpl_horizons(ephemeries_objs: list) -> tuple:
             known_objs.append(ephemeris)
         else:
             unknown_objs.append(celestial_obj)
-    ephemerides = dict()
+    ephemeris = dict()
     for obj in known_objs:
-        ephemerides.update(obj)
-    return (unknown_objs, ephemerides)
+        ephemeris.update(obj)
+    return unknown_objs, ephemeris
 
 
 def invoke_skyview(stars: list) -> None:
     """
     Run skyview in as many threads as specified.
 
-    :param stars: List of string of the stars download witrh skyview.
+    :param stars: List of string of the stars download with skyview.
     """
     with ThreadPoolExecutor(max_workers=Const.THREADS) as executor:
         executor.map(get_skyview_img, stars)
@@ -393,30 +393,29 @@ def get_visible(object_name: str, ra, dec) -> tuple:
     """
     Check to see if the given object is
     visible at a location in a certain time.
-    :param start_time: Astropy.time object starting time range.
-    :param end_time: Astropy.time object ending time range.
-    :param location: Astroplan.observer object as your location.
-    :param celestial_objs: List of objects to check.
+    :param object_name: Name of object to check.
+    :param ra: Right ascension of the object.
+    :param dec: Declination of the object.
     :return: Tuple of visible objects.
     """
 
     try:
         if ra == "-" and dec == "-":
-            return ("-", "-", "-", "-")
+            return "-", "-", "-", "-"
         if isinstance(ra, list) and isinstance(dec, list):
             ra = ((ra[0] + (ra[1] / 60) + (ra[2] / 3600)) / 24) * 360
             dec = dec[0] + (dec[1] / 60) + (dec[2] / 3600)
-        elif isinstance(ra, float) and isinstance(dec, float):
-            pass
-        elif isinstance(ra, numpy.float64) and isinstance(dec, numpy.float64):
-            pass
+        # elif isinstance(ra, float) and isinstance(dec, float):
+        #     pass
+        # elif isinstance(ra, numpy.float64) and isinstance(dec, numpy.float64):
+        #     pass
         celestial_obj_coord = SkyCoord(ra=ra * u.deg, dec=dec * u.deg)
         # celestial_obj = FixedTarget.from_name(object_name)
         celestial_obj = FixedTarget(coord=celestial_obj_coord, name=object_name)
         start_altitude, start_azimuth, end_altitude, end_azimuth = is_object_visible(
             celestial_obj=celestial_obj, secz_max=Const.SECZ_MAX
         )
-        return (start_altitude, start_azimuth, end_altitude, end_azimuth)
+        return start_altitude, start_azimuth, end_altitude, end_azimuth
     except astropy.coordinates.name_resolve.NameResolveError as e:
         Logger.log(
             "Unable to gather name, start_altaz.alt, and "
@@ -436,7 +435,7 @@ def get_visible(object_name: str, ra, dec) -> tuple:
 
 
 def gen_moon_data():
-    Logger.log("Retreiving data for tonight's moon...")
+    Logger.log("Retrieving data for tonight's moon...")
     illumination, phase = query()
     Logger.log("Data for tonight's moon:")
     Logger.log(f"Illumination: {illumination}\tPhase: {phase}")
@@ -451,7 +450,7 @@ def gen_moon_data():
                 }
             }
         ],
-        filename=f"moon_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}",
+        filename=Path(f"luna_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}"),
     )
     Logger.log("Wrote file!")
 

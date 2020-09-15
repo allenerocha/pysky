@@ -6,11 +6,13 @@ import os
 import sys
 import time
 import urllib.request
+from pathlib import Path
+
 import bs4
 import requests
 
-from .logger import Logger
 from .const import Const
+from .logger import Logger
 
 
 def get_skyview_img(celestial_obj: str) -> int:
@@ -90,14 +92,16 @@ def get_skyview_img(celestial_obj: str) -> int:
 
     Logger.log(f"Downloading image of {celestial_obj}...")
     t1 = time.time()
-    urllib.request.urlretrieve(img_url, f"{root_dir}/data/{celestial_obj}.temp.jpg")
+    urllib.request.urlretrieve(
+        img_url, Path(root_dir, "data", f"{celestial_obj}.temp.jpg")
+    )
     img_bytes = base64.b64encode(
-        open(f"{root_dir}/data/{celestial_obj}.temp.jpg", "rb").read()
+        open(Path(root_dir, "data", f"{celestial_obj}.temp.jpg"), "rb").read()
     )
     Logger.log(f"Downloaded successfully in {time.time() - t1} seconds!")
 
     Logger.log(f"Writing {celestial_obj} data to cache...")
-    cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
+    cache_file = json.loads(open(Path(root_dir, "data", "cache"), "r").read())
     try:
         cache_file[celestial_obj] = {
             "Type": "star",
@@ -113,9 +117,8 @@ def get_skyview_img(celestial_obj: str) -> int:
         Logger.log(f"Finished writing {celestial_obj} data to cache!")
 
         Logger.log("Saving changes to cache...")
-        with open(f"{root_dir}/data/cache", "w") as json_out:
+        with open(Path(root_dir, "data", "cache"), "w") as json_out:
             json.dump(cache_file, json_out, indent=4, sort_keys=True)
-            img_bytes = open(f"{root_dir}/data/{celestial_obj}.temp.jpg", "rb").read()
         Logger.log("Successfully saved changes to cache!")
 
     except TypeError as type_err:
@@ -145,7 +148,7 @@ def check_cache(
     :param b_scale brightness scale for image processing
     :return: boolean if depending on if the specific cache exists
     """
-    cache_file = json.loads(open(f"{root_dir}/data/cache", "r").read())
+    cache_file = json.loads(open(Path(root_dir, "data", "cache"), "r").read())
     try:
         if (
             (celestial_obj in cache_file)
@@ -156,8 +159,8 @@ def check_cache(
         ):
             files = [
                 f
-                for f in os.listdir(f"{Const.SLIDESHOW_DIR}/PySkySlideshow")
-                if os.path.isfile(f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{f}")
+                for f in os.listdir(Path(Const.SLIDESHOW_DIR, "PySkySlideshow"))
+                if os.path.isfile(Path(Const.SLIDESHOW_DIR, "PySkySlideshow", f))
             ]
     except KeyError:
         return False
@@ -165,8 +168,11 @@ def check_cache(
             return False
 
         elif (
-            f"{Const.SLIDESHOW_DIR}/PySkySlideshow/{celestial_obj}-"
-            + f"{width}-{height}-{image_size}-{b_scale}.png"
+            Path(
+                Const.SLIDESHOW_DIR,
+                "PySkySlideshow",
+                f"{celestial_obj}-{width}-{height}-{image_size}-{b_scale}.png",
+            )
             not in files
         ):
             cache_file.pop(celestial_obj, None)

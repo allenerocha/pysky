@@ -1,6 +1,5 @@
 """This module is used to see if an object is visible."""
 import astropy.units as u
-import numpy as np
 from astroplan import Observer
 from astropy.coordinates import EarthLocation
 from astropy.time import Time
@@ -71,7 +70,7 @@ def is_object_visible(celestial_obj: object, secz_max: float) -> tuple:
         else:
             end_alt = "-"
             end_az = "-"
-        return (start_alt, start_az, end_alt, end_az)
+        return start_alt, start_az, end_alt, end_az
     except ValueError as e:
         Logger.log(f"Could not find sec(z) for {celestial_obj.name}.", 40)
         Logger.log(str(e), 40)

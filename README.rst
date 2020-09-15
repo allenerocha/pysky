@@ -1,6 +1,15 @@
 PySky
 =====
 
+.. image:: https://img.shields.io/travis/allenerocha/pysky
+    :alt: Travis (.org)
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :alt: Code style: black https://github.com/psf/black
+.. image:: https://img.shields.io/codecov/c/github/allenerocha/pysky
+    :alt: Codecov
+.. image:: https://img.shields.io/badge/license-AGPLv3-green
+     :alt: License:AGPLv3
+
 Download & Installation
 =======================
 

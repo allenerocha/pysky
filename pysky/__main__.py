@@ -7,6 +7,7 @@ Invoke as `pysky' or python -m pysky.
 
 
 def main():
+    """Invokes the main function."""
     from .core import invoke
 
     invoke()

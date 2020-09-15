@@ -2,6 +2,7 @@
 """This module is able contains the method to log all output to a log file."""
 import logging
 from logging import critical, error, info, warning, debug
+from pathlib import Path
 from .const import Const
 
 
@@ -12,7 +13,7 @@ class Logger:
             level=Const.VERBOSITY,
             format="%(asctime)s [%(levelname)s] %(message)s",
             handlers=[
-                logging.FileHandler(f"{Const.ROOT_DIR}/data/log"),
+                logging.FileHandler(Path(Const.ROOT_DIR, "data", "output.log")),
                 logging.StreamHandler(),
             ],
         )

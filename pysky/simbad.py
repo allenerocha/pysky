@@ -2,6 +2,7 @@
 import json
 import re
 import sys
+from pathlib import Path
 
 import astroquery.simbad
 import requests
@@ -31,7 +32,7 @@ def get_classification(celestial_obj: str) -> str:
         classification = re.sub(regex, "", classification)
         return classification.split("--")[-1].strip()
     Logger.log(f"Could not find classification for {celestial_obj}!", 30)
-    return None
+    return "-"
 
 
 def get_brightness(celestial_obj: str) -> float:
@@ -58,16 +59,16 @@ def get_brightness(celestial_obj: str) -> float:
             Logger.log(f"Could not find brightness for {celestial_obj}!", 30)
             celestial_obj_aux = celestial_obj + "_A"
             Logger.log(f"Attempting to find brightness for {celestial_obj_aux}!", 30)
-            BRIGHTNESS_FEILD = str(
+            BRIGHTNESS_FIELD = str(
                 astroquery.simbad.Simbad.query_object(celestial_obj_aux)[0][0]
             )
-            brightness = float(BRIGHTNESS_FEILD)
+            brightness = float(BRIGHTNESS_FIELD)
 
         else:
-            BRIGHTNESS_FEILD = str(
+            BRIGHTNESS_FIELD = str(
                 astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0]
             )
-            brightness = float(BRIGHTNESS_FEILD)
+            brightness = float(BRIGHTNESS_FIELD)
         # Return brightness
         Logger.log(f"Retrieved brightness for {celestial_obj}!\n")
         return brightness
@@ -81,7 +82,6 @@ def get_brightness(celestial_obj: str) -> float:
         )
 
         try:
-
             Logger.log(f"Could not find brightness for {celestial_obj_aux}!", 30)
             Logger.log(
                 f"Attempting to find brightness for {celestial_obj} using it's IUE!",
@@ -92,7 +92,7 @@ def get_brightness(celestial_obj: str) -> float:
             astroquery.simbad.Simbad.add_votable_fields("iue")
             astroquery.simbad.Simbad.remove_votable_fields("main_id")
             astroquery.simbad.Simbad.remove_votable_fields("coordinates")
-            NEW_OBJECT_FEILD = (
+            NEW_OBJECT_FIELD = (
                 str(astroquery.simbad.Simbad.query_object(celestial_obj)[0][0])
                 .replace("b", "")
                 .replace("'", "")
@@ -106,11 +106,11 @@ def get_brightness(celestial_obj: str) -> float:
             astroquery.simbad.Simbad.remove_votable_fields("main_id")
             astroquery.simbad.Simbad.remove_votable_fields("coordinates")
 
-            BRIGHTNESS_FEILD = str(
-                astroquery.simbad.Simbad.query_object(NEW_OBJECT_FEILD)[0][0]
+            BRIGHTNESS_FIELD = str(
+                astroquery.simbad.Simbad.query_object(NEW_OBJECT_FIELD)[0][0]
             )
 
-            brightness = float(BRIGHTNESS_FEILD)
+            brightness = float(BRIGHTNESS_FIELD)
 
             return brightness
 
@@ -143,7 +143,7 @@ def get_constellation(celestial_obj: str) -> str:
     astroquery.simbad.Simbad.reset_votable_fields()
     Logger.log(f"Retrieving constellation for {celestial_obj}...")
     const_abbrvs = json.loads(
-        open(f"{Const.ROOT_DIR}/data/ConstellAbbrevs.json", "r").read()
+        open(Path(Const.ROOT_DIR, "data", "ConstellAbbrevs.json"), "r").read()
     )
     try:
         astroquery.simbad.Simbad.remove_votable_fields("coordinates")
@@ -205,7 +205,6 @@ def get_ra_dec(celestial_obj: str) -> list:
 
 
 def get_distance(celestial_obj: str) -> float:
-
     """
     Calculate the distance in Pm.
     :param celestial_obj: Obejct to query simbad.
@@ -222,7 +221,3 @@ def get_distance(celestial_obj: str) -> float:
         return None
 
     return int(float(parsec_dist) * 30.86)
-
-
-if __name__ == "__main__":
-    get_classification("polaris")
