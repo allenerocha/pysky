@@ -317,12 +317,15 @@ def invoke():
     for key, value in visible_caldwell.items():
         c_list.append({key: value})
 
-    write_out(s_list, code=0, filename="Stars")
-    write_out(m_list, code=0, filename="VisibleMessier")
-    write_out(c_list, code=0, filename="VisibleCaldwell")
+    write_out(s_list, filename="Stars")
+    write_out(m_list, filename="VisibleMessier")
+    write_out(c_list, filename="VisibleCaldwell")
 
     cel_objs = s_list + m_list + c_list
-    write_out(cel_objs, code=1)
+    if len(cel_objs) > 0:
+        write_out(cel_objs, code=1)
+    else:
+        Logger.log("No visible objects in the given range.")
 
 
 def set_simbad_values(celestial_obj: str, cache_file: dict) -> dict:

@@ -17,10 +17,8 @@ PySky
 Download & Installation
 =======================
 
-Python
-------
-:
-
+Initial setup
+-------------
 Download and install latest version of Python `here`_.
 
 .. _here: https://www.python.org/downloads/
@@ -37,7 +35,7 @@ Follow `these`_ instructions to get the latest version of pip.
 
  .. code-block:: bash
 
-    pysky/$ pip3 install .
+    pysky/$ pip install .
 
 
 Uninstalling
@@ -45,7 +43,7 @@ Uninstalling
 
  .. code-block:: bash
 
-   ~$ pip3 uninstall pysky -y
+   ~$ pip uninstall pysky -y
 
 
 Usage
@@ -57,20 +55,21 @@ Usage
 
 Command line options
 --------------------
-Options
-^^^^^^^
-===================  ==========================
-``-sd/--startdate``  Starting date (ISO 8601) [#f1]_
-``-st/--starttime``  Starting time.  (ISO 8601) [#f1]_
-``-ed/--enddate``    Ending date.  (ISO 8601) [#f2]_
-``-et/--endtime``    Ending time.  (ISO 8601) [#f2]_
+Options (Dates and times are in `ISO 8601`_ format)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+===================  =================
+``-sd/--startdate``  Starting date. [#f1]_
+``-st/--starttime``  Starting time. [#f1]_
+``-ed/--enddate``    Ending date. [#f2]_
+``-et/--endtime``    Ending time. [#f2]_
 ``-t/--threads``     Number of threads
                      to use. [#f2]_
 ``-v/--verbosity``   Verbosity level. [#f2]_
 ``-h/--help``        Display help for
                      the CL options.
-===================  ==========================
+===================  =================
 
+.. _ISO 8601: https://en.wikipedia.org/wiki/ISO_8601
 .. [#f1] Required.
 .. [#f2] Optional.
 

@@ -59,7 +59,9 @@ setup(
     setup_requires=setup_requirements,
     test_suite="tests",
     tests_require=test_requirements,
-    url="http://github.com/allenerocha/PySky",
-    project_urls={"Source Code": "https://github.com/allenerocha/PySky",},
+    url=pysky.__url__,
+    project_urls={
+        "Source Code": pysky.__url__,
+    },
     version=pysky.__version__,
 )
