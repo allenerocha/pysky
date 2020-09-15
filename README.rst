@@ -14,6 +14,20 @@ PySky
 Download & Installation
 =======================
 
+Python
+------
+:
+
+Download and install latest version of Python `here`_.
+
+.. _here: https://www.python.org/downloads/
+
+Follow `these`_ instructions to get the latest version of pip.
+
+.. _these: https://pip.pypa.io/en/stable/installing/
+
+
+
  .. code-block:: bash
 
     ~$ git clone https://github.com/allenerocha/pysky.git && cd pysky/
@@ -36,30 +50,33 @@ Usage
 
  .. code-block:: bash
 
-   ~$ pysky [start date] [start time] [end date] [end time] [thread count] [verbosity level]
+   ~$ pysky -sd [start date] -st [start time] -ed [end date] -et [end time] -t [thread count] -v [verbosity level]
 
 Command line options
 --------------------
 Options
 ^^^^^^^
-===================  =================
-``-sd/--startdate``  Starting date.
-``-st/--starttime``  Starting time.
-``-ed/--enddate``    Ending date.
-``-et/--endtime``    Ending time.
+===================  ==========================
+``-sd/--startdate``  Starting date (ISO 8601) [#f1]_
+``-st/--starttime``  Starting time.  (ISO 8601) [#f1]_
+``-ed/--enddate``    Ending date.  (ISO 8601) [#f2]_
+``-et/--endtime``    Ending time.  (ISO 8601) [#f2]_
 ``-t/--threads``     Number of threads
-                     to use.
-``-v/--verbosity``   Verbosity level.
+                     to use. [#f2]_
+``-v/--verbosity``   Verbosity level. [#f2]_
 ``-h/--help``        Display help for
                      the CL options.
-===================  =================
+===================  ==========================
 
-Date format (YEAR-DAY-MONTH)
+.. [#f1] Required.
+.. [#f2] Optional.
+
+Date format (YEAR-MONTH-DAY)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 =========   ==============
 ``YEAR``    4 digit format
-``DAY``     2 digit format
 ``MONTH``   2 digit format
+``DAY``     2 digit format
 =========   ==============
 
 Time format (HOUR:MINUTE)
@@ -69,6 +86,8 @@ Time format (HOUR:MINUTE)
 ``MINUTE``   Minute in regular
              format (0-59)
 ==========   =====================
+
+Specifying no end date and time defaults the search to only go for one hour long.
 
 Help
 ----
@@ -117,7 +136,7 @@ Start July 10th, 2012 17:00 End July 10th, 2012 23:00
 
  .. code-block:: bash
 
-   $ pysky -sd 2012-10-07 -st 17:00 -ed 2012-10-07 -et 23:00
+   $ pysky -sd 2012-07-10 -st 17:00 -ed 2012-07-10 -et 23:00
 
 Start December 31st, 2015 08:00 End January 1st, 2016 02:00 with high verbosity
 -------------------------------------------------------------------------------
@@ -125,7 +144,7 @@ Start December 31st, 2015 08:00 End January 1st, 2016 02:00 with high verbosity
 
  .. code-block:: bash
 
-   $ pysky -sd 2015-31-12 -st 08:00 -ed 2016-01-01 -et 02:00 -v 5
+   $ pysky -sd 2015-12-31 -st 08:00 -ed 2016-01-01 -et 02:00 -v 5
 
 Start September 1st, 2019 19:00 for one hour with 2 threads and medium verbosity
 --------------------------------------------------------------------------------
@@ -133,21 +152,9 @@ Start September 1st, 2019 19:00 for one hour with 2 threads and medium verbosity
 
  .. code-block:: bash
 
-   $ pysky -sd 2019-01-09 -st 17:00 -t 2 -v 3
+   $ pysky -sd 2019-09-01 -st 17:00 -t 2 -v 3
 
 Supported Python Versions
 =========================
 
     Python 3.6+
-
-Dependencies
-============
-
--  `astropy == 4.0 <https://github.com/astropy/astropy>`__
--  `astroplan == 0.6 <https://astroplan.readthedocs.io/>`__
--  `astroquery == 0.4 <https://github.com/cds-astro/astroquery>`__
--  `beautifulsoup4 ==
-   4.8.2 <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__
--  `requests == 2.21.0 <https://requests.readthedocs.io/en/master/>`__
--  `Pillow >= 6.2.2 <https://python-pillow.org/>`__
-

@@ -5,7 +5,7 @@ language: python
 python: 3.6
 
 install:
-  - pip install codecov
+  - pip install -U tox-travis coverage
 
 script:
-  - coverage run --omit="venv/*","docs/*",".github/*" -m pysky -sd 2020-08-01 -st 21:30 -ed 2020-08-02 -et 01:45 && codecov -t e9d50f9d-761c-4b65-83aa-faf40fcc3792
+  - coverage run --omit="venv/*","docs/*",".github/*" -m pysky -sd 2020-08-01 -st 21:30 -ed 2020-08-02 -et 01:45
