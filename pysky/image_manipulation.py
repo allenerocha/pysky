@@ -23,7 +23,6 @@ def overlay_text(celestial_obj: str) -> None:
     :img: Image file to overlay the text
     :overlay_text: List of text to overlay on the image
     """
-
     cache_file = json.loads(open(Path(Const.ROOT_DIR, "data", "cache"), "r").read())
     overlay_txt = list()
 
@@ -57,6 +56,7 @@ def overlay_text(celestial_obj: str) -> None:
             ),
             format="PNG",
         )
+        os.remove(Path(Const.ROOT_DIR, "data", f"{celestial_obj}.temp.jpg"))
         Logger.log(f"Overlaid text for {celestial_obj}")
 
     elif check_caldwell(celestial_obj):
@@ -98,9 +98,10 @@ def overlay_text(celestial_obj: str) -> None:
             ),
             format="PNG",
         )
-        Logger.log(f"Overlaying text for {celestial_obj}")
+        os.remove(Path(Const.ROOT_DIR, "data", f"{celestial_obj}.temp.jpg"))
 
-    else:
+    elif celestial_obj.lower() in cache_file:
+        Logger.log(f"Overlaying text for {celestial_obj}")
         decoded_img = base64.b64decode(
             cache_file[celestial_obj]["Image"]["Base64"][1:-1]
         )
@@ -114,23 +115,34 @@ def overlay_text(celestial_obj: str) -> None:
         ]
         img = add_text(img, overlay_txt)
         Logger.log(f"Adding edited image of {celestial_obj} to cache file...")
-        img.save(
-            fp=Path(Const.ROOT_DIR, "data", "{celestial_obj}.temp.png"), format="PNG"
-        )
+        # img.save(
+        #     fp=Path(
+        #         Const.ROOT_DIR,
+        #         "data",
+        #         f"{celestial_obj}.temp.jpg",
+        #     )
+        # )
 
         with open(Path(Const.ROOT_DIR, "data", "cache"), "w") as json_out:
             Logger.log("Saving edited cache file...")
             json.dump(cache_file, json_out)
-            os.remove(Path(Const.ROOT_DIR, "data", f"{celestial_obj}.temp.png"))
             Logger.log("Edited cache file saved!")
             img.save(
-                Path(
+                fp=Path(
                     Const.SLIDESHOW_DIR,
                     "PySkySlideshow",
-                    f"{celestial_obj.replace(' ', '_')}-{cache_file[celestial_obj]['Image']['Width']}-{cache_file[celestial_obj]['Image']['Height']}-{cache_file[celestial_obj]['Image']['Resolution']}-{cache_file[celestial_obj]['Image']['Brightness scaling']}.png",
-                )
+                    f"{celestial_obj.title().replace(' ', '_')}-{cache_file[celestial_obj]['Image']['Width']}-{cache_file[celestial_obj]['Image']['Height']}-{cache_file[celestial_obj]['Image']['Resolution']}-{cache_file[celestial_obj]['Image']['Brightness scaling']}.png",
+                ),
+                format="PNG",
             )
-    os.remove(f"{Const.ROOT_DIR}/data/{celestial_obj}.temp.jpg")
+
+        os.remove(
+            Path(
+                Const.ROOT_DIR,
+                "data",
+                f"{celestial_obj}.temp.jpg",
+            )
+        )
 
 
 def add_text(img: object, overlay_txt: list) -> object:
@@ -147,13 +159,15 @@ def add_text(img: object, overlay_txt: list) -> object:
         Logger.log(f"Error opening {img}", 50)
 
     Logger.log("Overlaying text to image...")
-    fonts = [f for f in os.listdir(Path(Const.ROOT_DIR, "data", "res")) if ".ttf" in f]
-
+    fonts = [
+        Path(Const.ROOT_DIR, "data", "res") / f
+        for f in os.listdir(Path(Const.ROOT_DIR, "data", "res"))
+        if ".ttf" in f
+    ]
     overlaid = PIL.ImageDraw.Draw(img, mode="RGBA")
     if len(fonts) >= 1:
-        fnt = PIL.ImageFont.truetype(
-            Path(Const.ROOT_DIR, "data", "res", fonts[0]), int(img_h / 33)
-        )
+        fnt_path = Path(Const.ROOT_DIR, "data", "res") / fonts[0]
+        fnt = PIL.ImageFont.truetype(str(fnt_path), int(img_h / 33))
         overlaid.multiline_text(
             xy=(20, int(img_h * 0.75)),  # xy for the text to be overlaid
             text="\n".join(overlay_txt),  # concats all strings in the list
@@ -174,3 +188,12 @@ def add_text(img: object, overlay_txt: list) -> object:
         )
 
     return img
+
+
+def img_garbage_collection():
+    for img in [
+        Path(Const.ROOT_DIR, "data") / f
+        for f in os.listdir(Path(Const.ROOT_DIR, "data"))
+        if ".temp.jpg" in f
+    ]:
+        os.remove(img)

@@ -1,5 +1,6 @@
 """Main module that calls all relevant modules."""
 import json
+import os
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -18,7 +19,7 @@ from .image_manipulation import overlay_text
 from .jpl_horizons_query import ephemeris_query
 from .logger import Logger
 from .moonquery import query
-from .output import to_html_list, to_html_table
+from .output import to_html_list, to_html_table, generate_plot
 from .prefs import check_integrity, read_user_prefs
 from .simbad import (
     get_brightness,
@@ -63,6 +64,7 @@ def invoke():
     cache_file = json.loads(open(cache_path, "r").read())
 
     set_img_txt(STARS)
+    # exit()
     # Iterate through the ephemeris to add information
     for body in tqdm(EPHEMERIS_BODIES):
         cache_file = get_ephemeris_info(body, cache_file)
@@ -324,6 +326,45 @@ def invoke():
     cel_objs = s_list + m_list + c_list
     if len(cel_objs) > 0:
         write_out(cel_objs, code=1)
+        fixed_objs = list()
+        for c in cel_objs:
+            if str(list(c.keys())[0]).lower() in cache_file:
+                ra, dec = ra_dec_to_deg(
+                    cache_file[str(list(c.keys())[0]).lower()]["Coordinates"]["ra"],
+                    cache_file[str(list(c.keys())[0]).lower()]["Coordinates"]["dec"],
+                )
+                celestial_obj_coord = SkyCoord(ra=ra * u.deg, dec=dec * u.deg)
+                fixed_objs.append(
+                    FixedTarget(
+                        coord=celestial_obj_coord, name=str(list(c.keys())[0]).title()
+                    )
+                )
+            elif str(list(c.keys())[0]) in MESSIER_OBJECTS:
+                ra, dec = ra_dec_to_deg(
+                    MESSIER_OBJECTS[str(list(c.keys())[0])]["Coordinates"]["ra"],
+                    MESSIER_OBJECTS[str(list(c.keys())[0])]["Coordinates"]["dec"],
+                )
+                celestial_obj_coord = SkyCoord(ra=ra * u.deg, dec=dec * u.deg)
+                fixed_objs.append(
+                    FixedTarget(
+                        coord=celestial_obj_coord,
+                        name=str(list(c.keys())[0]),
+                    )
+                )
+            elif str(list(c.keys())[0]) in CALDWELL_OBJECTS:
+                ra, dec = ra_dec_to_deg(
+                    CALDWELL_OBJECTS[str(list(c.keys())[0])]["Coordinates"]["ra"],
+                    CALDWELL_OBJECTS[str(list(c.keys())[0])]["Coordinates"]["dec"],
+                )
+                celestial_obj_coord = SkyCoord(ra=ra * u.deg, dec=dec * u.deg)
+                fixed_objs.append(
+                    FixedTarget(
+                        coord=celestial_obj_coord,
+                        name=str(list(c.keys())[0]),
+                    )
+                )
+        write_out(fixed_objs, code=2)
+
     else:
         Logger.log("No visible objects in the given range.")
 
@@ -406,14 +447,8 @@ def get_visible(object_name: str, ra, dec) -> tuple:
         if ra == "-" and dec == "-":
             return "-", "-", "-", "-"
         if isinstance(ra, list) and isinstance(dec, list):
-            ra = ((ra[0] + (ra[1] / 60) + (ra[2] / 3600)) / 24) * 360
-            dec = dec[0] + (dec[1] / 60) + (dec[2] / 3600)
-        # elif isinstance(ra, float) and isinstance(dec, float):
-        #     pass
-        # elif isinstance(ra, numpy.float64) and isinstance(dec, numpy.float64):
-        #     pass
+            ra, dec = ra_dec_to_deg(ra, dec)
         celestial_obj_coord = SkyCoord(ra=ra * u.deg, dec=dec * u.deg)
-        # celestial_obj = FixedTarget.from_name(object_name)
         celestial_obj = FixedTarget(coord=celestial_obj_coord, name=object_name)
         start_altitude, start_azimuth, end_altitude, end_azimuth = is_object_visible(
             celestial_obj=celestial_obj, secz_max=Const.SECZ_MAX
@@ -467,3 +502,18 @@ def write_out(celestial_objs: list, code=0, filename=None):
         Logger.log("Writing objects to HTML table")
         to_html_table(celestial_objs)
         Logger.log("Wrote HTML table.")
+    if code == 2:
+        Logger.log("Generating plots")
+        if not os.path.isdir(Path(Const.SLIDESHOW_DIR, "PySkySlideshow", "plots")):
+            os.makedirs(Path(Const.SLIDESHOW_DIR, "PySkySlideshow", "plots"))
+        for celestial_obj in celestial_objs:
+            generate_plot(celestial_obj)
+        Logger.log("Plots generated.")
+
+
+def ra_dec_to_deg(ra: list, dec: list) -> tuple:
+    if isinstance(ra, list) and isinstance(dec, list):
+        return ((ra[0] + (ra[1] / 60) + (ra[2] / 3600)) / 24) * 360, dec[0] + (
+            dec[1] / 60 + (dec[2] / 3600)
+        )
+    return ra, dec

@@ -2,6 +2,7 @@
 import json
 import os
 from pathlib import Path
+from .const import Const
 
 
 def parse_messier(root_dir: str) -> dict:
@@ -24,11 +25,10 @@ def check_messier(celestial_obj):
     :param celestial_obj: Object to check in the messier catalog.
     :return: The object if it exists
     """
-    messier_catalog = parse_messier()
-    for key, _ in messier_catalog.items():
-        if key == celestial_obj:
-            return messier_catalog[key]["Brightness"]
-    return None
+    messier_catalog = parse_messier(Const.ROOT_DIR)
+    if celestial_obj in messier_catalog:
+        return True
+    return False
 
 
 def parse_caldwell(root_dir: str) -> dict:
@@ -51,8 +51,7 @@ def check_caldwell(celestial_obj):
     :param celestial_obj: Object to check in the caldwell catalouge.
     :return: The object if it exists
     """
-    caldwell_catalog = parse_caldwell(None)
-    for key, _ in caldwell_catalog.items():
-        if key == celestial_obj:
-            return caldwell_catalog[key]["Brightness"]
-    return None
+    caldwell_catalog = parse_caldwell(Const.ROOT_DIR)
+    if celestial_obj in caldwell_catalog:
+        return True
+    return False

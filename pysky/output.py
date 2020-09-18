@@ -2,6 +2,14 @@
 
 from pathlib import Path
 
+import astropy.units as u
+import matplotlib.pyplot as plt
+from astroplan import Observer
+from astroplan.plots import plot_sky
+from astropy.time import Time
+from numpy import linspace
+from .logger import Logger
+
 from .const import Const
 from .html_list import HTML_list
 from .html_table import HTML_table
@@ -21,3 +29,43 @@ def to_html_table(items: list, filename=""):
     for item in items:
         html_table.add_row(item)
     html_table.dump(filename)
+
+
+def generate_plot(celestial_obj):
+    """
+    Generate the plot of the given target.
+
+    :param celestial_obj: FixedTarget object to find.
+    """
+    Logger.log(f"Generating plot for {celestial_obj.name}")
+    plt.figure(figsize=(8, 6))
+    location = Observer(
+        longitude=Const.LATITUDE * u.deg,
+        latitude=Const.LONGITUDE * u.deg,
+        elevation=Const.ELEVATION * u.m,
+        name="location",
+        timezone="US/Central",
+    )
+    start_time = Time(
+        f"{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY} {Const.START_TIME}"
+    )
+    end_time = Time(
+        f"{Const.END_YEAR}-{Const.END_MONTH}-{Const.END_DAY} {Const.END_TIME}"
+    )
+    delta_t = end_time - start_time
+    time_range = start_time + delta_t * linspace(-4, 5, 10)
+    plot_sky(celestial_obj, location, time_range)
+    plt.legend(loc="lower left", bbox_to_anchor=(0.85, 0.0))
+    plt.savefig(
+        Path(
+            Const.SLIDESHOW_DIR,
+            "PySkySlideshow",
+            "plots",
+            f"{str(celestial_obj.name).replace(' ', '')}_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}.png",
+        ),
+        dpi=300,
+        format="png",
+    )
+    Logger.log(
+        f"Plot for {celestial_obj.name} generated at {Path(Const.SLIDESHOW_DIR,'PySkySlideshow','plots')}"
+    )

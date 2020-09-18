@@ -26,6 +26,7 @@ html5lib==1.0.1
 idna==2.8
 imagesize==1.2.0
 jeepney==0.4.3
+jplephem==2.15
 Jinja2==2.11.2
 keyring==21.2.1
 MarkupSafe==1.1.1
@@ -68,3 +69,5 @@ urllib3==1.24.3
 virtualenv==20.0.21
 watchdog==0.9.0
 webencodings==0.5.1
+matplotlib<3.3
+setuptools~=47.1.0

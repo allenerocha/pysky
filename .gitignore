@@ -23,6 +23,6 @@ pysky/PySky.egg-info/
 
 pysky/data/cache
 
-pysky/data/log
+pysky/data/output.log
 
 .idea/
