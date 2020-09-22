@@ -8,17 +8,17 @@ from astroplan import Observer
 from astroplan.plots import plot_sky
 from astropy.time import Time
 from numpy import linspace
-from .logger import Logger
 
 from .const import Const
 from .html_list import HTML_list
 from .html_table import HTML_table
+from .logger import Logger
 
 
 def to_html_list(items: list, filename: str) -> None:
     html_list = HTML_list(items, delimiter=",")
     with open(
-        Path(Const.SLIDESHOW_DIR, "PySkySlideShow", f"{filename}.html"), "w"
+        Path(Const.SLIDESHOW_DIR, "PySkySlideshow", f"{filename}.html"), "w"
     ) as out_file:
         out_file.write(html_list.__str__())
 
