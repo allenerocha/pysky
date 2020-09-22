@@ -396,13 +396,12 @@ def query_jpl_horizons(ephemeris_objs: list) -> tuple:
 
     :param ephemeris_objs: List of objects to retrieve data for.
     """
-    with ThreadPoolExecutor(max_workers=Const.THREADS) as executor:
-        results = executor.map(ephemeris_query, ephemeris_objs)
 
     unknown_objs = list()
     known_objs = list()
-    for result in results:
-        ephemeris, celestial_obj = result
+
+    for ephemeris_obj in ephemeris_objs:
+        ephemeris, celestial_obj = ephemeris_query(ephemeris_obj)
         if ephemeris is not None:
             known_objs.append(ephemeris)
         else:
@@ -410,6 +409,7 @@ def query_jpl_horizons(ephemeris_objs: list) -> tuple:
     ephemeris = dict()
     for obj in known_objs:
         ephemeris.update(obj)
+
     return unknown_objs, ephemeris
 
 
