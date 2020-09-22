@@ -1,6 +1,9 @@
 PySky
 =====
 
+.. image:: http://img.shields.io/badge/powered%20by-AstroPy-orange.svg?style=flat
+    :alt: AstroPy
+    :target: https://www.astropy.org/
 .. image:: https://travis-ci.org/allenerocha/pysky.svg?branch=master
     :alt: Travis (.org)
     :target: https://travis-ci.org/allenerocha/pysky

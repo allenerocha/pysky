@@ -61,10 +61,10 @@ def generate_plot(celestial_obj):
             Const.SLIDESHOW_DIR,
             "PySkySlideshow",
             "plots",
-            f"{str(celestial_obj.name).replace(' ', '')}_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}.png",
+            f"{str(celestial_obj.name).replace(' ', '')}_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}.svg",
         ),
         dpi=300,
-        format="png",
+        format="svg",
     )
     Logger.log(
         f"Plot for {celestial_obj.name} generated at {Path(Const.SLIDESHOW_DIR,'PySkySlideshow','plots')}"
