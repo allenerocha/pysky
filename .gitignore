@@ -9,8 +9,6 @@ utils/__pycache__/
 
 slideshow/
 
-pysky/data/user_prefs.cfg
-
 venv/
 
 build/
