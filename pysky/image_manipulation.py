@@ -23,6 +23,7 @@ def overlay_text(celestial_obj: str) -> None:
     :img: Image file to overlay the text
     :overlay_text: List of text to overlay on the image
     """
+    conv_str = "1 Pm = 1 000 000 000 000 000 meters"
     cache_file = json.loads(open(Path(Const.ROOT_DIR, "data", "cache"), "r").read())
     overlay_txt = list()
 
@@ -46,7 +47,7 @@ def overlay_text(celestial_obj: str) -> None:
         overlay_txt.append(
             "Distance (petameters): " + f"{m_catalog[celestial_obj]['Distance']} Pm "
         )
-        overlay_txt.append("1 Pm = 1 000 000 000 000 000 meters")
+        overlay_txt.append(conv_str)
         img = add_text(img, overlay_txt)
         img.save(
             fp=Path(
@@ -56,7 +57,6 @@ def overlay_text(celestial_obj: str) -> None:
             ),
             format="PNG",
         )
-        os.remove(Path(Const.ROOT_DIR, "data", f"{celestial_obj}.temp.jpg"))
         Logger.log(f"Overlaid text for {celestial_obj}")
 
     elif check_caldwell(celestial_obj):
@@ -88,7 +88,7 @@ def overlay_text(celestial_obj: str) -> None:
         overlay_txt.append(
             "Distance (petameters): " + f"{c_catalogue[celestial_obj]['Distance']} Pm "
         )
-        overlay_txt.append("1 Pm = 1 000 000 000 000 000 meters")
+        overlay_txt.append(conv_str)
         img = add_text(img, overlay_txt)
         img.save(
             fp=Path(
@@ -98,30 +98,36 @@ def overlay_text(celestial_obj: str) -> None:
             ),
             format="PNG",
         )
-        os.remove(Path(Const.ROOT_DIR, "data", f"{celestial_obj}.temp.jpg"))
 
     elif celestial_obj.lower() in cache_file:
         Logger.log(f"Overlaying text for {celestial_obj}")
+        if not os.path.isdir(Path(Const.SLIDESHOW_DIR, "PySkySlideshow", "garbage")):
+            Logger.log("Garbage directory not found! Creating it.", 30)
+            os.makedirs(Path(Const.SLIDESHOW_DIR, "PySkySlideshow", "garbage"))
+        Logger.log("Reading image data.")
         decoded_img = base64.b64decode(
             cache_file[celestial_obj]["Image"]["Base64"][1:-1]
         )
+        Logger.log("Loading image data.")
         img = PIL.Image.open(io.BytesIO(decoded_img))
+        Logger.log("Generating image text.")
         overlay_txt = [
             f"Name: {celestial_obj.capitalize()}",
             f"Constellation: {cache_file[celestial_obj]['Constellation']}",
             f"Brightness: {cache_file[celestial_obj]['Brightness']}",
             f"Distance: {cache_file[celestial_obj]['Distance']} Pm",
-            "1 Pm = 1 000 000 000 000 000 meters",
+            conv_str,
         ]
         img = add_text(img, overlay_txt)
         Logger.log(f"Adding edited image of {celestial_obj} to cache file...")
-        # img.save(
-        #     fp=Path(
-        #         Const.ROOT_DIR,
-        #         "data",
-        #         f"{celestial_obj}.temp.jpg",
-        #     )
-        # )
+        img.save(
+            fp=Path(
+                Const.SLIDESHOW_DIR,
+                "PySkySlideshow",
+                "garbage",
+                f"{celestial_obj}.temp.jpg",
+            )
+        )
 
         with open(Path(Const.ROOT_DIR, "data", "cache"), "w") as json_out:
             Logger.log("Saving edited cache file...")
@@ -131,18 +137,12 @@ def overlay_text(celestial_obj: str) -> None:
                 fp=Path(
                     Const.SLIDESHOW_DIR,
                     "PySkySlideshow",
-                    f"{celestial_obj.title().replace(' ', '_')}-{cache_file[celestial_obj]['Image']['Width']}-{cache_file[celestial_obj]['Image']['Height']}-{cache_file[celestial_obj]['Image']['Resolution']}-{cache_file[celestial_obj]['Image']['Brightness scaling']}.png",
+                    f"{celestial_obj.title().replace(' ', '_')}-{cache_file[celestial_obj]['Image']['Width']}-"
+                    f"{cache_file[celestial_obj]['Image']['Height']}-{cache_file[celestial_obj]['Image']['Resolution']}"
+                    f"-{cache_file[celestial_obj]['Image']['Brightness scaling']}.png",
                 ),
                 format="PNG",
             )
-
-        os.remove(
-            Path(
-                Const.ROOT_DIR,
-                "data",
-                f"{celestial_obj}.temp.jpg",
-            )
-        )
 
 
 def add_text(img: object, overlay_txt: list) -> object:
@@ -192,7 +192,7 @@ def add_text(img: object, overlay_txt: list) -> object:
 
 def img_garbage_collection():
     for img in [
-        Path(Const.ROOT_DIR, "data") / f
+        Path(Const.SLIDESHOW_DIR, "PySkySlideshow", "garbage") / f
         for f in os.listdir(Path(Const.ROOT_DIR, "data"))
         if ".temp.jpg" in f
     ]:

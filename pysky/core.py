@@ -377,6 +377,8 @@ def set_simbad_values(celestial_obj: str, cache_file: dict) -> dict:
     :param cache_file: Opened cache file to apply changes to.
     :return: Cache file with added simbad values.
     """
+    if celestial_obj not in cache_file:
+        cache_file[celestial_obj] = dict()
     cache_file[celestial_obj]["Type"] = get_classification(celestial_obj)
 
     cache_file[celestial_obj]["Brightness"] = get_brightness(celestial_obj)

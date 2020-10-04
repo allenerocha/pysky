@@ -16,14 +16,14 @@ def get_classification(celestial_obj: str) -> str:
     """
     Scrape the simbad website to get the object's classification.
 
-    :param celestial_obj: name celestial object to retreieve the brightness of.
+    :param celestial_obj: name celestial object to retrieve the brightness of.
     :return: the brightness of the passed celestial object.
     """
     Logger.log(f"Retrieving classification for {celestial_obj}...")
     regex = re.compile(r"\s*\r?\n")
     endpoint = f"http://simbad.u-strasbg.fr/simbad/sim-basic?Ident={celestial_obj}&submit=SIMBAD+search"
-    webdata = requests.get(endpoint).text
-    soup = BeautifulSoup(webdata, "html.parser")
+    web_data = requests.get(endpoint).text
+    soup = BeautifulSoup(web_data, "html.parser")
     classification = soup.find("td", attrs={"id": "basic_data"}).find("font").text
     if classification is not None:
         Logger.log(f"Found classification for {celestial_obj}!")
@@ -39,7 +39,7 @@ def get_brightness(celestial_obj: str) -> float:
     """
     Make a request to the simbad website to retrieve a brightness.
 
-    :param celestial_obj: name celestial object to retreieve the brightness of.
+    :param celestial_obj: name celestial object to retrieve the brightness of.
     :return: the brightness of the passed celestial object.
     """
 
@@ -137,7 +137,7 @@ def get_brightness(celestial_obj: str) -> float:
 def get_constellation(celestial_obj: str) -> str:
     """
     This function returns the TLA of the constellation from the passed object.
-    :param celestial_obj: name celestial object to retreieve the TLA.
+    :param celestial_obj: name celestial object to retrieve the TLA.
     :return: TLA of the constellation.
     """
     astroquery.simbad.Simbad.reset_votable_fields()
@@ -182,15 +182,15 @@ def get_constellation(celestial_obj: str) -> str:
 
 def get_ra_dec(celestial_obj: str) -> list:
     """
-    This function uses simbad to retrieve the right acension
+    This function uses simbad to retrieve the right ascension
     and declination from the object passed as an argument.
     :param celestial_obj: name of the celestial
-                          object to retreive the ra and dec.
-    :return: List of the right acension and declination.
+                          object to retrieve the ra and dec.
+    :return: List of the right ascension and declination.
     """
     astroquery.simbad.Simbad.reset_votable_fields()
     astroquery.simbad.Simbad.remove_votable_fields("main_id")
-    Logger.log(f"Retreiving right acension and declination for {celestial_obj}...")
+    Logger.log(f"Retrieving right ascension and declination for {celestial_obj}...")
     ras = astroquery.simbad.Simbad.query_object(f"{celestial_obj}")[0][0].split()
     try:
         ra = [int(float(r)) for r in ras]
@@ -207,14 +207,14 @@ def get_ra_dec(celestial_obj: str) -> list:
 def get_distance(celestial_obj: str) -> float:
     """
     Calculate the distance in Pm.
-    :param celestial_obj: Obejct to query simbad.
+    :param celestial_obj: Object to query simbad.
     :return: Distance of the object in Pm.
     """
     astroquery.simbad.Simbad.reset_votable_fields()
     astroquery.simbad.Simbad.add_votable_fields("parallax")
     astroquery.simbad.Simbad.remove_votable_fields("main_id")
     astroquery.simbad.Simbad.remove_votable_fields("coordinates")
-    Logger.log(f"Retreiving distance for {celestial_obj}...")
+    Logger.log(f"Retrieving distance for {celestial_obj}...")
     parsec_dist = astroquery.simbad.Simbad.query_object(celestial_obj)[0][0]
 
     if parsec_dist is None:

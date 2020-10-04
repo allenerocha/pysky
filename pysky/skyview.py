@@ -93,10 +93,24 @@ def get_skyview_img(celestial_obj: str) -> int:
     Logger.log(f"Downloading image of {celestial_obj}...")
     t1 = time.time()
     urllib.request.urlretrieve(
-        img_url, Path(root_dir, "data", f"{celestial_obj}.temp.jpg")
+        img_url,
+        Path(
+            Const.SLIDESHOW_DIR,
+            "PySkySlideshow",
+            "garbage",
+            f"{celestial_obj}.temp.jpg",
+        ),
     )
     img_bytes = base64.b64encode(
-        open(Path(root_dir, "data", f"{celestial_obj}.temp.jpg"), "rb").read()
+        open(
+            Path(
+                Const.SLIDESHOW_DIR,
+                "PySkySlideshow",
+                "garbage",
+                f"{celestial_obj}.temp.jpg",
+            ),
+            "rb",
+        ).read()
     )
     Logger.log(f"Downloaded successfully in {time.time() - t1} seconds!")
 
