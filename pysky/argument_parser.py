@@ -1,6 +1,7 @@
 """This module parses the passed CLI options."""
 import argparse
 from datetime import date, timedelta
+from pathlib import Path
 
 from .const import Const
 
@@ -11,7 +12,7 @@ def cli_parse():
     # TODO Add support for JSON config file overwriting
     # TODO Add support for launching a GUI
 
-    open(f"{Const.ROOT_DIR}/data/log", "w").write("")
+    open(Path(Const.ROOT_DIR, "data", "output.log"), "w").write("")
     parser = argparse.ArgumentParser(
         description="pysky is an interactive module that allows the "
         + "user to check the sky given a date and time allowing them "
