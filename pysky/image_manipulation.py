@@ -1,7 +1,5 @@
 """This module will be used to overlay information of the
 celestial body over image of the celestial body using PIL"""
-import base64
-import io
 import json
 import os
 from pathlib import Path
@@ -104,12 +102,15 @@ def overlay_text(celestial_obj: str) -> None:
         if not os.path.isdir(Path(Const.SLIDESHOW_DIR, "PySkySlideshow", "garbage")):
             Logger.log("Garbage directory not found! Creating it.", 30)
             os.makedirs(Path(Const.SLIDESHOW_DIR, "PySkySlideshow", "garbage"))
-        Logger.log("Reading image data.")
-        decoded_img = base64.b64decode(
-            cache_file[celestial_obj]["Image"]["Base64"][1:-1]
-        )
         Logger.log("Loading image data.")
-        img = PIL.Image.open(io.BytesIO(decoded_img))
+        img = PIL.Image.open(
+            Path(
+                Const.SLIDESHOW_DIR,
+                "PySkySlideshow",
+                "garbage",
+                f"{celestial_obj}.temp.jpg",
+            )
+        )
         Logger.log("Generating image text.")
         overlay_txt = [
             f"Name: {celestial_obj.capitalize()}",
@@ -137,9 +138,7 @@ def overlay_text(celestial_obj: str) -> None:
                 fp=Path(
                     Const.SLIDESHOW_DIR,
                     "PySkySlideshow",
-                    f"{celestial_obj.title().replace(' ', '_')}-{cache_file[celestial_obj]['Image']['Width']}-"
-                    f"{cache_file[celestial_obj]['Image']['Height']}-{cache_file[celestial_obj]['Image']['Resolution']}"
-                    f"-{cache_file[celestial_obj]['Image']['Brightness scaling']}.png",
+                    f"{celestial_obj.title().replace(' ', '_')}.png",
                 ),
                 format="PNG",
             )

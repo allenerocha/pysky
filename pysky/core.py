@@ -64,7 +64,6 @@ def invoke():
     cache_file = json.loads(open(cache_path, "r").read())
 
     set_img_txt(STARS)
-    # exit()
     # Iterate through the ephemeris to add information
     for body in tqdm(EPHEMERIS_BODIES):
         cache_file = get_ephemeris_info(body, cache_file)
