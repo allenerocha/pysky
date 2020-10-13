@@ -255,8 +255,8 @@ def invoke():
                 30,
             )
 
-    # set_img_txt(visible_messier)
-    # set_img_txt(visible_caldwell)
+    set_img_txt(visible_messier)
+    set_img_txt(visible_caldwell)
 
     s_list = list()
     v_obj = dict()
