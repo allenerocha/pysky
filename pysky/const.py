@@ -21,3 +21,4 @@ class Const(object):
     ELEVATION = 0.0
     MIN_V = 4.5
     SECZ_MAX = 3.0
+    MOON_PHASE = ""

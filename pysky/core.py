@@ -307,6 +307,75 @@ def invoke():
     for f in to_prune:
         v_obj.pop(f, None)
 
+    moon_data, _ = ephemeris_query("Moon")
+    moon_data = moon_data.pop("Moon")
+
+    months = {
+        "01": "Jan",
+        "02": "Feb",
+        "03": "Mar",
+        "04": "Apr",
+        "05": "May",
+        "06": "Jun",
+        "07": "Jul",
+        "08": "Aug",
+        "09": "Sep",
+        "10": "Oct",
+        "11": "Nov",
+        "12": "Dec",
+    }
+
+    v_obj["Luna"] = {
+        "Type": f"Moon: {Const.MOON_PHASE}",
+        "Start Alt. (°)": round(
+            float(
+                moon_data[
+                    f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
+                ]["alt"]
+            )
+        ),
+        "Start Az. (°)": round(
+            float(
+                moon_data[
+                    f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
+                ]["az"]
+            )
+        ),
+        "End Alt. (°)": round(
+            float(
+                moon_data[
+                    f"{Const.END_YEAR}-{months[str(Const.END_MONTH)]}-{Const.END_DAY} {Const.END_TIME}"
+                ]["alt"]
+            )
+        ),
+        "End Az. (°)": round(
+            float(
+                moon_data[
+                    f"{Const.END_YEAR}-{months[str(Const.END_MONTH)]}-{Const.END_DAY} {Const.END_TIME}"
+                ]["az"]
+            )
+        ),
+        "Constellation": moon_data["Constellation"],
+        "Brightness": round(
+            float(
+                moon_data[
+                    f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
+                ]["Brightness"]
+            ),
+            1,
+        ),
+        "Distance": int(
+            float(
+                "%.2g"
+                % (
+                    moon_data[
+                        f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
+                    ]["Distance"]
+                )
+            )
+        ),
+    }
+
     for key, value in v_obj.items():
         s_list.append({str(key).title(): value})
 
@@ -476,6 +545,7 @@ def get_visible(object_name: str, ra, dec) -> tuple:
 def gen_moon_data():
     Logger.log("Retrieving data for tonight's moon...")
     illumination, phase = query()
+    Const.MOON_PHASE = phase
     Logger.log("Data for tonight's moon:")
     Logger.log(f"Illumination: {illumination}\tPhase: {phase}")
     Logger.log(f"Writing data to `{Const.SLIDESHOW_DIR}/PySkySlideshow/`...")
