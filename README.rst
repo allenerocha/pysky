@@ -16,6 +16,9 @@ PySky
 .. image:: https://img.shields.io/badge/license-AGPLv3-green
      :alt: License:AGPLv3
     :target: https://www.gnu.org/licenses/agpl-3.0.en.html
+.. image:: https://img.shields.io/github/last-commit/allenerocha/pysky
+    :alt: GitHub last commit
+    :target: https://www.github.com/allenerocha/pysky/commits/master
 
 Download & Installation
 =======================
