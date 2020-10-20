@@ -364,15 +364,13 @@ def invoke():
             ),
             1,
         ),
-        "Distance": int(
+        "Distance": round(
             float(
-                "%.2g"
-                % (
-                    moon_data[
-                        f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
-                    ]["Distance"]
-                )
-            )
+                moon_data[
+                    f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
+                ]["Distance"]
+            ),
+            8,
         ),
     }
 
