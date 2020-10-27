@@ -7,7 +7,7 @@ from pathlib import Path
 import astropy
 import astropy.units as u
 from astroplan import FixedTarget
-from astropy.coordinates import Angle, SkyCoord
+from astropy.coordinates import SkyCoord
 from tqdm import tqdm
 
 from .argument_parser import cli_parse
@@ -364,13 +364,19 @@ def invoke():
             ),
             1,
         ),
-        "Distance": round(
+        "Distance": "{:.7f}".format(
             float(
-                moon_data[
-                    f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
-                ]["Distance"]
-            ),
-            8,
+                str(
+                    round(
+                        float(
+                            moon_data[
+                                f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
+                            ]["Distance"]
+                        ),
+                        8,
+                    )
+                ).upper()
+            )
         ),
     }
 
