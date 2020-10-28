@@ -325,46 +325,68 @@ def invoke():
         "12": "Dec",
     }
 
-    v_obj["Luna"] = {
-        "Type": f"Moon: {Const.MOON_PHASE}",
-        "Start Alt. (°)": round(
+    v_obj["Luna"] = dict()
+    
+    try:
+        v_obj["Luna"]["Type"] = f"Moon: {Const.MOON_PHASE}"
+    except KeyError:
+        v_obj["Luna"]["Type"] = "-"
+    try:
+        v_obj["Luna"]["Start Alt. (°)"] = round(
             float(
                 moon_data[
                     f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
                 ]["alt"]
-            )
-        ),
-        "Start Az. (°)": round(
+            ))
+    except KeyError:
+        v_obj["Luna"]["Start Alt. (°)"] = "-"
+    try:
+        v_obj["Luna"]["Start Az. (°)"] = round(
             float(
                 moon_data[
                     f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
                 ]["az"]
             )
-        ),
-        "End Alt. (°)": round(
+        )
+    except KeyError:
+        v_obj["Luna"]["Start Az. (°)"] = "-"
+    try:
+        v_obj["Luna"]["End Alt. (°)"] = round(
             float(
                 moon_data[
                     f"{Const.END_YEAR}-{months[str(Const.END_MONTH)]}-{Const.END_DAY} {Const.END_TIME}"
                 ]["alt"]
             )
         ),
-        "End Az. (°)": round(
+    except KeyError:
+        v_obj["Luna"]["End Alt. (°)"] = "-"
+    try:
+        v_obj["Luna"]["End Az. (°)"] = round(
             float(
                 moon_data[
                     f"{Const.END_YEAR}-{months[str(Const.END_MONTH)]}-{Const.END_DAY} {Const.END_TIME}"
                 ]["az"]
             )
-        ),
-        "Constellation": moon_data["Constellation"],
-        "Brightness": round(
+        )
+    except KeyError:
+        v_obj["Luna"]["End Az. (°)"] = "-"
+    try:
+        v_obj["Luna"]["Constellation"] = moon_data["Constellation"]
+    except KeyError:
+        v_obj["Luna"]["Constellation"] = "-"
+    try:
+        v_obj["Luna"]["Brightness"] = round(
             float(
                 moon_data[
                     f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
                 ]["Brightness"]
             ),
             1,
-        ),
-        "Distance": "{:.7f}".format(
+        )
+    except KeyError:
+        v_obj["Luna"]["Brightness"] = "-"
+    try:
+        v_obj["Luna"]["Distance"] = "{:.7f}".format(
             float(
                 str(
                     round(
@@ -377,8 +399,9 @@ def invoke():
                     )
                 ).upper()
             )
-        ),
-    }
+        )
+    except KeyError:
+        v_obj["Luna"]["Distance"] = "-"
 
     for key, value in v_obj.items():
         s_list.append({str(key).title(): value})
