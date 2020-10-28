@@ -24,8 +24,7 @@ def query() -> tuple:
     soup.prettify()
     text = soup.text.split("var jArray=")[1].split(";")[0]
     data = json.loads(tags.sub("", text))
-
-    for item in data["2"]:
+    for item in data[2]:
         if "illumination" in item.lower():
             illumination = item.replace("Illumination: ", "")
 
