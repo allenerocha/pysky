@@ -300,7 +300,19 @@ def invoke():
         except KeyError:
             v_obj[star]["Brightness"] = "-"
         try:
-            v_obj[star]["Distance (Pm)"] = cache_file[star]["Distance"]
+            if "e" in str(cache_file[star]["Distance"]):
+                v_obj[star]["Distance (Pm)"] = "{:.5f}".format(
+                    float(
+                        str(
+                            round(
+                                float(cache_file[star]["Distance"]),
+                               6,
+                            )
+                        ).upper()
+                    )
+                )
+            else:
+                v_obj[star]["Distance (Pm)"] = cache_file[star]["Distance"]
         except KeyError:
             v_obj[star]["Distance (Pm)"] = "-"
 
