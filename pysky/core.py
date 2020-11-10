@@ -306,7 +306,7 @@ def invoke():
                         str(
                             round(
                                 float(cache_file[star]["Distance"]),
-                               6,
+                                6,
                             )
                         ).upper()
                     )
@@ -338,7 +338,7 @@ def invoke():
     }
 
     v_obj["Luna"] = dict()
-    
+
     try:
         v_obj["Luna"]["Type"] = f"Moon: {Const.MOON_PHASE}"
     except KeyError:
@@ -349,7 +349,8 @@ def invoke():
                 moon_data[
                     f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
                 ]["alt"]
-            ))
+            )
+        )
     except KeyError:
         v_obj["Luna"]["Start Alt. (°)"] = "-"
     try:
@@ -363,13 +364,15 @@ def invoke():
     except KeyError:
         v_obj["Luna"]["Start Az. (°)"] = "-"
     try:
-        v_obj["Luna"]["End Alt. (°)"] = round(
-            float(
-                moon_data[
-                    f"{Const.END_YEAR}-{months[str(Const.END_MONTH)]}-{Const.END_DAY} {Const.END_TIME}"
-                ]["alt"]
-            )
-        ),
+        v_obj["Luna"]["End Alt. (°)"] = (
+            round(
+                float(
+                    moon_data[
+                        f"{Const.END_YEAR}-{months[str(Const.END_MONTH)]}-{Const.END_DAY} {Const.END_TIME}"
+                    ]["alt"]
+                )
+            ),
+        )
     except KeyError:
         v_obj["Luna"]["End Alt. (°)"] = "-"
     try:
