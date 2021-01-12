@@ -44,7 +44,7 @@ def generate_plot(celestial_obj):
         latitude=Const.LONGITUDE * u.deg,
         elevation=Const.ELEVATION * u.m,
         name="location",
-        timezone="US/Central",
+        timezone="UTC",
     )
     start_time = Time(
         f"{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY} {Const.START_TIME}"
@@ -53,7 +53,8 @@ def generate_plot(celestial_obj):
         f"{Const.END_YEAR}-{Const.END_MONTH}-{Const.END_DAY} {Const.END_TIME}"
     )
     delta_t = end_time - start_time
-    time_range = start_time + delta_t * linspace(-4, 5, 10)
+    linspace_count = int(delta_t.to_value('min')/15)
+    time_range = start_time + delta_t * linspace(0, 1, linspace_count)
     plot_sky(celestial_obj, location, time_range)
     plt.legend(loc="lower left", bbox_to_anchor=(0.85, 0.0))
     plt.savefig(
@@ -61,11 +62,20 @@ def generate_plot(celestial_obj):
             Const.SLIDESHOW_DIR,
             "PySkySlideshow",
             "plots",
-            f"{str(celestial_obj.name).replace(' ', '')}_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}.svg",
+            f"{str(celestial_obj.name).replace(' ', '')}_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}.pdf",
         ),
         dpi=300,
-        format="svg",
+        format="pdf",
     )
     Logger.log(
         f"Plot for {celestial_obj.name} generated at {Path(Const.SLIDESHOW_DIR,'PySkySlideshow','plots')}"
     )
+
+
+"""
+start_time = Time('YYYY-MM-DD HH:MM:SS')
+end_time = Time('YYYY-MM-DD HH:MM:SS')
+delta_t = end_time - start_time
+linspace_count = int(delta_t.to_value('min')/15)
+observe_time = start_time + delta_t*np.linspace(0, 1, linspace_count)
+"""
