@@ -15,7 +15,7 @@ from .logger import Logger
 PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
 
-def overlay_text(celestial_obj: str) -> None:
+def overlay_text(celestial_obj: str, extra_data=None) -> None:
     """
     This adds text to the image
     :img: Image file to overlay the text
@@ -96,6 +96,48 @@ def overlay_text(celestial_obj: str) -> None:
             ),
             format="PNG",
         )
+            
+    elif celestial_obj.lower() == "luna":
+        Logger.log(f"Overlaying text for {celestial_obj}")
+        if not os.path.isdir(Path(Const.SLIDESHOW_DIR, "PySkySlideshow", "garbage")):
+            Logger.log("Garbage directory not found! Creating it.", 30)
+            os.makedirs(Path(Const.SLIDESHOW_DIR, "PySkySlideshow", "garbage"))
+        Logger.log("Loading image data.")
+        
+        static_data_path = Path(Const.ROOT_DIR, "data", "static_data")
+        img = PIL.Image.open(
+            Path(static_data_path, f"{extra_data['Luna']['Type'].lower().replace('moon: ', '').replace(' ', '_')}.tif")
+        )
+        
+        Logger.log("Generating image text.")
+        overlay_txt = [
+            f"Name: Luna",
+            f"Type: {extra_data['Luna']['Type']}",
+            f"Constellation: {extra_data['Luna']['Constellation']}",
+            f"Brightness: {extra_data['Luna']['Brightness']}",
+            f"Distance: {extra_data['Luna']['Distance']} Pm",
+            conv_str,
+        ]
+        img = add_text(img, overlay_txt)
+        Logger.log(f"Adding edited image of {celestial_obj} to cache file...")
+        img.save(
+            fp=Path(
+                Const.SLIDESHOW_DIR,
+                "PySkySlideshow",
+                "garbage",
+                f"{celestial_obj}.temp.jpg",
+            )
+        )
+
+        
+        img.save(
+            fp=Path(
+                Const.SLIDESHOW_DIR,
+                "PySkySlideshow",
+                f"{celestial_obj.title().replace(' ', '_')}_{extra_data['Luna']['Type'].lower().replace('moon: ', '').replace(' ', '_')}_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}.pdf",
+            ),
+            format="pdf",
+        )
 
     elif celestial_obj.lower() in cache_file:
         Logger.log(f"Overlaying text for {celestial_obj}")
@@ -114,6 +156,7 @@ def overlay_text(celestial_obj: str) -> None:
         Logger.log("Generating image text.")
         overlay_txt = [
             f"Name: {celestial_obj.capitalize()}",
+            f"Type: {cache_file[celestial_obj]['Type']}",
             f"Constellation: {cache_file[celestial_obj]['Constellation']}",
             f"Brightness: {cache_file[celestial_obj]['Brightness']}",
             f"Distance: {cache_file[celestial_obj]['Distance']} Pm",
@@ -138,9 +181,9 @@ def overlay_text(celestial_obj: str) -> None:
                 fp=Path(
                     Const.SLIDESHOW_DIR,
                     "PySkySlideshow",
-                    f"{celestial_obj.title().replace(' ', '_')}.png",
+                    f"{celestial_obj.title().replace(' ', '_')}.pdf",
                 ),
-                format="PNG",
+                format="pdf",
             )
 
 
