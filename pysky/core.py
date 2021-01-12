@@ -417,6 +417,10 @@ def invoke():
         )
     except KeyError:
         v_obj["Luna"]["Distance"] = "-"
+        
+    
+    overlay_text("Luna", v_obj)
+    
 
     for key, value in v_obj.items():
         s_list.append({str(key).title(): value})
