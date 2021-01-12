@@ -37,6 +37,7 @@ def generate_plot(celestial_obj):
 
     :param celestial_obj: FixedTarget object to find.
     """
+    
     Logger.log(f"Generating plot for {celestial_obj.name}")
     plt.figure(figsize=(8, 6))
     location = Observer(
@@ -70,3 +71,6 @@ def generate_plot(celestial_obj):
     Logger.log(
         f"Plot for {celestial_obj.name} generated at {Path(Const.SLIDESHOW_DIR,'PySkySlideshow','plots')}"
     )
+    plt.clf()
+    plt.cla()
+    plt.close('all')
