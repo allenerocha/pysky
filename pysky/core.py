@@ -29,6 +29,7 @@ from .simbad import (
     get_ra_dec,
 )
 from .skyview import get_skyview_img
+from astroplan import download_IERS_A
 
 
 def invoke():
@@ -36,9 +37,10 @@ def invoke():
     Call all other relevant functions.
     """
 
-    check_integrity()
-
     cli_parse()
+
+    download_IERS_A()
+    check_integrity()
 
     CALDWELL_OBJECTS = parse_caldwell(Const.ROOT_DIR)
     MESSIER_OBJECTS = parse_messier(Const.ROOT_DIR)

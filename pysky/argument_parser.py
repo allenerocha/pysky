@@ -28,12 +28,12 @@ def cli_parse():
         "--startdate",
         help="Starting date if no other arguments "
         + "give, it defaults to one hour. Formatted "
-        + "as YYYY-DAY-MON",
+        + "as YYYY-MON-DAY",
         type=str,
     )
     parser.add_argument("-st", "--starttime", help="Starting time.", type=str)
     parser.add_argument(
-        "-ed", "--enddate", help="Ending date. Formatted as YYYY-DAY-MON.", type=str
+        "-ed", "--enddate", help="Ending date. Formatted as YYYY-MON-DAY.", type=str
     )
     parser.add_argument("-et", "--endtime", help="Ending time.", type=str)
     parser.add_argument(

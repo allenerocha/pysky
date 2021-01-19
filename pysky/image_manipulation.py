@@ -108,7 +108,6 @@ def overlay_text(celestial_obj: str, extra_data=None) -> None:
         img = PIL.Image.open(
             Path(static_data_path, f"{extra_data['Luna']['Type'].lower().replace('moon: ', '').replace(' ', '_')}.jpg")
         )
-        
         Logger.log("Generating image text.")
         overlay_txt = [
             f"Name: Luna",
