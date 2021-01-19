@@ -153,7 +153,7 @@ def invoke():
             ):
                 Logger.log(f"Successfully gathered data for {m_obj}!\n")
                 visible[str(m_obj)] = dict()
-                visible[str(m_obj)]["Type"] = MESSIER_OBJECTS[m_obj]["Type"]
+                visible[str(m_obj)]["Type"] = MESSIER_OBJECTS[m_obj]["Type"].title()
                 try:
                     visible[str(m_obj)]["Start Alt. (°)"] = round(
                         float(start_altitude.to_string(decimal=True))
@@ -214,7 +214,7 @@ def invoke():
             ):
                 Logger.log(f"Successfully gathered data for {c_obj}!\n")
                 visible[str(c_obj)] = dict()
-                visible[str(c_obj)]["Type"] = CALDWELL_OBJECTS[c_obj]["Type"]
+                visible[str(c_obj)]["Type"] = CALDWELL_OBJECTS[c_obj]["Type"].title()
                 try:
                     visible[str(c_obj)]["Start Alt. (°)"] = round(
                         float(start_altitude.to_string(decimal=True))
@@ -339,13 +339,13 @@ def invoke():
         "12": "Dec",
     }
 
-    v_obj["Luna"] = dict()
+    v_obj["Moon"] = dict()
     try:
-        v_obj["Luna"]["Type"] = f"Moon: {Const.MOON_PHASE}"
+        v_obj["Moon"]["Type"] = f"Satellite (Phase: {Const.MOON_PHASE})"
     except KeyError:
-        v_obj["Luna"]["Type"] = "-"
+        v_obj["Moon"]["Type"] = "-"
     try:
-        v_obj["Luna"]["Start Alt. (°)"] = round(
+        v_obj["Moon"]["Start Alt. (°)"] = round(
             float(
                 moon_data[
                     f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
@@ -353,9 +353,9 @@ def invoke():
             )
         )
     except KeyError:
-        v_obj["Luna"]["Start Alt. (°)"] = "-"
+        v_obj["Moon"]["Start Alt. (°)"] = "-"
     try:
-        v_obj["Luna"]["Start Az. (°)"] = round(
+        v_obj["Moon"]["Start Az. (°)"] = round(
             float(
                 moon_data[
                     f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
@@ -363,9 +363,9 @@ def invoke():
             )
         )
     except KeyError:
-        v_obj["Luna"]["Start Az. (°)"] = "-"
+        v_obj["Moon"]["Start Az. (°)"] = "-"
     try:
-        v_obj["Luna"]["End Alt. (°)"] = round(
+        v_obj["Moon"]["End Alt. (°)"] = round(
                 float(
                     moon_data[
                         f"{Const.END_YEAR}-{months[str(Const.END_MONTH)]}-{Const.END_DAY} {Const.END_TIME}"
@@ -373,9 +373,9 @@ def invoke():
                 )
             )
     except KeyError:
-        v_obj["Luna"]["End Alt. (°)"] = "-"
+        v_obj["Moon"]["End Alt. (°)"] = "-"
     try:
-        v_obj["Luna"]["End Az. (°)"] = round(
+        v_obj["Moon"]["End Az. (°)"] = round(
             float(
                 moon_data[
                     f"{Const.END_YEAR}-{months[str(Const.END_MONTH)]}-{Const.END_DAY} {Const.END_TIME}"
@@ -383,13 +383,13 @@ def invoke():
             )
         )
     except KeyError:
-        v_obj["Luna"]["End Az. (°)"] = "-"
+        v_obj["Moon"]["End Az. (°)"] = "-"
     try:
-        v_obj["Luna"]["Constellation"] = moon_data["Constellation"]
+        v_obj["Moon"]["Constellation"] = moon_data["Constellation"]
     except KeyError:
-        v_obj["Luna"]["Constellation"] = "-"
+        v_obj["Moon"]["Constellation"] = "-"
     try:
-        v_obj["Luna"]["Brightness"] = round(
+        v_obj["Moon"]["Brightness"] = round(
             float(
                 moon_data[
                     f"{Const.START_YEAR}-{months[str(Const.START_MONTH)]}-{Const.START_DAY} {Const.START_TIME}"
@@ -398,9 +398,9 @@ def invoke():
             1,
         )
     except KeyError:
-        v_obj["Luna"]["Brightness"] = "-"
+        v_obj["Moon"]["Brightness"] = "-"
     try:
-        v_obj["Luna"]["Distance"] = "{:.7f}".format(
+        v_obj["Moon"]["Distance"] = "{:.7f}".format(
             float(
                 str(
                     round(
@@ -415,10 +415,10 @@ def invoke():
             )
         )
     except KeyError:
-        v_obj["Luna"]["Distance"] = "-"
+        v_obj["Moon"]["Distance"] = "-"
         
     
-    overlay_text("Luna", v_obj)
+    overlay_text("Moon", v_obj)
     
 
     for key, value in v_obj.items():
@@ -492,7 +492,7 @@ def set_simbad_values(celestial_obj: str, cache_file: dict) -> dict:
     """
     if celestial_obj not in cache_file:
         cache_file[celestial_obj] = dict()
-    cache_file[celestial_obj]["Type"] = get_classification(celestial_obj)
+    cache_file[celestial_obj]["Type"] = get_classification(celestial_obj).title()
 
     cache_file[celestial_obj]["Brightness"] = get_brightness(celestial_obj)
 

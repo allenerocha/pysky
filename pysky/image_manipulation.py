@@ -97,7 +97,7 @@ def overlay_text(celestial_obj: str, extra_data=None) -> None:
             format="PNG",
         )
             
-    elif celestial_obj.lower() == "luna":
+    elif celestial_obj.lower() == "moon":
         Logger.log(f"Overlaying text for {celestial_obj}")
         if not os.path.isdir(Path(Const.SLIDESHOW_DIR, "PySkySlideshow", "garbage")):
             Logger.log("Garbage directory not found! Creating it.", 30)
@@ -106,15 +106,15 @@ def overlay_text(celestial_obj: str, extra_data=None) -> None:
         
         static_data_path = Path(Const.ROOT_DIR, "data", "static_data")
         img = PIL.Image.open(
-            Path(static_data_path, f"{extra_data['Luna']['Type'].lower().replace('moon: ', '').replace(' ', '_')}.jpg")
+            Path(static_data_path, f"{extra_data['Moon']['Type'].replace('Satellite (Phase: ', '').replace(')', '').lower().replace(' ', '_')}.jpg")
         )
         Logger.log("Generating image text.")
         overlay_txt = [
-            f"Name: Luna",
-            f"Type: {extra_data['Luna']['Type']}",
-            f"Constellation: {extra_data['Luna']['Constellation']}",
-            f"Brightness: {extra_data['Luna']['Brightness']}",
-            f"Distance: {extra_data['Luna']['Distance']} Pm",
+            f"Name: Moon",
+            f"Type: {extra_data['Moon']['Type']}",
+            f"Constellation: {extra_data['Moon']['Constellation']}",
+            f"Brightness: {extra_data['Moon']['Brightness']}",
+            f"Distance: {extra_data['Moon']['Distance']} Pm",
             conv_str,
         ]
         img = add_text(img, overlay_txt)
@@ -133,7 +133,7 @@ def overlay_text(celestial_obj: str, extra_data=None) -> None:
             fp=Path(
                 Const.SLIDESHOW_DIR,
                 "PySkySlideshow",
-                f"{celestial_obj.title().replace(' ', '_')}_{extra_data['Luna']['Type'].lower().replace('moon: ', '').replace(' ', '_')}_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}.pdf",
+                f"{celestial_obj.title().replace(' ', '_')}_{extra_data['Moon']['Type'].lower().replace('Satellite (Phase: ', '').replace(')', '').replace(' ', '_')}_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}.pdf",
             ),
             format="pdf",
         )
