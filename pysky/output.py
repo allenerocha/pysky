@@ -41,8 +41,8 @@ def generate_plot(celestial_obj):
     Logger.log(f"Generating plot for {celestial_obj.name}")
     plt.figure(figsize=(8, 6))
     location = Observer(
-        longitude=Const.LATITUDE * u.deg,
-        latitude=Const.LONGITUDE * u.deg,
+        longitude=Const.LONGITUDE * u.deg,
+        latitude=Const.LATITUDE * u.deg,
         elevation=Const.ELEVATION * u.m,
         name="location",
         timezone="UTC",
