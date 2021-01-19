@@ -340,7 +340,6 @@ def invoke():
     }
 
     v_obj["Luna"] = dict()
-
     try:
         v_obj["Luna"]["Type"] = f"Moon: {Const.MOON_PHASE}"
     except KeyError:
@@ -366,15 +365,13 @@ def invoke():
     except KeyError:
         v_obj["Luna"]["Start Az. (°)"] = "-"
     try:
-        v_obj["Luna"]["End Alt. (°)"] = (
-            round(
+        v_obj["Luna"]["End Alt. (°)"] = round(
                 float(
                     moon_data[
                         f"{Const.END_YEAR}-{months[str(Const.END_MONTH)]}-{Const.END_DAY} {Const.END_TIME}"
                     ]["alt"]
                 )
-            ),
-        )
+            )
     except KeyError:
         v_obj["Luna"]["End Alt. (°)"] = "-"
     try:
