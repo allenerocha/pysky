@@ -18,10 +18,10 @@ def is_object_visible(celestial_obj: object, secz_max: float) -> tuple:
     """
     location = Observer(
         location=EarthLocation.from_geodetic(
-            Const.LATITUDE * u.deg, Const.LONGITUDE * u.deg, Const.ELEVATION * u.m
+            lon=(Const.LONGITUDE * u.deg), lat=(Const.LATITUDE * u.deg), height=(Const.ELEVATION * u.m)
         ),
         name="location",
-        timezone="US/Central",
+        timezone="UTC",
     )
     start_time = Time(
         f"{Const.START_YEAR}-"
