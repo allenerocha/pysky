@@ -18,7 +18,6 @@ from .const import Const
 from .image_manipulation import overlay_text
 from .jpl_horizons_query import ephemeris_query
 from .logger import Logger
-from .moonquery import query
 from .output import to_html_list, to_html_table, generate_plot
 from .prefs import check_integrity, read_user_prefs
 from .simbad import (
@@ -29,6 +28,7 @@ from .simbad import (
     get_ra_dec,
 )
 from .skyview import get_skyview_img
+from .moonphase import phase_calculation
 from astroplan import download_IERS_A
 
 
@@ -45,8 +45,6 @@ def invoke():
     CALDWELL_OBJECTS = parse_caldwell(Const.ROOT_DIR)
     MESSIER_OBJECTS = parse_messier(Const.ROOT_DIR)
     USER_OBJECTS = read_user_prefs()
-
-    gen_moon_data()
 
     STARS, EPHEMERIS = query_jpl_horizons(USER_OBJECTS)
 
@@ -340,6 +338,7 @@ def invoke():
     }
 
     v_obj["Moon"] = dict()
+    phase_calculation()
     try:
         v_obj["Moon"]["Type"] = f"Satellite (Phase: {Const.MOON_PHASE})"
     except KeyError:
@@ -416,7 +415,6 @@ def invoke():
         )
     except KeyError:
         v_obj["Moon"]["Distance"] = "-"
-        
     
     overlay_text("Moon", v_obj)
     
@@ -585,29 +583,6 @@ def get_visible(object_name: str, ra, dec) -> tuple:
         )
         Logger.log(str(e), 40)
         return "-", "-", "-", "-"
-
-
-def gen_moon_data():
-    Logger.log("Retrieving data for tonight's moon...")
-    illumination, phase = query()
-    Const.MOON_PHASE = phase
-    Logger.log("Data for tonight's moon:")
-    Logger.log(f"Illumination: {illumination}\tPhase: {phase}")
-    Logger.log(f"Writing data to `{Const.SLIDESHOW_DIR}/PySkySlideshow/`...")
-    write_out(
-        celestial_objs=[
-            {
-                "Moon": {
-                    "Date": f"{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}",
-                    "Illumination": illumination,
-                    "Phase": phase,
-                }
-            }
-        ],
-        filename=Path(f"luna_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}"),
-    )
-    Logger.log("Wrote file!")
-
 
 def write_out(celestial_objs: list, code=0, filename=None):
     if code == 0:

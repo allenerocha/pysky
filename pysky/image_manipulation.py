@@ -133,7 +133,7 @@ def overlay_text(celestial_obj: str, extra_data=None) -> None:
             fp=Path(
                 Const.SLIDESHOW_DIR,
                 "PySkySlideshow",
-                f"{celestial_obj.title().replace(' ', '_')}_{extra_data['Moon']['Type'].lower().replace('Satellite (Phase: ', '').replace(')', '').replace(' ', '_')}_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}.pdf",
+                f"{celestial_obj.title().replace(' ', '_')}_{extra_data['Moon']['Type'].replace('Satellite (Phase: ', '').replace(')', '').lower().replace(' ', '_')}_{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}.pdf",
             ),
             format="pdf",
         )
