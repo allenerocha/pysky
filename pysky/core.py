@@ -474,6 +474,8 @@ def invoke():
                         name=str(list(c.keys())[0]),
                     )
                 )
+            else:
+                print(str(list(c.keys())[0]))
         write_out(fixed_objs, code=2)
 
     else:
