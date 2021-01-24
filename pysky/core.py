@@ -474,8 +474,18 @@ def invoke():
                         name=str(list(c.keys())[0]),
                     )
                 )
-            else:
-                print(str(list(c.keys())[0]))
+            elif str(list(c.keys())[0]).lower() == "moon":
+                
+                moon_data = json.loads(
+                    open(Path(Const.SLIDESHOW_DIR, "PySkySlideshow", f"Moon-{Const.START_YEAR}-{Const.START_MONTH}-{Const.START_DAY}-{Const.START_TIME.replace(':', '')}-{Const.END_YEAR}-{Const.END_MONTH}-{Const.END_DAY}-{Const.END_TIME.replace(':', '')}-data.json"), "r").read()
+                )
+                celestial_obj_coord = SkyCoord(ra=moon_data['Coordinates']['ra'] * u.deg, dec=moon_data['Coordinates']['dec'] * u.deg)
+                fixed_objs.append(
+                    FixedTarget(
+                        coord=celestial_obj_coord,
+                        name=str(list(c.keys())[0]),
+                    )
+                )
         write_out(fixed_objs, code=2)
 
     else:
