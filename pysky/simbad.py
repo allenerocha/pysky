@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 
 import astroquery.simbad
+import astropy
 import requests
 from bs4 import BeautifulSoup
 
@@ -215,9 +216,14 @@ def get_distance(celestial_obj: str) -> float:
     astroquery.simbad.Simbad.remove_votable_fields("main_id")
     astroquery.simbad.Simbad.remove_votable_fields("coordinates")
     Logger.log(f"Retrieving distance for {celestial_obj}...")
-    parsec_dist = astroquery.simbad.Simbad.query_object(celestial_obj)[0][0]
+    parallax = astroquery.simbad.Simbad.query_object(celestial_obj)[0][0]
+    Logger.log(f"\tFound parallax of {parallax} mas...")
 
-    if parsec_dist is None:
+    if parallax is None:
         return None
 
-    return int(float(parsec_dist) * 30.86)
+    parsec_distance = astropy.coordinates.Distance(parallax=parallax*astropy.units.mas)
+    Logger.log(f"\tFound distance of {parsec_distance.value} pc...")
+    Logger.log(f"\tReporting distance of {parsec_distance.to(astropy.units.Pm).value} Pm...")
+
+    return int(float(parsec_distance.to(astropy.units.Pm).value))
