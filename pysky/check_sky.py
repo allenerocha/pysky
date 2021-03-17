@@ -47,6 +47,7 @@ def is_object_visible(celestial_obj: object, secz_max: float) -> tuple:
         if 0 < start_secz < secz_max:
             Logger.log(
                 f"Found starting sec(z) = {start_secz} for {celestial_obj.name}."
+                f"Found ending sec(z) = {end_secz} for {celestial_obj.name}."
             )
             Logger.log(
                 f"Zenith={start_altaz.zen} "
@@ -70,10 +71,10 @@ def is_object_visible(celestial_obj: object, secz_max: float) -> tuple:
         else:
             end_alt = "-"
             end_az = "-"
-        return start_alt, start_az, end_alt, end_az
+        return start_alt, start_az, end_alt, end_az, transit_time
     except ValueError as e:
         Logger.log(f"Could not find sec(z) for {celestial_obj.name}.", 40)
         Logger.log(str(e), 40)
         Logger.log(start_secz, 40)
-        return "-", "-", "-", "-"
-    return "-", "-", "-", "-"
+        return "-", "-", "-", "-", "-"
+    return "-", "-", "-", "-", "-"
