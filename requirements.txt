@@ -27,7 +27,7 @@ html5lib==1.0.1
 idna==2.8
 imagesize==1.2.0
 jeepney==0.4.3
-Jinja2==2.11.2
+Jinja2==2.11.3
 jplephem==2.15
 keyring==21.2.1
 kiwisolver==1.3.1
