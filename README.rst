@@ -166,3 +166,9 @@ Supported Python Versions
 =========================
 
     Python 3.6+
+
+License
+=======
+.. image:: https://www.gnu.org/graphics/agplv3-with-text-162x68.png
+    :alt: AGPLv3
+    :target: https://www.gnu.org
