@@ -96,17 +96,20 @@ def overlay_text(celestial_obj: str, extra_data=None) -> None:
             ),
             format="PNG",
         )
-            
+
     elif celestial_obj.lower() == "moon":
         Logger.log(f"Overlaying text for {celestial_obj}")
         if not os.path.isdir(Path(Const.SLIDESHOW_DIR, "PySkySlideshow", "garbage")):
             Logger.log("Garbage directory not found! Creating it.", 30)
             os.makedirs(Path(Const.SLIDESHOW_DIR, "PySkySlideshow", "garbage"))
         Logger.log("Loading image data.")
-        
+
         static_data_path = Path(Const.ROOT_DIR, "data", "static_data")
         img = PIL.Image.open(
-            Path(static_data_path, f"{extra_data['Moon']['Type'].replace('Satellite (Phase: ', '').replace(')', '').lower().replace(' ', '_')}.jpg")
+            Path(
+                static_data_path,
+                f"{extra_data['Moon']['Type'].replace('Satellite (Phase: ', '').replace(')', '').lower().replace(' ', '_')}.jpg",
+            )
         )
         Logger.log("Generating image text.")
         overlay_txt = [
@@ -128,7 +131,6 @@ def overlay_text(celestial_obj: str, extra_data=None) -> None:
             )
         )
 
-        
         img.save(
             fp=Path(
                 Const.SLIDESHOW_DIR,
@@ -144,14 +146,27 @@ def overlay_text(celestial_obj: str, extra_data=None) -> None:
             Logger.log("Garbage directory not found! Creating it.", 30)
             os.makedirs(Path(Const.SLIDESHOW_DIR, "PySkySlideshow", "garbage"))
         Logger.log("Loading image data.")
-        img = PIL.Image.open(
-            Path(
-                Const.SLIDESHOW_DIR,
-                "PySkySlideshow",
-                "garbage",
-                f"{celestial_obj}.temp.jpg",
+        if os.path.isfile(
+                Path(
+                    Const.SLIDESHOW_DIR,
+                    "PySkySlideshow",
+                    "garbage",
+                    f"{celestial_obj}.temp.jpg",
+                )
+        ):
+            img = PIL.Image.open(
+                Path(
+                    Const.SLIDESHOW_DIR,
+                    "PySkySlideshow",
+                    "garbage",
+                    f"{celestial_obj}.temp.jpg",
+                )
             )
-        )
+        else:
+            static_data_path = f"{Const.ROOT_DIR}/data/static_data/"
+            img = PIL.Image.open(
+                Path(static_data_path, f"{celestial_obj.lower().replace(' ', '')}.jpg")
+            )
         Logger.log("Generating image text.")
         overlay_txt = [
             f"Name: {celestial_obj.capitalize()}",
