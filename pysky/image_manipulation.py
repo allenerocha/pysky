@@ -222,7 +222,7 @@ def add_text(img: object, overlay_txt: list) -> object:
     else:
         overlaid.multiline_text(
             xy=(10, int(img_h * 0.75)),  # xy for the text to be overlaid
-            text="\n".join(overlay_text),  # concats all strings in the list
+            text="\n".join(overlay_txt),  # concats all strings in the list
             fill=(255, 255, 255, 100),  # white text with alpha=100
             spacing=2.0,  # in between each new line
             align="left",
