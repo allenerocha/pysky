@@ -51,7 +51,7 @@ requirements = [
     "packaging==20.4",
     "pathspec==0.8.0",
     "pathtools==0.1.2",
-    "Pillow==7.1.2",
+    "pillow>=8.1.2",
     "pkginfo==1.5.0.1",
     "pluggy==0.13.1",
     "py>=1.10.0",
