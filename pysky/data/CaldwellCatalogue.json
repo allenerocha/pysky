@@ -156,7 +156,7 @@
 		"Type": "Open Cluster",
 		"Distance": 69063,
 		"Constellation": "Perseus",
-		"Brightness": 4.0,
+		"Brightness": 3.7,
 		"Coordinates": {
 			"ra": [2, 19, 0],
 			"dec": [57, 7, 0]
@@ -168,7 +168,7 @@
 		"Type": "Open Cluster",
 		"Distance": 69063,
 		"Constellation": "Perseus",
-		"Brightness": 4.0,
+		"Brightness": 3.8,
 		"Coordinates": {
 			"ra": [2, 22, 23],
 			"dec": [57, 7, 0]
